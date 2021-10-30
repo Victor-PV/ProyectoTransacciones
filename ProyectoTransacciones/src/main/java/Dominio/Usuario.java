@@ -48,7 +48,7 @@ public class Usuario {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -56,7 +56,7 @@ public class Usuario {
     }
 
     public Date getNacimiento() {
-        return nacimiento;
+        return this.nacimiento;
     }
 
     public void setNacimiento(Date nacimiento) {
@@ -65,7 +65,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "DNI=" + DNI + ", nombre=" + nombre + ", apellidos=" + apellidos + ", password=" + password + ", nacimiento=" + nacimiento + '}';
+        return "Usuario{" + "DNI=" + this.DNI + ", nombre=" + this.nombre + ", apellidos=" + this.apellidos + ", password=" + this.password + ", nacimiento=" + this.nacimiento + '}';
     }
     
     
