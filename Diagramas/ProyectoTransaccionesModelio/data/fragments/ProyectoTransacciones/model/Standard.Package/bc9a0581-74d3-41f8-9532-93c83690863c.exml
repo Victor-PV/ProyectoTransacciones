@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="proyectotransacciones" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="DiagramaClases" version="4">
   <OBJECT>
-    <ID name="proyectotransacciones" mc="Standard.Package" uid="bc9a0581-74d3-41f8-9532-93c83690863c"/>
+    <ID name="DiagramaClases" mc="Standard.Package" uid="bc9a0581-74d3-41f8-9532-93c83690863c"/>
     <PID name="ProyectoTransacciones" mc="Standard.Project" uid="294fb193-355a-479d-8a88-70f33cae0f4c"/>
     <ATTRIBUTES>
       <ATT name="IsInstantiable">false</ATT>
@@ -9,7 +9,7 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[proyectotransacciones]]></ATT>
+      <ATT name="Name"><![CDATA[DiagramaClases]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
