@@ -40,20 +40,25 @@ funciona en forma de prepago con una e-wallet del club Supercomprín.
 
 	3. Cada producto tiene asignado un valor en puntos, previamente definido
 	por estrategias de márqueting y comerciales, que puede cambiar en
-	cualquier momento. Se mantiene un stock de cada producto del	supermercado.
+	cualquier momento. Se mantiene un stock de cada producto del supermercado.
 
 	4. Cuando un cliente compra, se le descuenta el importe total de la compra
 	de su saldo en euros en la e-wallet y se le suman los puntos
 	correspondientes a su saldo.
-	Si el cliente no tiene saldo suficiente en su e-wallet para pagar la compra, el cliente no podrá llevarse los productos.
+	Si el cliente no tiene saldo suficiente en su e-wallet para pagar la compra, 
+	el cliente no podrá llevarse los productos.
 
-	5. Si el cliente devuelve el producto, se le devuelve el importe al saldo de la	e-wallet y los puntos de dicho producto -si los hubiera tenido- se restan de la wallet. Si con la devolución, la e-wallet queda en saldo menor a 5 puntos, el producto no se puede devolver.
+	5. Si el cliente devuelve el producto, se le devuelve el importe al saldo 
+	de la e-wallet y los puntos de dicho producto -si los hubiera tenido- se 
+	restan de la wallet. Si con la devolución, la e-wallet queda en saldo 
+	menor a 5 puntos, el producto no se puede devolver.
 
 	6. El cliente puede canjear los puntos por productos al realizar cualquier
 	compra, pagando directamente con puntos de su e-wallet, siempre que dicha com
 
 
 #SE PIDE:
+
 	1 Diagrama de clases del modelo y análisis de la solución. 1 punto.
 
 	2 Implementación de las operaciones de mantenimiento para e-wallet (alta,
@@ -64,8 +69,8 @@ funciona en forma de prepago con una e-wallet del club Supercomprín.
 	transacción específica, asumiendo las siguientes simplificaciones del
 	modelo a fin de facilitar la implementación: en cada compra se compra 1
 	solo artículo, que debe descontarse del stock de almacén e incorporar el
-	saldo de puntos a la ewallet. Controlar excepciones y flujos de error. 3
-	puntos
+	saldo de puntos a la ewallet. Controlar excepciones y flujos de error. 
+	3 puntos
 
 	4 Implementación de la operación devolver producto, mediante una
 	transacción específica. Controlar excepciones y flujos de error. 3 puntos
