@@ -20,30 +20,6 @@ public class EWallet {
         this.saldo = saldo;
     }
 
-    public String getDNIPropietario() {
-        return DNIPropietario;
-    }
-
-    public void setDNIPropietario(String DNIPropietario) {
-        this.DNIPropietario = DNIPropietario;
-    }
-
-    public int getPuntos() {
-        return puntos;
-    }
-
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
-    public float getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
-    }
-    
     
     
 }
