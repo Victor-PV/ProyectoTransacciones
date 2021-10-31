@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import Vista.Paneles.PanelBackground;
+import Vista.Paneles.PanelLogin;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,10 +15,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
 /**
@@ -37,14 +39,17 @@ public class FrameInicio extends JFrame {
 
     public FrameInicio() {
         this.setSize(400, 600);
+        this.setTitle("Inicio");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        
+        this.setIconImage(new ImageIcon("./src/main/java/Imagenes/logo.png").getImage());
 
         panel = new PanelBackground();
         panel.setLayout(new GridBagLayout());
 
-        panel.setBackground("D://Instituto/1DAM/Programacion/JAVA/Proyectos/ProyectoTransacciones/ProyectoTransacciones/src/main/java/Imagenes/fondoInicio2.png");
+        panel.setBackground("./src/main/java/Imagenes/fondoInicio2.png");
         panel.setBackground(colorPrincipal);
 
         GridBagConstraints g = new GridBagConstraints();
@@ -58,8 +63,8 @@ public class FrameInicio extends JFrame {
         g.fill = GridBagConstraints.HORIZONTAL;
         g.weightx = 1;
         g.gridx = 0;
-        g.ipady = 20;
         g.gridy = 0;
+        g.ipady = 20;
         g.gridwidth = 2;
         panel.add(titulo, g);
         limpiarConstraints(g);
@@ -81,6 +86,7 @@ public class FrameInicio extends JFrame {
          */
         botonLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                FrameInicio.this.setTitle("Iniciar Sesión");
                 FrameInicio.this.setContentPane(new PanelLogin());
                 FrameInicio.this.invalidate();
                 FrameInicio.this.validate();
