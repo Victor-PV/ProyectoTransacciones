@@ -89,7 +89,7 @@ public class FrameInicio extends JFrame {
         botonLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 FrameInicio.this.setTitle("Iniciar Sesión");
-                FrameInicio.this.setContentPane(new PanelLogin());
+                FrameInicio.this.setContentPane(new PanelLogin(FrameInicio.this));
                 FrameInicio.this.invalidate();
                 FrameInicio.this.validate();
             }
@@ -113,8 +113,8 @@ public class FrameInicio extends JFrame {
          */
         botonRegister.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FrameInicio.this.setTitle("Iniciar Sesión");
-                FrameInicio.this.setContentPane(new PanelRegistro());
+                FrameInicio.this.setTitle("Registro");
+                FrameInicio.this.setContentPane(new PanelRegistro(FrameInicio.this));
                 FrameInicio.this.invalidate();
                 FrameInicio.this.validate();
             }

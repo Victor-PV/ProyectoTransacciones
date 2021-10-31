@@ -11,10 +11,14 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
@@ -25,14 +29,15 @@ import javax.swing.border.MatteBorder;
 public class PanelLogin extends PanelBackground {
 
     private JLabel titulo;
-    private JTextField campoDNI, campoPassword;
+    private JTextField campoDNI;
+    private JPasswordField campoPassword;
     private JLabel txtDNI, txtPassword;
     private JButton botonConfirmar;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelLogin() {
+    public PanelLogin(JFrame ventana) {
         this.setLayout(new GridBagLayout());
         this.setBackground("./src/main/java/Imagenes/fondoInicio3.png");
         GridBagConstraints g = new GridBagConstraints();
@@ -44,7 +49,7 @@ public class PanelLogin extends PanelBackground {
         titulo.setForeground(colorSecundario);
         titulo.setFont(new Font(fuentePrincipal, Font.BOLD, 40));
         g.fill = GridBagConstraints.HORIZONTAL;
-        g.insets = new Insets(0, 0,30, 0);
+        g.insets = new Insets(0, 0, 30, 0);
         g.weightx = 1;
         g.gridx = 0;
         g.ipady = 20;
@@ -69,8 +74,9 @@ public class PanelLogin extends PanelBackground {
         campoDNI.setPreferredSize(new Dimension(300, 35));
         campoDNI.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         campoDNI.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
-        campoDNI.setOpaque(false);        
+        campoDNI.setOpaque(false);
         campoDNI.setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        campoDNI.addFocusListener(new focusListener());
         g.gridx = 0;
         g.gridy = 2;
         g.gridwidth = 2;
@@ -89,12 +95,13 @@ public class PanelLogin extends PanelBackground {
         limpiarConstraints(g);
 
         //http://javaswingcomponents.blogspot.com/2012/05/how-to-create-simple-hinttextfield-in.html
-        campoPassword = new JTextField();
+        campoPassword = new JPasswordField();
         campoPassword.setPreferredSize(new Dimension(300, 35));
         campoPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         campoPassword.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
-        campoPassword.setOpaque(false);        
+        campoPassword.setOpaque(false);
         campoPassword.setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        campoPassword.addFocusListener(new focusListener());
         g.gridx = 0;
         g.gridy = 4;
         g.gridwidth = 2;
@@ -115,6 +122,12 @@ public class PanelLogin extends PanelBackground {
         this.add(botonConfirmar, g);
         limpiarConstraints(g);
 
+        botonConfirmar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ventana.dispose();
+            }
+        });
+
     }
 
     /**
@@ -133,5 +146,18 @@ public class PanelLogin extends PanelBackground {
         g.insets = new Insets(0, 0, 0, 0);
         g.anchor = GridBagConstraints.CENTER;
         g.fill = GridBagConstraints.NONE;
+    }
+
+    class focusListener extends FocusAdapter {
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            ((JTextField) e.getSource()).setBorder(new MatteBorder(0, 0, 2, 0, colorPrincipal));
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            ((JTextField) e.getSource()).setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        }
     }
 }
