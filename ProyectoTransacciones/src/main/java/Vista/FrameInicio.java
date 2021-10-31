@@ -7,6 +7,7 @@ package Vista;
 
 import Vista.Paneles.PanelBackground;
 import Vista.Paneles.PanelLogin;
+import Vista.Paneles.PanelRegistro;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,7 +44,7 @@ public class FrameInicio extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        
+
         this.setIconImage(new ImageIcon("./src/main/java/Imagenes/logo.png").getImage());
 
         panel = new PanelBackground();
@@ -83,6 +84,7 @@ public class FrameInicio extends JFrame {
         limpiarConstraints(g);
         /**
          * Añadir funcionalidad al botonLogin
+         * Al pulsar el boton cambia al panel donde esta el inicio de sesión "PanelLogin"
          */
         botonLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +107,18 @@ public class FrameInicio extends JFrame {
         g.gridy = 1;
         panel.add(botonRegister, g);
         limpiarConstraints(g);
+        /**
+         * Añadir funcionalidad al botonLogin
+         * Al pulsar el boton cambia al panel donde esta el inicio de sesión "PanelLogin"
+         */
+        botonRegister.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                FrameInicio.this.setTitle("Iniciar Sesión");
+                FrameInicio.this.setContentPane(new PanelRegistro());
+                FrameInicio.this.invalidate();
+                FrameInicio.this.validate();
+            }
+        });
 
         this.add(panel);
     }
