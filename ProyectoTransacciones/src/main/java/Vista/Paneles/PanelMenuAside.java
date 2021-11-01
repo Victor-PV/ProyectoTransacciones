@@ -88,7 +88,7 @@ public class PanelMenuAside extends JPanel {
         Icon iconoEscalado3 = new ImageIcon(imgEscalada3);
         labelHistorial.setIcon(iconoEscalado3);
         labelHistorial.setHorizontalAlignment(JLabel.CENTER);
-        labelHistorial.setToolTipText("Catalogo");
+        labelHistorial.setToolTipText("Historial");
         g.insets = new Insets(10, -20, 10, -20);
         g.gridx = 0;
         g.gridy = 2;
@@ -114,12 +114,19 @@ public class PanelMenuAside extends JPanel {
         Icon iconoEscalado4 = new ImageIcon(imgEscalada4);
         labelDepositar.setIcon(iconoEscalado4);
         labelDepositar.setHorizontalAlignment(JLabel.CENTER);
-        labelDepositar.setToolTipText("Catalogo");
+        labelDepositar.setToolTipText("Reponer");
         g.insets = new Insets(10, -20, 0, -20);
         g.gridx = 0;
         g.gridy = 3;
         this.add(labelDepositar, g);
         limpiarConstraints(g);
+        labelDepositar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReponer()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
 
         /**
          * Icono del Salir
