@@ -54,20 +54,6 @@ public class PanelReponer extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
-        /**
-         * Avatar del usuario
-         */
-        img = new ImageIcon("./src/main/java/Imagenes/imgUser.png");
-        imgUser = new JLabel();
-        imgUser.setIcon(img);
-        //imgUser.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
-        g.insets = new Insets(50, 30, 40, 0);
-        g.gridx = 0;
-        g.gridy = 0;
-        g.gridheight = 5;
-        g.weightx = 0.1;
-        this.add(imgUser, g);
-        limpiarConstraints(g);
 
         /**
          * Texto para el campo Campo producto
@@ -76,26 +62,25 @@ public class PanelReponer extends JPanel {
         txtCodProducto.setForeground(colorSecundario);
         txtCodProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 30, 15, 0);
-        g.gridx = 1;
+        g.insets = new Insets(50, 90, 15, 0);
+        g.gridx = 0;
         g.gridy = 0;
         g.gridwidth = 2;
-        g.weightx = 0.6;
+        g.weightx = 0.66;
         this.add(txtCodProducto, g);
         limpiarConstraints(g);
         /**
          * Campo de texto para el campo Producto
          */
         campoCodProducto = new JTextField("23322973F");
-        campoCodProducto.setPreferredSize(new Dimension(150, 35));
+        campoCodProducto.setPreferredSize(new Dimension(520, 35));
         campoCodProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.insets = new Insets(0, 30, 0, 0);
+        g.insets = new Insets(0, 90, 0, 0);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 1;
+        g.gridx = 0;
         g.gridy = 1;
         g.gridwidth = 2;
-        g.weightx = 0.6;
+        g.weightx = 0.66;
         this.add(campoCodProducto, g);
         limpiarConstraints(g);
 
@@ -109,10 +94,11 @@ public class PanelReponer extends JPanel {
         botonConsulta.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonConsulta.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonConsulta.setFocusPainted(false);
-        g.insets = new Insets(0, 0, 0, 30);
-        g.gridx = 3;
+        g.anchor = GridBagConstraints.LINE_START;
+        g.insets = new Insets(0, 0, 0, 60);
+        g.gridx = 2;
         g.gridy = 1;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(botonConsulta, g);
 
         /**
@@ -122,24 +108,24 @@ public class PanelReponer extends JPanel {
         txtNombreProducto.setForeground(colorSecundario);
         txtNombreProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 30, 15, 0);
-        g.gridx = 1;
+        g.insets = new Insets(50, 90, 15, 0);
+        g.gridx = 0;
         g.gridy = 2;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(txtNombreProducto, g);
         limpiarConstraints(g);
         /**
          * Campo de texto para el campo Nombre del producto No sera editable
          */
         campoNombreProducto = new JTextField("Tomaticos");
-        campoNombreProducto.setPreferredSize(new Dimension(158, 35));
+        campoNombreProducto.setPreferredSize(new Dimension(210, 35));
         campoNombreProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoNombreProducto.setEditable(false);
-        g.insets = new Insets(0, 30, 40, 0);
+        g.insets = new Insets(0, 90, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 1;
+        g.gridx = 0;
         g.gridy = 3;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(campoNombreProducto, g);
         limpiarConstraints(g);
 
@@ -151,23 +137,23 @@ public class PanelReponer extends JPanel {
         txtPrecioUd.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(50, 10, 15, 0);
-        g.gridx = 2;
+        g.gridx = 1;
         g.gridy = 2;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(txtPrecioUd, g);
         limpiarConstraints(g);
         /**
          * Campo de texto para el campo DNI No sera editable
          */
         campoPrecioUd = new JTextField("2.80€");
-        campoPrecioUd.setPreferredSize(new Dimension(158, 35));
+        campoPrecioUd.setPreferredSize(new Dimension(210, 35));
         campoPrecioUd.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoPrecioUd.setEditable(false);
         g.insets = new Insets(0, 10, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 2;
+        g.gridx = 1;
         g.gridy = 3;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(campoPrecioUd, g);
         limpiarConstraints(g);
 
@@ -178,24 +164,24 @@ public class PanelReponer extends JPanel {
         txtCantidadDisponible.setForeground(colorSecundario);
         txtCantidadDisponible.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 10, 15, 0);
-        g.gridx = 3;
+        g.insets = new Insets(50, 0, 15, 0);
+        g.gridx = 2;
         g.gridy = 2;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(txtCantidadDisponible, g);
         limpiarConstraints(g);
         /**
          * Campo de texto la cantidad disponible
          */
         campoCantidadDisponible = new JTextField("5");
-        campoCantidadDisponible.setPreferredSize(new Dimension(158, 35));
+        campoCantidadDisponible.setPreferredSize(new Dimension(140, 35));
         campoCantidadDisponible.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoCantidadDisponible.setEditable(false);
-        g.insets = new Insets(0, 10, 40, 30);
+        g.insets = new Insets(0, 0, 40, 30);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 3;
+        g.gridx = 2;
         g.gridy = 3;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(campoCantidadDisponible, g);
         limpiarConstraints(g);
 
@@ -208,11 +194,11 @@ public class PanelReponer extends JPanel {
         espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 30, 30, 60);
-        g.gridx = 1;
+        g.insets = new Insets(0, 90, 0, 100);
+        g.gridx = 0;
         g.gridy = 4;
         g.gridwidth = 3;
-        g.weightx = 0.9;
+        g.weightx = 1;
         this.add(espacio, g);
         limpiarConstraints(g);
 
@@ -223,10 +209,10 @@ public class PanelReponer extends JPanel {
         txtCantidadDepos.setForeground(colorSecundario);
         txtCantidadDepos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 30, 0, 0);
-        g.gridx = 1;
+        g.insets = new Insets(30, 90, 15, 0);
+        g.gridx = 0;
         g.gridy = 5;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(txtCantidadDepos, g);
         limpiarConstraints(g);
         /**
@@ -237,44 +223,44 @@ public class PanelReponer extends JPanel {
             listaDepos[i] = (i + 1) + "";
         }
         cantidadDepos = new JComboBox(listaDepos);
-        cantidadDepos.setPreferredSize(new Dimension(158, 35));
+        cantidadDepos.setPreferredSize(new Dimension(210, 35));
         cantidadDepos.setBackground(Color.WHITE);
         cantidadDepos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        cantidadDepos.setEnabled(false);
+        cantidadDepos.setEnabled(true);
         cantidadDepos.setBorder(new EmptyBorder(0, 0, 0, 0));
-        g.insets = new Insets(0, 30, 160, 0);
+        g.insets = new Insets(0, 90, 160, 0);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 1;
+        g.gridx = 0;
         g.gridy = 6;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(cantidadDepos, g);
         limpiarConstraints(g);
 
         /**
-         * Texto para el campo DNI
+         * Texto para el campo precio total
          */
         txtPrecioDepos = new JLabel("Precio total: ");
         txtPrecioDepos.setForeground(colorSecundario);
         txtPrecioDepos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 10, 0, 0);
-        g.gridx = 2;
+        g.insets = new Insets(30, 10, 15, 0);
+        g.gridx = 1;
         g.gridy = 5;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(txtPrecioDepos, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto para el campo DNI No sera editable
+         * Campo de texto donde se mostrara el precio de la cantidad seleccionada
          */
         campoPrecioDepos = new JTextField("");
-        campoPrecioDepos.setPreferredSize(new Dimension(158, 35));
+        campoPrecioDepos.setPreferredSize(new Dimension(210, 35));
         campoPrecioDepos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoPrecioDepos.setEditable(false);
+        campoPrecioDepos.setEditable(true);
         g.insets = new Insets(0, 10, 160, 0);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 2;
+        g.gridx = 1;
         g.gridy = 6;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(campoPrecioDepos, g);
         limpiarConstraints(g);
 
@@ -287,12 +273,13 @@ public class PanelReponer extends JPanel {
         botonPedir.setForeground(colorPrincipal);
         botonPedir.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonPedir.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
-        botonPedir.setEnabled(false);
         botonPedir.setFocusPainted(false);
-        g.insets = new Insets(0, 0, 160, 30);
-        g.gridx = 3;
+        botonPedir.setEnabled(true);
+        g.anchor = GridBagConstraints.LINE_START;
+        g.insets = new Insets(0, 0, 160, 60);
+        g.gridx = 2;
         g.gridy = 6;
-        g.weightx = 0.3;
+        g.weightx = 0.33;
         this.add(botonPedir, g);
     }
 
