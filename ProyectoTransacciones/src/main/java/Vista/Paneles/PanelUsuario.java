@@ -51,7 +51,7 @@ public class PanelUsuario extends JPanel {
         imgUser = new JLabel();
         imgUser.setIcon(img);
         //imgUser.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
-        g.insets = new Insets(0, 30, 40, 0);
+        g.insets = new Insets(50, 30, 40, 0);
         g.gridx = 0;
         g.gridy = 0;
         g.gridheight = 5;
@@ -66,7 +66,7 @@ public class PanelUsuario extends JPanel {
         txtDNI.setForeground(colorSecundario);
         txtDNI.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 30, 15, 0);
+        g.insets = new Insets(50, 30, 15, 0);
         g.gridx = 1;
         g.gridy = 0;
         g.weightx = 0.35;
@@ -95,7 +95,7 @@ public class PanelUsuario extends JPanel {
         txtNombre.setForeground(colorSecundario);
         txtNombre.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 0, 15, 0);
+        g.insets = new Insets(50, 0, 15, 0);
         g.gridx = 2;
         g.gridy = 0;
         g.weightx = 0.55;
@@ -236,7 +236,7 @@ public class PanelUsuario extends JPanel {
         panelBotones.setOpaque(false);
         //panelBotones.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
-        g.insets = new Insets(0, 100, 0, 100);
+        g.insets = new Insets(150, 100, 0, 90);
         g.gridx = 0;
         g.gridy = 6;
         g.gridwidth = 3;
@@ -252,6 +252,7 @@ public class PanelUsuario extends JPanel {
         botonActualizar.setForeground(colorPrincipal);
         botonActualizar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonActualizar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+        botonActualizar.setFocusPainted(false);
         panelBotones.add(botonActualizar, BorderLayout.EAST);
     }
 
