@@ -6,6 +6,7 @@
 package Vista;
 
 import Vista.Paneles.PanelAplicacion;
+import Vista.Paneles.PanelCatalogo;
 import Vista.Paneles.PanelHistorial;
 import Vista.Paneles.PanelMenuAside;
 import Vista.Paneles.PanelReponer;
@@ -42,7 +43,7 @@ public class FrameAplicacion extends JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon("./src/main/java/Imagenes/logo.png").getImage());
 
-        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelReponer());
+        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelCatalogo());
         
         
         this.add(panelPrincipal);

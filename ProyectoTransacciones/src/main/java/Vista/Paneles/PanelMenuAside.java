@@ -5,8 +5,6 @@
  */
 package Vista.Paneles;
 
-import Vista.FrameAplicacion;
-import Vista.FrameInicio;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -15,7 +13,9 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -30,13 +30,18 @@ public class PanelMenuAside extends JPanel {
 
     private JPanel panelGeneral, panelSalir;
 
-    private JLabel labelSalir, labelPlantilla;
-    private ImageIcon imgSalir, imgPlantilla;
+    private JLabel labelPlantilla;
+    private ImageIcon imgPlantilla;
+
+    private JLabel labelHome, labelSalir, labelHistorial, labelCatalogo, labelDepositar, labelEncargos, labelRecargar, labelEncargar;
+    private ImageIcon imgHome, imgSalir, imgHistorial, imgCatalogo, imgDepositar, imgEncargos, imgRecargar, imgEncargar;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    private String[] listaPaneles = {"home", "catalogo", "historial", "encargos", "recargar", "encargar"};
+    private String[] listaPanelesAdminCliente = {"home", "catalogo", "historial", "encargos", "recargar", "encargar"};
+    private String[] listaPanelesAdmin = {"home", "catalogo", "encargos", "encargar"};
+    private String[] listaPanelesCliente = {"home", "catalogo", "historial", "recargar"};
 
     public PanelMenuAside(JFrame ventana) {
         this.setLayout(new BorderLayout());
@@ -44,52 +49,172 @@ public class PanelMenuAside extends JPanel {
         this.add(panelGeneral, BorderLayout.NORTH);
         GridBagConstraints g = new GridBagConstraints();
 
-        //listaPaneles = null;
-        String variableTemporal = "AdminClient";
-        if (variableTemporal.equals("AdminClient")) {
-            //Si la variable coincide carga x paneles
-        }
+        int posicionY = 0;
 
-        for (int i = 0; i < listaPaneles.length; i++) {
-            imgPlantilla = new ImageIcon("./src/main/java/Imagenes/" + listaPaneles[i] + ".png");
-            labelPlantilla = new JLabel();
-            Image imgEscalada = imgPlantilla.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-            Icon iconoEscalado = new ImageIcon(imgEscalada);
-            labelPlantilla.setIcon(iconoEscalado);
-            labelPlantilla.setHorizontalAlignment(JLabel.CENTER);
-            labelPlantilla.setToolTipText(listaPaneles[i]);
-            if (i != 0) {
-                g.insets = new Insets(0, -20, 20, -20);
-            } else {
-                g.insets = new Insets(15, -20, 20, -20);
+        /**
+         * Icono del Home
+         */
+        imgHome = new ImageIcon("./src/main/java/Imagenes/home.png");
+        labelHome = new JLabel();
+        Image imgEscalada = imgHome.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado = new ImageIcon(imgEscalada);
+        labelHome.setIcon(iconoEscalado);
+        labelHome.setHorizontalAlignment(JLabel.CENTER);
+        labelHome.setToolTipText("Home");
+        g.insets = new Insets(15, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelHome, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Home
+         */
+        labelHome.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario()));
+                ventana.invalidate();
+                ventana.validate();
             }
-            g.gridx = 0;
-            g.gridy = i;
-            panelGeneral.add(labelPlantilla, g);
-            limpiarConstraints(g);
-            /**
-             * Añade interaccion al label Home
-             */
-            labelPlantilla.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    //Depende que listaPaneles haya pones un panel
-                    //if (listaPaneles[i] instanceof PanelUsuario){
-                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario()));
-                    // }
-                    ventana.invalidate();
-                    ventana.validate();
-                }
-            });
-        }
+        });
+
+        /**
+         * Icono del Home
+         */
+        imgCatalogo = new ImageIcon("./src/main/java/Imagenes/catalogo.png");
+        labelCatalogo = new JLabel();
+        Image imgEscalada2 = imgCatalogo.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado2 = new ImageIcon(imgEscalada2);
+        labelCatalogo.setIcon(iconoEscalado2);
+        labelCatalogo.setHorizontalAlignment(JLabel.CENTER);
+        labelCatalogo.setToolTipText("Catalogo");
+        g.insets = new Insets(0, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelCatalogo, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Catalogo
+         */
+        labelCatalogo.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
+
+        /**
+         * Icono del Historial
+         */
+        imgHistorial = new ImageIcon("./src/main/java/Imagenes/historial.png");
+        labelHistorial = new JLabel();
+        Image imgEscalada3 = imgHistorial.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado3 = new ImageIcon(imgEscalada3);
+        labelHistorial.setIcon(iconoEscalado3);
+        labelHistorial.setHorizontalAlignment(JLabel.CENTER);
+        labelHistorial.setToolTipText("Historial");
+        g.insets = new Insets(0, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelHistorial, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Home
+         */
+        labelHistorial.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelHistorial()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
+
+        /**
+         * Icono de los encargos
+         */
+        imgEncargos = new ImageIcon("./src/main/java/Imagenes/encargos.png");
+        labelEncargos = new JLabel();
+        Image imgEscalada4 = imgEncargos.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado4 = new ImageIcon(imgEscalada4);
+        labelEncargos.setIcon(iconoEscalado4);
+        labelEncargos.setHorizontalAlignment(JLabel.CENTER);
+        labelEncargos.setToolTipText("Encargos");
+        g.insets = new Insets(0, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelEncargos, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Encargos
+         */
+        labelEncargos.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelEncargos()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
+
+                /**
+         * Icono de los encargos
+         */
+        imgRecargar = new ImageIcon("./src/main/java/Imagenes/recargar.png");
+        labelRecargar = new JLabel();
+        Image imgEscalada5 = imgRecargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado5 = new ImageIcon(imgEscalada5);
+        labelRecargar.setIcon(iconoEscalado5);
+        labelRecargar.setHorizontalAlignment(JLabel.CENTER);
+        labelRecargar.setToolTipText("Encargos");
+        g.insets = new Insets(0, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelRecargar, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Encargos
+         */
+        labelRecargar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                //ventana.setContentPane(new PanelAplicacion(ventana, new Panel()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
+        
+        /**
+         * Icono del Historial
+         */
+        imgEncargar = new ImageIcon("./src/main/java/Imagenes/encargar.png");
+        labelEncargar = new JLabel();
+        Image imgEscalada6 = imgEncargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado6 = new ImageIcon(imgEscalada6);
+        labelEncargar.setIcon(iconoEscalado6);
+        labelEncargar.setHorizontalAlignment(JLabel.CENTER);
+        labelEncargar.setToolTipText("Encargar");
+        g.insets = new Insets(0, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelEncargar, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Depositar
+         */
+        labelEncargar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReponer()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
 
         panelSalir = new JPanel(new GridBagLayout());
         this.add(panelSalir, BorderLayout.SOUTH);
 
         imgSalir = new ImageIcon("./src/main/java/Imagenes/salir.png");
         labelSalir = new JLabel();
-        Image imgEscalada = imgSalir.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado = new ImageIcon(imgEscalada);
-        labelSalir.setIcon(iconoEscalado);
+        Image imgEscaladaSalir = imgSalir.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscaladoSalir = new ImageIcon(imgEscaladaSalir);
+        labelSalir.setIcon(iconoEscaladoSalir);
         labelSalir.setHorizontalAlignment(JLabel.CENTER);
         labelSalir.setToolTipText("Salir");
         g.insets = new Insets(0, -20, 10, -20);

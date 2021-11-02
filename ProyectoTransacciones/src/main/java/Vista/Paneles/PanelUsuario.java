@@ -43,7 +43,7 @@ public class PanelUsuario extends JPanel {
     public PanelUsuario() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
-
+        System.out.println("SUa");
         /**
          * Avatar del usuario
          */

@@ -23,7 +23,7 @@ import javax.swing.border.MatteBorder;
  *
  * @author victo
  */
-public class PanelHistorial extends JPanel {
+public class PanelEncargos extends JPanel {
 
     /**
      * Variables de la clase
@@ -35,14 +35,14 @@ public class PanelHistorial extends JPanel {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelHistorial() {
+    public PanelEncargos() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
         /**
          * Texto para el campo DNI
          */
-        txtDNI = new JLabel("Historial de compra (Nombre provisional): ");
+        txtDNI = new JLabel("Historial de pedidos (Nombre provisional): ");
         txtDNI.setForeground(colorSecundario);
         txtDNI.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         txtDNI.setHorizontalAlignment(JLabel.CENTER);
