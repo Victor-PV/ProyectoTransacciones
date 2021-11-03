@@ -5,8 +5,8 @@
  */
 package Vista.Paneles;
 
-import Vista.FrameInicio;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -59,7 +59,7 @@ public class PanelRegistro extends PanelBackground {
         titulo.setForeground(colorSecundario);
         titulo.setFont(new Font(fuentePrincipal, Font.BOLD, 34));
         g.fill = GridBagConstraints.HORIZONTAL;
-        g.insets = new Insets(0, 43, 0, 43);
+        g.insets = new Insets(-20, 43, 0, 43);
         g.weightx = 1;
         g.gridx = 0;
         g.ipady = 20;
@@ -77,7 +77,7 @@ public class PanelRegistro extends PanelBackground {
         espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(20, 43, 20, 43);
+        g.insets = new Insets(0, 23, 20, 23);
         g.gridx = 0;
         g.gridy = 1;
         g.gridwidth = 4;
@@ -268,7 +268,7 @@ public class PanelRegistro extends PanelBackground {
         espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(40, 43, 10, 43);
+        g.insets = new Insets(40, 23, 10, 23);
         g.gridx = 0;
         g.gridy = 10;
         g.gridwidth = 4;
@@ -280,6 +280,7 @@ public class PanelRegistro extends PanelBackground {
         checkAdmin.setForeground(colorSecundario);
         checkAdmin.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
         checkAdmin.setOpaque(false);
+        checkAdmin.setCursor(new Cursor(Cursor.HAND_CURSOR));
         checkAdmin.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         g.insets = new Insets(0, 36, 0, 0);
         g.gridx = 0;
@@ -294,6 +295,7 @@ public class PanelRegistro extends PanelBackground {
         botonConfirmar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonConfirmar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonConfirmar.setFocusPainted(false);
+        botonConfirmar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(5, 0, 0, 43);
         g.anchor = GridBagConstraints.LINE_END;
         g.gridx = 1;

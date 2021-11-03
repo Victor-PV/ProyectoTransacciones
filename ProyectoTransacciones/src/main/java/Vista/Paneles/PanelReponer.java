@@ -5,8 +5,8 @@
  */
 package Vista.Paneles;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -121,6 +121,7 @@ public class PanelReponer extends JPanel {
         botonConsulta.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonConsulta.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonConsulta.setFocusPainted(false);
+        botonConsulta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(0, 0, 0, 60);
         g.gridx = 2;
@@ -302,6 +303,7 @@ public class PanelReponer extends JPanel {
         botonPedir.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonPedir.setFocusPainted(false);
         botonPedir.setEnabled(true);
+        botonPedir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(0, 0, 160, 60);
         g.gridx = 2;

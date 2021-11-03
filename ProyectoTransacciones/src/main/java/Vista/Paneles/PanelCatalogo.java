@@ -7,12 +7,12 @@ package Vista.Paneles;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import javax.swing.Icon;
@@ -37,7 +37,7 @@ public class PanelCatalogo extends JPanel {
 
     private JPanel panelMain, panelProducto, panelPasarProductos;
     private ImageIcon imgProducto;
-    private JLabel labelProductoImg, labelProducto, labelPrecio, labelPuntosProducto;
+    private JLabel labelProductoImg, labelProducto, labelPrecio, labelPuntosProducto, labelPaginas;
     private JButton botonProducto, botonLeft, botonRight;
 
     private JPanel panelFooter, panelSaldo, panelCesta;
@@ -90,8 +90,8 @@ public class PanelCatalogo extends JPanel {
         panelMain = new JPanel(new GridBagLayout());
         panelMain.setOpaque(false);
 
-        String[] listaProductosNombre = {"Naranjas 4Kg", "Pechuga de pavo", "Ensalada gourmet", "Jamón cocido 125g", 
-                                                            "Rabo vacuno 1Kg", "Setas enteras 300g", "Pan de perrito 6Ud", "Lechuga romana"};
+        String[] listaProductosNombre = {"Naranjas 4Kg", "Pechuga de pavo", "Ensalada gourmet", "Jamón cocido 125g",
+            "Rabo vacuno 1Kg", "Setas enteras 300g", "Pan de perrito 6Ud", "Lechuga romana"};
         String[] listaProductosPrecio = {"3.80", "4.11", "1.08", "1.99", "10.95", "2.99", "1.65", "1.39"};
         String[] listaProductosPuntos = {"120", "400", "120", "150", "400", "200", "100", "120"};
         for (int i = 0; i < 2; i++) {
@@ -104,21 +104,22 @@ public class PanelCatalogo extends JPanel {
                 g.anchor = GridBagConstraints.CENTER;
                 g.insets = new Insets(10, 0, 0, 0);
                 if (i == 0) {
-                    g.insets = new Insets(10, 0, 10, 0);
+                    g.insets = new Insets(12, 0, 10, 0);
                 }
                 panelMain.add(panelProducto, g);
                 limpiarConstraints(g);
-                
-                if(i == 0)
-                    labelPuntosProducto = new JLabel(listaProductosPuntos[j]+"Pts");
-                else
-                    labelPuntosProducto = new JLabel(listaProductosPuntos[j+4]+"Pts");
+
+                if (i == 0) {
+                    labelPuntosProducto = new JLabel(listaProductosPuntos[j] + "Pts");
+                } else {
+                    labelPuntosProducto = new JLabel(listaProductosPuntos[j + 4] + "Pts");
+                }
                 labelPuntosProducto.setForeground(colorSecundario);
                 labelPuntosProducto.setOpaque(true);
                 labelPuntosProducto.setPreferredSize(new Dimension(60, 30));
                 labelPuntosProducto.setHorizontalAlignment(JLabel.CENTER);
                 labelPuntosProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
-                labelPuntosProducto.setBackground(new Color(255,253 ,176));
+                labelPuntosProducto.setBackground(new Color(255, 253, 176));
                 labelPuntosProducto.setBorder(new MatteBorder(1, 1, 0, 0, colorSecundario));
                 g.anchor = GridBagConstraints.LINE_END;
                 g.gridx = 1;
@@ -127,11 +128,12 @@ public class PanelCatalogo extends JPanel {
                 g.insets = new Insets(-195, 0, 0, 0);
                 panelProducto.add(labelPuntosProducto, g);
                 limpiarConstraints(g);
-                
-                if(i == 0)
+
+                if (i == 0) {
                     imgProducto = new ImageIcon("./src/main/java/Imagenes/Productos/" + (j + 1) + ".jpg");
-                else
-                     imgProducto = new ImageIcon("./src/main/java/Imagenes/Productos/" + (j + 5) + ".jpg");
+                } else {
+                    imgProducto = new ImageIcon("./src/main/java/Imagenes/Productos/" + (j + 5) + ".jpg");
+                }
                 labelProductoImg = new JLabel();
                 Image imgEscalada = imgProducto.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
                 Icon iconoEscalado = new ImageIcon(imgEscalada);
@@ -142,10 +144,11 @@ public class PanelCatalogo extends JPanel {
                 panelProducto.add(labelProductoImg, g);
                 limpiarConstraints(g);
 
-                if(i == 0)
+                if (i == 0) {
                     labelProducto = new JLabel(listaProductosNombre[j]);
-                else
-                    labelProducto = new JLabel(listaProductosNombre[j+4]);
+                } else {
+                    labelProducto = new JLabel(listaProductosNombre[j + 4]);
+                }
                 labelProducto.setForeground(colorSecundario);
                 labelProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
                 labelProducto.setBackground(new Color(255, 255, 255));
@@ -162,10 +165,11 @@ public class PanelCatalogo extends JPanel {
                 panelProducto.add(labelProducto, g);
                 limpiarConstraints(g);
 
-                if (i == 0)
-                    labelPrecio = new JLabel(listaProductosPrecio[j ]+ "€");
-                else 
-                    labelPrecio = new JLabel(listaProductosPrecio[j + 4]+ "€");
+                if (i == 0) {
+                    labelPrecio = new JLabel(listaProductosPrecio[j] + "€");
+                } else {
+                    labelPrecio = new JLabel(listaProductosPrecio[j + 4] + "€");
+                }
                 labelPrecio.setForeground(colorSecundario);
                 labelPrecio.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
                 labelProducto.setHorizontalAlignment(JLabel.CENTER);
@@ -181,6 +185,7 @@ public class PanelCatalogo extends JPanel {
                 botonProducto.setForeground(colorPrincipal);
                 botonProducto.setBorder(new MatteBorder(0, 1, 1, 1, colorPrincipal));
                 botonProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+                botonProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 botonProducto.setFocusPainted(false);
                 g.anchor = GridBagConstraints.LINE_END;
                 g.gridx = 1;
@@ -209,7 +214,13 @@ public class PanelCatalogo extends JPanel {
         botonLeft.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonLeft.setEnabled(false);
         botonLeft.setFocusPainted(false);
+        botonLeft.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelPasarProductos.add(botonLeft);
+
+        labelNombreCesta = new JLabel("01 / 32");
+        labelNombreCesta.setForeground(colorSecundario);
+        labelNombreCesta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+        panelPasarProductos.add(labelNombreCesta);
 
         botonRight = new JButton(">>");
         botonRight.setPreferredSize(new Dimension(60, 22));
@@ -218,6 +229,7 @@ public class PanelCatalogo extends JPanel {
         botonRight.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonRight.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonRight.setFocusPainted(false);
+        botonRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelPasarProductos.add(botonRight);
 
         this.add(panelMain, BorderLayout.CENTER);
@@ -289,8 +301,7 @@ public class PanelCatalogo extends JPanel {
         labelNombreCesta.setForeground(colorSecundario);
         labelNombreCesta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
         panelCesta.add(labelNombreCesta);
-        
-        
+
         botonCesta = new JButton("COMPRAR");
         botonCesta.setPreferredSize(new Dimension(140, 38));
         botonCesta.setBackground(colorSecundario);
@@ -299,6 +310,7 @@ public class PanelCatalogo extends JPanel {
         botonCesta.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonCesta.setFocusPainted(false);
         botonCesta.setEnabled(false);
+        botonCesta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelCesta.add(botonCesta);
 
         panelFooter.add(panelCesta, g);

@@ -7,15 +7,13 @@ package Vista.Paneles;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -60,6 +58,7 @@ public class PanelMenuAside extends JPanel {
         Icon iconoEscalado = new ImageIcon(imgEscalada);
         labelHome.setIcon(iconoEscalado);
         labelHome.setHorizontalAlignment(JLabel.CENTER);
+        labelHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
         labelHome.setToolTipText("Home");
         g.insets = new Insets(15, -20, 20, -20);
         g.gridx = 0;
@@ -87,6 +86,7 @@ public class PanelMenuAside extends JPanel {
         labelCatalogo.setIcon(iconoEscalado2);
         labelCatalogo.setHorizontalAlignment(JLabel.CENTER);
         labelCatalogo.setToolTipText("Catalogo");
+        labelCatalogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(0, -20, 20, -20);
         g.gridx = 0;
         g.gridy = posicionY++;
@@ -112,7 +112,8 @@ public class PanelMenuAside extends JPanel {
         Icon iconoEscalado5 = new ImageIcon(imgEscalada5);
         labelRecargar.setIcon(iconoEscalado5);
         labelRecargar.setHorizontalAlignment(JLabel.CENTER);
-        labelRecargar.setToolTipText("Encargos");
+        labelRecargar.setToolTipText("Recargar");
+        labelRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(0, -20, 20, -20);
         g.gridx = 0;
         g.gridy = posicionY++;
@@ -139,6 +140,7 @@ public class PanelMenuAside extends JPanel {
         labelEncargar.setIcon(iconoEscalado6);
         labelEncargar.setHorizontalAlignment(JLabel.CENTER);
         labelEncargar.setToolTipText("Encargar");
+        labelEncargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(0, -20, 20, -20);
         g.gridx = 0;
         g.gridy = posicionY++;
@@ -165,6 +167,7 @@ public class PanelMenuAside extends JPanel {
         labelSalir.setIcon(iconoEscaladoSalir);
         labelSalir.setHorizontalAlignment(JLabel.CENTER);
         labelSalir.setToolTipText("Salir");
+        labelSalir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(0, -20, 10, -20);
         g.gridx = 0;
         g.gridy = 0;

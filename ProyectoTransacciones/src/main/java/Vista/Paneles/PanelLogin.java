@@ -6,6 +6,7 @@
 package Vista.Paneles;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -13,8 +14,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -149,6 +148,7 @@ public class PanelLogin extends PanelBackground {
         botonConfirmar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonConfirmar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonConfirmar.setFocusPainted(false);
+        botonConfirmar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(20, 0, 0, 43);
         g.anchor = GridBagConstraints.LINE_END;
         g.gridx = 0;

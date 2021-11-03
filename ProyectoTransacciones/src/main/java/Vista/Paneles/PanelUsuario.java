@@ -7,6 +7,7 @@ package Vista.Paneles;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -251,6 +252,7 @@ public class PanelUsuario extends JPanel {
         botonActualizar.setForeground(colorPrincipal);
         botonActualizar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonActualizar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+        botonActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         botonActualizar.setFocusPainted(false);
         panelBotones.add(botonActualizar, BorderLayout.EAST);
     }

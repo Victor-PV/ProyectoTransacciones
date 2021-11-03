@@ -9,6 +9,7 @@ import Vista.Paneles.PanelBackground;
 import Vista.Paneles.PanelLogin;
 import Vista.Paneles.PanelRegistro;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -77,6 +78,7 @@ public class FrameInicio extends JFrame {
         botonLogin.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonLogin.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonLogin.setFocusPainted(false);
+        botonLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(250, 20, 0, 0);
         g.gridx = 0;
         g.gridy = 1;
@@ -102,6 +104,7 @@ public class FrameInicio extends JFrame {
         botonRegister.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonRegister.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonRegister.setFocusPainted(false);
+        botonRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.insets = new Insets(250, 0, 0, 20);
         g.gridx = 1;
         g.gridy = 1;
