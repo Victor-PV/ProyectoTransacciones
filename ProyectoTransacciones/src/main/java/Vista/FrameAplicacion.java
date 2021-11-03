@@ -6,18 +6,11 @@
 package Vista;
 
 import Vista.Paneles.PanelAplicacion;
-import Vista.Paneles.PanelCatalogo;
-import Vista.Paneles.PanelMenuAside;
-import Vista.Paneles.PanelReponer;
-import Vista.Paneles.PanelUsuario;
+import Vista.Paneles.PanelRecargar;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.MatteBorder;
 
 /**
  *
@@ -42,7 +35,7 @@ public class FrameAplicacion extends JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon("./src/main/java/Imagenes/logo.png").getImage());
 
-        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelCatalogo());
+        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelRecargar());
         
         
         this.add(panelPrincipal);

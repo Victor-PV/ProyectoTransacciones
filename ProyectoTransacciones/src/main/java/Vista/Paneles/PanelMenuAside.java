@@ -123,7 +123,7 @@ public class PanelMenuAside extends JPanel {
          */
         labelRecargar.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                //ventana.setContentPane(new PanelAplicacion(ventana, new Panel()));
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelRecargar()));
                 ventana.invalidate();
                 ventana.validate();
             }
