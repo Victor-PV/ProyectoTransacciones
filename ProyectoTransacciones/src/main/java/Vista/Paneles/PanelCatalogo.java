@@ -18,6 +18,7 @@ import java.awt.Insets;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -40,11 +41,12 @@ public class PanelCatalogo extends JPanel {
     private JLabel labelProductoImg, labelProducto, labelPrecio, labelPuntosProducto, labelPaginas;
     private JButton botonProducto, botonLeft, botonRight;
 
-    private JPanel panelFooter, panelSaldo, panelCesta;
+    private JPanel panelFooter, panelSaldo, panelCesta, panelPagarPuntos;
     private ImageIcon imgProductoCesta;
     private JLabel labelProductoCesta, labelNombreCesta, labelSaldo, labelPuntos;
     private JTextField campoSaldo, campoPuntos;
     private JButton botonCesta;
+    private JCheckBox checkPagarPuntos;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
@@ -65,9 +67,43 @@ public class PanelCatalogo extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
         g.gridy = 0;
-        g.insets = new Insets(30, 50, 30, 50);
+        g.gridwidth = 1;
+        g.insets = new Insets(30, 50, 10, 0);
         panelHeader.add(txtTitulo, g);
         limpiarConstraints(g);
+
+        panelSaldo = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //panelSaldo.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
+        panelSaldo.setOpaque(false);
+        g.insets = new Insets(30, 0, 10, 50);
+        g.gridx = 1;
+        g.gridy = 0;
+        g.gridwidth = 1;
+        g.anchor = GridBagConstraints.LINE_END;
+
+        labelSaldo = new JLabel("Saldo:");
+        labelSaldo.setForeground(colorSecundario);
+        labelSaldo.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        panelSaldo.add(labelSaldo);
+
+        campoSaldo = new JTextField("121,5€");
+        campoSaldo.setPreferredSize(new Dimension(90, 35));
+        campoSaldo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoSaldo.setEditable(false);
+        panelSaldo.add(campoSaldo);
+
+        labelPuntos = new JLabel("Puntos:");
+        labelPuntos.setForeground(colorSecundario);
+        labelPuntos.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        panelSaldo.add(labelPuntos);
+
+        campoPuntos = new JTextField("3.080Pts");
+        campoPuntos.setPreferredSize(new Dimension(90, 35));
+        campoPuntos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoPuntos.setEditable(false);
+        panelSaldo.add(campoPuntos);
+
+        panelHeader.add(panelSaldo, g);
 
         espacio = new JLabel("");
         espacio.setForeground(colorSecundario);
@@ -78,6 +114,7 @@ public class PanelCatalogo extends JPanel {
         g.insets = new Insets(0, 50, 0, 50);
         g.gridx = 0;
         g.gridy = 1;
+        g.gridwidth = 2;
         g.weightx = 1;
         panelHeader.add(espacio, g);
         limpiarConstraints(g);
@@ -104,7 +141,7 @@ public class PanelCatalogo extends JPanel {
                 g.anchor = GridBagConstraints.CENTER;
                 g.insets = new Insets(10, 0, 0, 0);
                 if (i == 0) {
-                    g.insets = new Insets(12, 0, 10, 0);
+                    g.insets = new Insets(-25, 0, 10, 0);
                 }
                 panelMain.add(panelProducto, g);
                 limpiarConstraints(g);
@@ -195,42 +232,42 @@ public class PanelCatalogo extends JPanel {
                 limpiarConstraints(g);
 
             }
+            panelPasarProductos = new JPanel();
+            panelPasarProductos.setOpaque(false);
+            g.anchor = GridBagConstraints.CENTER;
+            g.insets = new Insets(30, 0, -30, 0);
+            g.gridx = 0;
+            g.gridy = 2;
+            g.gridwidth = 4;
+            panelMain.add(panelPasarProductos, g);
+            limpiarConstraints(g);
+
+            botonLeft = new JButton("<<");
+            botonLeft.setPreferredSize(new Dimension(60, 22));
+            botonLeft.setBackground(colorSecundario);
+            botonLeft.setForeground(colorPrincipal);
+            botonLeft.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
+            botonLeft.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+            botonLeft.setEnabled(false);
+            botonLeft.setFocusPainted(false);
+            botonLeft.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panelPasarProductos.add(botonLeft);
+
+            labelNombreCesta = new JLabel("01 / 32");
+            labelNombreCesta.setForeground(colorSecundario);
+            labelNombreCesta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+            panelPasarProductos.add(labelNombreCesta);
+
+            botonRight = new JButton(">>");
+            botonRight.setPreferredSize(new Dimension(60, 22));
+            botonRight.setBackground(colorSecundario);
+            botonRight.setForeground(colorPrincipal);
+            botonRight.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
+            botonRight.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+            botonRight.setFocusPainted(false);
+            botonRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panelPasarProductos.add(botonRight);
         }
-
-        panelPasarProductos = new JPanel();
-        panelPasarProductos.setOpaque(false);
-        g.insets = new Insets(30, 0, 0, 0);
-        g.gridx = 0;
-        g.gridy = 2;
-        g.gridwidth = 4;
-        panelMain.add(panelPasarProductos, g);
-        limpiarConstraints(g);
-
-        botonLeft = new JButton("<<");
-        botonLeft.setPreferredSize(new Dimension(60, 22));
-        botonLeft.setBackground(colorSecundario);
-        botonLeft.setForeground(colorPrincipal);
-        botonLeft.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
-        botonLeft.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
-        botonLeft.setEnabled(false);
-        botonLeft.setFocusPainted(false);
-        botonLeft.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelPasarProductos.add(botonLeft);
-
-        labelNombreCesta = new JLabel("01 / 32");
-        labelNombreCesta.setForeground(colorSecundario);
-        labelNombreCesta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
-        panelPasarProductos.add(labelNombreCesta);
-
-        botonRight = new JButton(">>");
-        botonRight.setPreferredSize(new Dimension(60, 22));
-        botonRight.setBackground(colorSecundario);
-        botonRight.setForeground(colorPrincipal);
-        botonRight.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
-        botonRight.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
-        botonRight.setFocusPainted(false);
-        botonRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelPasarProductos.add(botonRight);
 
         this.add(panelMain, BorderLayout.CENTER);
 
@@ -254,52 +291,40 @@ public class PanelCatalogo extends JPanel {
         panelFooter.add(espacio, g);
         limpiarConstraints(g);
 
+        panelPagarPuntos = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelPagarPuntos.setOpaque(false);
+        g.insets = new Insets(0, 50, 0, 0);
+        g.gridx = 0;
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridy = 1;
+        g.gridwidth = 1;
+        panelFooter.add(panelPagarPuntos, g);
+        limpiarConstraints(g);
+
+        checkPagarPuntos = new JCheckBox("Pagar con puntos");
+        checkPagarPuntos.setForeground(colorSecundario);
+        checkPagarPuntos.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        checkPagarPuntos.setOpaque(false);
+        checkPagarPuntos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        checkPagarPuntos.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        panelPagarPuntos.add(checkPagarPuntos);
+
         /**
          * Panel donde ira el saldo y los puntos
          */
-        panelSaldo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        //panelSaldo.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
-        panelSaldo.setOpaque(false);
-        g.insets = new Insets(10, 50, 10, 0);
-        g.gridx = 0;
-        g.gridy = 1;
-        g.anchor = GridBagConstraints.LINE_START;
-
-        labelSaldo = new JLabel("Saldo:");
-        labelSaldo.setForeground(colorSecundario);
-        labelSaldo.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
-        panelSaldo.add(labelSaldo);
-
-        campoSaldo = new JTextField("121,5€");
-        campoSaldo.setPreferredSize(new Dimension(90, 35));
-        campoSaldo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoSaldo.setEditable(false);
-        panelSaldo.add(campoSaldo);
-
-        labelPuntos = new JLabel("Puntos:");
-        labelPuntos.setForeground(colorSecundario);
-        labelPuntos.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
-        panelSaldo.add(labelPuntos);
-
-        campoPuntos = new JTextField("3.080Pts");
-        campoPuntos.setPreferredSize(new Dimension(90, 35));
-        campoPuntos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoPuntos.setEditable(false);
-        panelSaldo.add(campoPuntos);
-
-        panelFooter.add(panelSaldo, g);
-
         panelCesta = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         //panelCesta.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
         panelCesta.setOpaque(false);
-        g.insets = new Insets(10, 0, 10, 50);
+        g.insets = new Insets(10, 0, 10, 45);
         g.gridx = 1;
         g.gridy = 1;
         g.anchor = GridBagConstraints.LINE_END;
 
+        //labelNombreCesta = new JLabel(listaProductosNombre[1] + "  |  " + listaProductosPrecio[1]+"€");
         labelNombreCesta = new JLabel("");
         labelNombreCesta.setForeground(colorSecundario);
         labelNombreCesta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+        labelNombreCesta.setPreferredSize(new Dimension(200, 30));
         panelCesta.add(labelNombreCesta);
 
         botonCesta = new JButton("COMPRAR");

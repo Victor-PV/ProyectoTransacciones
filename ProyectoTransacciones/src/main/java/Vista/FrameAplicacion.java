@@ -6,6 +6,7 @@
 package Vista;
 
 import Vista.Paneles.PanelAplicacion;
+import Vista.Paneles.PanelCatalogo;
 import Vista.Paneles.PanelRecargar;
 import java.awt.Color;
 import javax.swing.ImageIcon;

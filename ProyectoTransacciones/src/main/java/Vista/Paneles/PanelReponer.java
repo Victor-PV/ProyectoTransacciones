@@ -44,7 +44,8 @@ public class PanelReponer extends JPanel {
     private JTextField campoPrecioDepos;
     private JButton botonPedir;
 
-    private JPanel panelBotones;
+    private JLabel txtPuntosActuales, txtPuntosNuevos;
+    private JTextField campoPuntosActuales, camposPuntosNuevos;
     private JButton botonActualizar;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
@@ -61,7 +62,6 @@ public class PanelReponer extends JPanel {
         g.gridx = 0;
         g.gridy = 0;
         g.gridwidth = 3;
-        g.insets = new Insets(30, 90, 30, 50);
         this.add(titulo, g);
         limpiarConstraints(g);
 
@@ -74,7 +74,6 @@ public class PanelReponer extends JPanel {
         espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 90, 0, 100);
         g.gridx = 0;
         g.gridy = 1;
         g.gridwidth = 3;
@@ -89,7 +88,6 @@ public class PanelReponer extends JPanel {
         txtCodProducto.setForeground(colorSecundario);
         txtCodProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 90, 15, 0);
         g.gridx = 0;
         g.gridy = 2;
         g.gridwidth = 2;
@@ -99,10 +97,9 @@ public class PanelReponer extends JPanel {
         /**
          * Campo de texto para el campo Producto
          */
-        campoCodProducto = new JTextField("23322973F");
+        campoCodProducto = new JTextField("");
         campoCodProducto.setPreferredSize(new Dimension(520, 35));
         campoCodProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.insets = new Insets(0, 90, 0, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
         g.gridy = 3;
@@ -123,7 +120,6 @@ public class PanelReponer extends JPanel {
         botonConsulta.setFocusPainted(false);
         botonConsulta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 0, 0, 60);
         g.gridx = 2;
         g.gridy = 3;
         g.weightx = 0.33;
@@ -136,7 +132,6 @@ public class PanelReponer extends JPanel {
         txtNombreProducto.setForeground(colorSecundario);
         txtNombreProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 90, 15, 0);
         g.gridx = 0;
         g.gridy = 4;
         g.weightx = 0.33;
@@ -145,11 +140,10 @@ public class PanelReponer extends JPanel {
         /**
          * Campo de texto para el campo Nombre del producto No sera editable
          */
-        campoNombreProducto = new JTextField("Tomaticos");
+        campoNombreProducto = new JTextField("");
         campoNombreProducto.setPreferredSize(new Dimension(210, 35));
         campoNombreProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoNombreProducto.setEditable(false);
-        g.insets = new Insets(0, 90, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
         g.gridy = 5;
@@ -164,7 +158,6 @@ public class PanelReponer extends JPanel {
         txtPrecioUd.setForeground(colorSecundario);
         txtPrecioUd.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 10, 15, 0);
         g.gridx = 1;
         g.gridy = 4;
         g.weightx = 0.33;
@@ -173,11 +166,10 @@ public class PanelReponer extends JPanel {
         /**
          * Campo de texto para el campo DNI No sera editable
          */
-        campoPrecioUd = new JTextField("2.80€");
+        campoPrecioUd = new JTextField("");
         campoPrecioUd.setPreferredSize(new Dimension(210, 35));
         campoPrecioUd.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoPrecioUd.setEditable(false);
-        g.insets = new Insets(0, 10, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 1;
         g.gridy = 5;
@@ -192,7 +184,6 @@ public class PanelReponer extends JPanel {
         txtCantidadDisponible.setForeground(colorSecundario);
         txtCantidadDisponible.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 0, 15, 0);
         g.gridx = 2;
         g.gridy = 4;
         g.weightx = 0.33;
@@ -201,11 +192,10 @@ public class PanelReponer extends JPanel {
         /**
          * Campo de texto la cantidad disponible
          */
-        campoCantidadDisponible = new JTextField("5");
+        campoCantidadDisponible = new JTextField("");
         campoCantidadDisponible.setPreferredSize(new Dimension(140, 35));
         campoCantidadDisponible.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoCantidadDisponible.setEditable(false);
-        g.insets = new Insets(0, 0, 40, 30);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 2;
         g.gridy = 5;
@@ -222,7 +212,6 @@ public class PanelReponer extends JPanel {
         espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 90, 0, 100);
         g.gridx = 0;
         g.gridy = 6;
         g.gridwidth = 3;
@@ -237,7 +226,6 @@ public class PanelReponer extends JPanel {
         txtCantidadDepos.setForeground(colorSecundario);
         txtCantidadDepos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 90, 15, 0);
         g.gridx = 0;
         g.gridy = 7;
         g.weightx = 0.33;
@@ -256,7 +244,6 @@ public class PanelReponer extends JPanel {
         cantidadDepos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         cantidadDepos.setEnabled(true);
         cantidadDepos.setBorder(new EmptyBorder(0, 0, 0, 0));
-        g.insets = new Insets(0, 90, 160, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
         g.gridy = 8;
@@ -271,7 +258,6 @@ public class PanelReponer extends JPanel {
         txtPrecioDepos.setForeground(colorSecundario);
         txtPrecioDepos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 10, 15, 0);
         g.gridx = 1;
         g.gridy = 7;
         g.weightx = 0.33;
@@ -283,8 +269,7 @@ public class PanelReponer extends JPanel {
         campoPrecioDepos = new JTextField("");
         campoPrecioDepos.setPreferredSize(new Dimension(210, 35));
         campoPrecioDepos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoPrecioDepos.setEditable(true);
-        g.insets = new Insets(0, 10, 160, 0);
+        campoPrecioDepos.setEditable(false);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 1;
         g.gridy = 8;
@@ -305,11 +290,97 @@ public class PanelReponer extends JPanel {
         botonPedir.setEnabled(true);
         botonPedir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 0, 160, 60);
         g.gridx = 2;
         g.gridy = 8;
         g.weightx = 0.33;
         this.add(botonPedir, g);
+        limpiarConstraints(g);
+        
+                /**
+         * JLabel para espaciar entre zonas
+         */
+        espacio = new JLabel();
+        espacio.setForeground(colorSecundario);
+        espacio.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
+        g.fill = GridBagConstraints.HORIZONTAL;
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 0;
+        g.gridy = 9;
+        g.gridwidth = 3;
+        g.weightx = 1;
+        this.add(espacio, g);
+        limpiarConstraints(g);
+
+        /**
+         * Texto para el campo cantidad a depositar
+         */
+        txtPuntosActuales = new JLabel("Puntos actuales: ");
+        txtPuntosActuales.setForeground(colorSecundario);
+        txtPuntosActuales.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 0;
+        g.gridy = 10;
+        g.weightx = 0.33;
+        this.add(txtPuntosActuales, g);
+        limpiarConstraints(g);
+        /**
+         * Campo de texto para el campo cantidad a depositar
+         */
+        campoPuntosActuales = new JTextField("");
+        campoPuntosActuales.setPreferredSize(new Dimension(210, 35));
+        campoPuntosActuales.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoPuntosActuales.setEditable(false);
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 0;
+        g.gridy = 11;
+        g.weightx = 0.33;
+        this.add(campoPuntosActuales, g);
+        limpiarConstraints(g);
+
+        /**
+         * Texto para el campo precio total
+         */
+        txtPuntosNuevos = new JLabel("Nuevos puntos: ");
+        txtPuntosNuevos.setForeground(colorSecundario);
+        txtPuntosNuevos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 1;
+        g.gridy = 10;
+        g.weightx = 0.33;
+        this.add(txtPuntosNuevos, g);
+        limpiarConstraints(g);
+        /**
+         * Campo de texto donde se mostrara el precio de la cantidad seleccionada
+         */
+        camposPuntosNuevos = new JTextField("");
+        camposPuntosNuevos.setPreferredSize(new Dimension(210, 35));
+        camposPuntosNuevos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        camposPuntosNuevos.setEditable(false);
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 1;
+        g.gridy = 11;
+        g.weightx = 0.33;
+        this.add(camposPuntosNuevos, g);
+        limpiarConstraints(g);
+
+        /**
+         * Boton para consultar el codigoPreoducto
+         */
+        botonActualizar = new JButton("ACTUALIZAR");
+        botonActualizar.setPreferredSize(new Dimension(140, 38));
+        botonActualizar.setBackground(colorSecundario);
+        botonActualizar.setForeground(colorPrincipal);
+        botonActualizar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
+        botonActualizar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+        botonActualizar.setFocusPainted(false);
+        botonActualizar.setEnabled(true);
+        botonActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 2;
+        g.gridy = 11;
+        g.weightx = 0.33;
+        this.add(botonActualizar, g);
     }
 
     /**

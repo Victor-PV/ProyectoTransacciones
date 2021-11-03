@@ -5,7 +5,6 @@
  */
 package Vista.Paneles;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,11 +13,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 /**
@@ -32,20 +29,16 @@ public class PanelRecargar extends JPanel {
      */
     private ImageIcon img;
     private JLabel imgUser, titulo;
-    private JLabel txtCodProducto, txtNombreProducto, txtPrecioUd, txtCantidadDisponible;
-    private JTextField campoCodProducto, campoNombreProducto, campoPrecioUd, campoCantidadDisponible;
+    private JLabel txtSaldoActual, txtPuntosActual;
+    private JTextField campoSaldoActual, campoPuntosActual;
     private JButton botonConsulta;
 
     private JLabel espacio;
 
-    private JLabel txtCantidadDepos, txtPrecioDepos, txtResultado;
-    private JComboBox cantidadDepos;
-    private String[] listaDepos;
-    private JTextField campoPrecioDepos;
-    private JButton botonPedir;
-
-    private JPanel panelBotones;
-    private JButton botonActualizar;
+    private JPanel panelFecha;
+    
+    private JLabel labelNumeroTarjeta, labelTitularTarjeta, labelCodigoTarjeta;
+    private JTextField campoNumeroTarjeta, campoTitularTarjeta, campoCodigoTarjet;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
@@ -60,7 +53,7 @@ public class PanelRecargar extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
         g.gridy = 0;
-        g.gridwidth = 3;
+        g.gridwidth = 30;
         g.insets = new Insets(30, 90, 30, 50);
         this.add(titulo, g);
         limpiarConstraints(g);
@@ -77,237 +70,93 @@ public class PanelRecargar extends JPanel {
         g.insets = new Insets(0, 90, 0, 100);
         g.gridx = 0;
         g.gridy = 1;
-        g.gridwidth = 3;
+        g.gridwidth = 30;
         g.weightx = 1;
         this.add(espacio, g);
         limpiarConstraints(g);
         
-        /**
-         * Texto para el campo Campo producto
-         */
-        txtCodProducto = new JLabel("Codigo producto: ");
-        txtCodProducto.setForeground(colorSecundario);
-        txtCodProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 90, 15, 0);
-        g.gridx = 0;
-        g.gridy = 2;
-        g.gridwidth = 2;
-        g.weightx = 0.66;
-        this.add(txtCodProducto, g);
-        limpiarConstraints(g);
-        /**
-         * Campo de texto para el campo Producto
-         */
-        campoCodProducto = new JTextField("23322973F");
-        campoCodProducto.setPreferredSize(new Dimension(520, 35));
-        campoCodProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.insets = new Insets(0, 90, 0, 0);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 0;
-        g.gridy = 3;
-        g.gridwidth = 2;
-        g.weightx = 0.66;
-        this.add(campoCodProducto, g);
-        limpiarConstraints(g);
-
-        /**
-         * Boton para consultar el codigoPreoducto
-         */
-        botonConsulta = new JButton("CONSULTAR");
-        botonConsulta.setPreferredSize(new Dimension(140, 38));
-        botonConsulta.setBackground(colorSecundario);
-        botonConsulta.setForeground(colorPrincipal);
-        botonConsulta.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
-        botonConsulta.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
-        botonConsulta.setFocusPainted(false);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 0, 0, 60);
-        g.gridx = 2;
-        g.gridy = 3;
-        g.weightx = 0.33;
-        this.add(botonConsulta, g);
-
-        /**
-         * Texto para el campo Nombre del producto
-         */
-        txtNombreProducto = new JLabel("Nombre: ");
-        txtNombreProducto.setForeground(colorSecundario);
-        txtNombreProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 90, 15, 0);
-        g.gridx = 0;
-        g.gridy = 4;
-        g.weightx = 0.33;
-        this.add(txtNombreProducto, g);
-        limpiarConstraints(g);
-        /**
-         * Campo de texto para el campo Nombre del producto No sera editable
-         */
-        campoNombreProducto = new JTextField("Tomaticos");
-        campoNombreProducto.setPreferredSize(new Dimension(210, 35));
-        campoNombreProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoNombreProducto.setEditable(false);
-        g.insets = new Insets(0, 90, 40, 0);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 0;
-        g.gridy = 5;
-        g.weightx = 0.33;
-        this.add(campoNombreProducto, g);
-        limpiarConstraints(g);
-
-        /**
-         * Texto para el campo DNI
-         */
-        txtPrecioUd = new JLabel("Precio Ud: ");
-        txtPrecioUd.setForeground(colorSecundario);
-        txtPrecioUd.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 10, 15, 0);
-        g.gridx = 1;
-        g.gridy = 4;
-        g.weightx = 0.33;
-        this.add(txtPrecioUd, g);
-        limpiarConstraints(g);
-        /**
-         * Campo de texto para el campo DNI No sera editable
-         */
-        campoPrecioUd = new JTextField("2.80€");
-        campoPrecioUd.setPreferredSize(new Dimension(210, 35));
-        campoPrecioUd.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoPrecioUd.setEditable(false);
-        g.insets = new Insets(0, 10, 40, 0);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 1;
-        g.gridy = 5;
-        g.weightx = 0.33;
-        this.add(campoPrecioUd, g);
-        limpiarConstraints(g);
-
-        /**
+                /**
          * Texto para la cantidad disponible
          */
-        txtCantidadDisponible = new JLabel("En stock: ");
-        txtCantidadDisponible.setForeground(colorSecundario);
-        txtCantidadDisponible.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        txtSaldoActual = new JLabel("Saldo actual: ");
+        txtSaldoActual.setForeground(colorSecundario);
+        txtSaldoActual.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(50, 0, 15, 0);
-        g.gridx = 2;
-        g.gridy = 4;
-        g.weightx = 0.33;
-        this.add(txtCantidadDisponible, g);
+        g.insets = new Insets(0, 90, 15, 0);
+        g.gridx = 0;
+        g.gridy = 2;
+        g.weightx = 0.2;
+        this.add(txtSaldoActual, g);
         limpiarConstraints(g);
         /**
          * Campo de texto la cantidad disponible
          */
-        campoCantidadDisponible = new JTextField("5");
-        campoCantidadDisponible.setPreferredSize(new Dimension(140, 35));
-        campoCantidadDisponible.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoCantidadDisponible.setEditable(false);
-        g.insets = new Insets(0, 0, 40, 30);
+        campoSaldoActual = new JTextField("");
+        campoSaldoActual.setPreferredSize(new Dimension(140, 35));
+        campoSaldoActual.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoSaldoActual.setEditable(false);
+        g.insets = new Insets(0, 90, 40, 30);
         g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 2;
+        g.gridx = 0;
+        g.gridy = 3;
+        g.weightx = 0.2;
+        this.add(campoSaldoActual, g);
+        limpiarConstraints(g);
+        
+                    /**
+         * Texto para la cantidad disponible
+         */
+        txtPuntosActual = new JLabel("Puntos actuales: ");
+        txtPuntosActual.setForeground(colorSecundario);
+        txtPuntosActual.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        g.anchor = GridBagConstraints.LINE_START;
+        g.insets = new Insets(50, 90, 15, 0);
+        g.gridx = 0;
+        g.gridy = 4;
+        g.weightx = 0.2;
+        this.add(txtPuntosActual, g);
+        limpiarConstraints(g);
+        /**
+         * Campo de texto la cantidad disponible
+         */
+        campoPuntosActual = new JTextField("");
+        campoPuntosActual.setPreferredSize(new Dimension(140, 35));
+        campoPuntosActual.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoPuntosActual.setEditable(false);
+        g.insets = new Insets(0, 90, 40, 30);
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 0;
         g.gridy = 5;
-        g.weightx = 0.33;
-        this.add(campoCantidadDisponible, g);
+        g.weightx = 0.2;
+        this.add(campoPuntosActual, g);
         limpiarConstraints(g);
-
-        /**
-         * JLabel para espaciar entre zonas
-         */
+        
         espacio = new JLabel();
-        espacio.setForeground(colorSecundario);
-        espacio.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 90, 0, 100);
-        g.gridx = 0;
-        g.gridy = 6;
-        g.gridwidth = 3;
-        g.weightx = 1;
+        espacio.setBorder(new MatteBorder(0, 1, 0, 0, colorSecundario));
+        g.fill = GridBagConstraints.VERTICAL;
+        g.gridx = 1;
+        g.gridy = 2;
+        g.gridheight = 10;
         this.add(espacio, g);
-        limpiarConstraints(g);
 
-        /**
-         * Texto para el campo cantidad a depositar
-         */
-        txtCantidadDepos = new JLabel("Cantidad: ");
-        txtCantidadDepos.setForeground(colorSecundario);
-        txtCantidadDepos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        labelNumeroTarjeta = new JLabel("Numero tarjeta: ");
+        labelNumeroTarjeta.setForeground(colorSecundario);
+        labelNumeroTarjeta.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 90, 15, 0);
-        g.gridx = 0;
-        g.gridy = 7;
-        g.weightx = 0.33;
-        this.add(txtCantidadDepos, g);
-        limpiarConstraints(g);
-        /**
-         * Campo de texto para el campo cantidad a depositar
-         */
-        listaDepos = new String[50];
-        for (int i = 0; i < listaDepos.length; i++) {
-            listaDepos[i] = (i + 1) + "";
-        }
-        cantidadDepos = new JComboBox(listaDepos);
-        cantidadDepos.setPreferredSize(new Dimension(210, 35));
-        cantidadDepos.setBackground(Color.WHITE);
-        cantidadDepos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        cantidadDepos.setEnabled(true);
-        cantidadDepos.setBorder(new EmptyBorder(0, 0, 0, 0));
-        g.insets = new Insets(0, 90, 160, 0);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 0;
-        g.gridy = 8;
-        g.weightx = 0.33;
-        this.add(cantidadDepos, g);
-        limpiarConstraints(g);
-
-        /**
-         * Texto para el campo precio total
-         */
-        txtPrecioDepos = new JLabel("Precio total: ");
-        txtPrecioDepos.setForeground(colorSecundario);
-        txtPrecioDepos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(30, 10, 15, 0);
-        g.gridx = 1;
-        g.gridy = 7;
-        g.weightx = 0.33;
-        this.add(txtPrecioDepos, g);
-        limpiarConstraints(g);
-        /**
-         * Campo de texto donde se mostrara el precio de la cantidad seleccionada
-         */
-        campoPrecioDepos = new JTextField("");
-        campoPrecioDepos.setPreferredSize(new Dimension(210, 35));
-        campoPrecioDepos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoPrecioDepos.setEditable(true);
-        g.insets = new Insets(0, 10, 160, 0);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.gridx = 1;
-        g.gridy = 8;
-        g.weightx = 0.33;
-        this.add(campoPrecioDepos, g);
-        limpiarConstraints(g);
-
-        /**
-         * Boton para consultar el codigoPreoducto
-         */
-        botonPedir = new JButton("PEDIR");
-        botonPedir.setPreferredSize(new Dimension(140, 38));
-        botonPedir.setBackground(colorSecundario);
-        botonPedir.setForeground(colorPrincipal);
-        botonPedir.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
-        botonPedir.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
-        botonPedir.setFocusPainted(false);
-        botonPedir.setEnabled(true);
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(0, 0, 160, 60);
         g.gridx = 2;
-        g.gridy = 8;
-        g.weightx = 0.33;
-        this.add(botonPedir, g);
+        g.gridy = 2;
+        this.add(labelNumeroTarjeta, g);
+        limpiarConstraints(g);
+        
+        campoNumeroTarjeta = new JTextField("sasas");
+        campoNumeroTarjeta.setPreferredSize(new Dimension(140, 35));
+        campoNumeroTarjeta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoNumeroTarjeta.setEditable(false);
+        g.gridx = 2;
+        g.gridy = 3;
+        this.add(campoNumeroTarjeta, g);
+        limpiarConstraints(g);
+
     }
 
     /**
