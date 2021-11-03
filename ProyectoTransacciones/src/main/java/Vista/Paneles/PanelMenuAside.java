@@ -104,58 +104,6 @@ public class PanelMenuAside extends JPanel {
         });
 
         /**
-         * Icono del Historial
-         */
-        imgHistorial = new ImageIcon("./src/main/java/Imagenes/historial.png");
-        labelHistorial = new JLabel();
-        Image imgEscalada3 = imgHistorial.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado3 = new ImageIcon(imgEscalada3);
-        labelHistorial.setIcon(iconoEscalado3);
-        labelHistorial.setHorizontalAlignment(JLabel.CENTER);
-        labelHistorial.setToolTipText("Historial");
-        g.insets = new Insets(0, -20, 20, -20);
-        g.gridx = 0;
-        g.gridy = posicionY++;
-        panelGeneral.add(labelHistorial, g);
-        limpiarConstraints(g);
-        /**
-         * Añade interaccion al label Home
-         */
-        labelHistorial.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelHistorial()));
-                ventana.invalidate();
-                ventana.validate();
-            }
-        });
-
-        /**
-         * Icono de los encargos
-         */
-        imgEncargos = new ImageIcon("./src/main/java/Imagenes/encargos.png");
-        labelEncargos = new JLabel();
-        Image imgEscalada4 = imgEncargos.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado4 = new ImageIcon(imgEscalada4);
-        labelEncargos.setIcon(iconoEscalado4);
-        labelEncargos.setHorizontalAlignment(JLabel.CENTER);
-        labelEncargos.setToolTipText("Encargos");
-        g.insets = new Insets(0, -20, 20, -20);
-        g.gridx = 0;
-        g.gridy = posicionY++;
-        panelGeneral.add(labelEncargos, g);
-        limpiarConstraints(g);
-        /**
-         * Añade interaccion al label Encargos
-         */
-        labelEncargos.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelEncargos()));
-                ventana.invalidate();
-                ventana.validate();
-            }
-        });
-
-                /**
          * Icono de los encargos
          */
         imgRecargar = new ImageIcon("./src/main/java/Imagenes/recargar.png");
@@ -180,7 +128,7 @@ public class PanelMenuAside extends JPanel {
                 ventana.validate();
             }
         });
-        
+
         /**
          * Icono del Historial
          */

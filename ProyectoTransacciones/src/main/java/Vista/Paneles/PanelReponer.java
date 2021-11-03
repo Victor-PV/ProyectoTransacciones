@@ -31,7 +31,7 @@ public class PanelReponer extends JPanel {
      * Variables de la clase
      */
     private ImageIcon img;
-    private JLabel imgUser;
+    private JLabel imgUser, titulo;
     private JLabel txtCodProducto, txtNombreProducto, txtPrecioUd, txtCantidadDisponible;
     private JTextField campoCodProducto, campoNombreProducto, campoPrecioUd, campoCantidadDisponible;
     private JButton botonConsulta;
@@ -54,7 +54,34 @@ public class PanelReponer extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
+        titulo = new JLabel("Reponer productos:");
+        titulo.setForeground(colorSecundario);
+        titulo.setFont(new Font(fuenteSecundaria, Font.BOLD, 26));
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 0;
+        g.gridy = 0;
+        g.gridwidth = 3;
+        g.insets = new Insets(30, 90, 30, 50);
+        this.add(titulo, g);
+        limpiarConstraints(g);
 
+        /**
+         * JLabel para espaciar entre zonas
+         */
+        espacio = new JLabel();
+        espacio.setForeground(colorSecundario);
+        espacio.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
+        g.fill = GridBagConstraints.HORIZONTAL;
+        g.anchor = GridBagConstraints.LINE_START;
+        g.insets = new Insets(0, 90, 0, 100);
+        g.gridx = 0;
+        g.gridy = 1;
+        g.gridwidth = 3;
+        g.weightx = 1;
+        this.add(espacio, g);
+        limpiarConstraints(g);
+        
         /**
          * Texto para el campo Campo producto
          */
@@ -64,7 +91,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(50, 90, 15, 0);
         g.gridx = 0;
-        g.gridy = 0;
+        g.gridy = 2;
         g.gridwidth = 2;
         g.weightx = 0.66;
         this.add(txtCodProducto, g);
@@ -78,7 +105,7 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 90, 0, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
-        g.gridy = 1;
+        g.gridy = 3;
         g.gridwidth = 2;
         g.weightx = 0.66;
         this.add(campoCodProducto, g);
@@ -97,7 +124,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(0, 0, 0, 60);
         g.gridx = 2;
-        g.gridy = 1;
+        g.gridy = 3;
         g.weightx = 0.33;
         this.add(botonConsulta, g);
 
@@ -110,7 +137,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(50, 90, 15, 0);
         g.gridx = 0;
-        g.gridy = 2;
+        g.gridy = 4;
         g.weightx = 0.33;
         this.add(txtNombreProducto, g);
         limpiarConstraints(g);
@@ -124,7 +151,7 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 90, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
-        g.gridy = 3;
+        g.gridy = 5;
         g.weightx = 0.33;
         this.add(campoNombreProducto, g);
         limpiarConstraints(g);
@@ -138,7 +165,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(50, 10, 15, 0);
         g.gridx = 1;
-        g.gridy = 2;
+        g.gridy = 4;
         g.weightx = 0.33;
         this.add(txtPrecioUd, g);
         limpiarConstraints(g);
@@ -152,7 +179,7 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 10, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 1;
-        g.gridy = 3;
+        g.gridy = 5;
         g.weightx = 0.33;
         this.add(campoPrecioUd, g);
         limpiarConstraints(g);
@@ -166,7 +193,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(50, 0, 15, 0);
         g.gridx = 2;
-        g.gridy = 2;
+        g.gridy = 4;
         g.weightx = 0.33;
         this.add(txtCantidadDisponible, g);
         limpiarConstraints(g);
@@ -180,7 +207,7 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 0, 40, 30);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 2;
-        g.gridy = 3;
+        g.gridy = 5;
         g.weightx = 0.33;
         this.add(campoCantidadDisponible, g);
         limpiarConstraints(g);
@@ -196,7 +223,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(0, 90, 0, 100);
         g.gridx = 0;
-        g.gridy = 4;
+        g.gridy = 6;
         g.gridwidth = 3;
         g.weightx = 1;
         this.add(espacio, g);
@@ -211,7 +238,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(30, 90, 15, 0);
         g.gridx = 0;
-        g.gridy = 5;
+        g.gridy = 7;
         g.weightx = 0.33;
         this.add(txtCantidadDepos, g);
         limpiarConstraints(g);
@@ -231,7 +258,7 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 90, 160, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
-        g.gridy = 6;
+        g.gridy = 8;
         g.weightx = 0.33;
         this.add(cantidadDepos, g);
         limpiarConstraints(g);
@@ -245,7 +272,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(30, 10, 15, 0);
         g.gridx = 1;
-        g.gridy = 5;
+        g.gridy = 7;
         g.weightx = 0.33;
         this.add(txtPrecioDepos, g);
         limpiarConstraints(g);
@@ -259,7 +286,7 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 10, 160, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 1;
-        g.gridy = 6;
+        g.gridy = 8;
         g.weightx = 0.33;
         this.add(campoPrecioDepos, g);
         limpiarConstraints(g);
@@ -278,7 +305,7 @@ public class PanelReponer extends JPanel {
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(0, 0, 160, 60);
         g.gridx = 2;
-        g.gridy = 6;
+        g.gridy = 8;
         g.weightx = 0.33;
         this.add(botonPedir, g);
     }

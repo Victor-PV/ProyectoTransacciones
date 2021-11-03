@@ -30,12 +30,12 @@ import javax.swing.border.MatteBorder;
  *
  * @author victo
  */
-public class PanelRegistro extends PanelBackground {
+public class PanelRegistro2 extends PanelBackground {
 
     private JPanel panelNacimiento;
     private JLabel titulo;
-    private JLabel txtDNI, txtNombre, txtApellido, txtPassword, txtNacimiento, espacio, txtCorreo;
-    private JTextField campoDNI, campoNombre, campoApellido, campoCorreo;
+    private JLabel txtDNI, txtNombre, txtApellido, txtPassword, txtNacimiento;
+    private JTextField campoDNI, campoNombre, campoApellido;
     private JPasswordField campoPassword;
     private JComboBox listaDias, listaMeses, listaAños;
     private JButton botonConfirmar;
@@ -46,10 +46,9 @@ public class PanelRegistro extends PanelBackground {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelRegistro(JFrame ventana) {
+    public PanelRegistro2(JFrame ventana) {
         this.setLayout(new GridBagLayout());
-        //this.setBackground("./src/main/java/Imagenes/fondoInicio3.png");
-        this.setBackground(Color.WHITE);
+        this.setBackground("./src/main/java/Imagenes/fondoInicio3.png");
         GridBagConstraints g = new GridBagConstraints();
 
         titulo = new JLabel("SUPERCOMPRÍN");
@@ -57,9 +56,9 @@ public class PanelRegistro extends PanelBackground {
         titulo.setOpaque(true);
         titulo.setBackground(Color.WHITE);
         titulo.setForeground(colorSecundario);
-        titulo.setFont(new Font(fuentePrincipal, Font.BOLD, 34));
+        titulo.setFont(new Font(fuentePrincipal, Font.BOLD, 40));
         g.fill = GridBagConstraints.HORIZONTAL;
-        g.insets = new Insets(0, 43, 0, 43);
+        //g.insets = new Insets(0, 0,30, 0);
         g.weightx = 1;
         g.gridx = 0;
         g.ipady = 20;
@@ -68,99 +67,65 @@ public class PanelRegistro extends PanelBackground {
         this.add(titulo, g);
         limpiarConstraints(g);
 
-        /**
-         * JLabel para espaciar entre zonas
-         */
-        espacio = new JLabel();
-        espacio.setForeground(colorSecundario);
-        espacio.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
+        txtNombre = new JLabel("Introduce tu Nombre:");
+        txtNombre.setForeground(new Color(7, 65, 35));
+        txtNombre.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        g.insets = new Insets(20, 43, 0, 0);
         g.fill = GridBagConstraints.HORIZONTAL;
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(20, 43, 20, 43);
         g.gridx = 0;
         g.gridy = 1;
         g.gridwidth = 4;
-        g.weightx = 1;
-        this.add(espacio, g);
-        limpiarConstraints(g);
-
-        txtNombre = new JLabel("Nombre:");
-        txtNombre.setForeground(colorSecundario);
-        txtNombre.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
-        g.insets = new Insets(10, 43, 0, 0);
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.gridx = 0;
-        g.gridy = 2;
-        g.gridwidth = 2;
         this.add(txtNombre, g);
         limpiarConstraints(g);
 
         campoNombre = new JTextField();
         campoNombre.setPreferredSize(new Dimension(300, 35));
-        campoNombre.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.ipady = 10;
-        g.insets = new Insets(10, 43, 0, 10);
+        campoNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        campoNombre.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+        campoNombre.setOpaque(false);
+        campoNombre.setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        campoNombre.addFocusListener(new focusListener());
+        g.insets = new Insets(10, 43, 0, 43);
         g.fill = GridBagConstraints.HORIZONTAL;
         g.gridx = 0;
-        g.gridy = 3;
-        g.gridwidth = 2;
+        g.gridy = 2;
+        g.gridwidth = 4;
         this.add(campoNombre, g);
         limpiarConstraints(g);
 
-        txtDNI = new JLabel("DNI:");
-        txtDNI.setForeground(colorSecundario);
-        txtDNI.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
-        g.insets = new Insets(10, 0, 0, 0);
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.gridx = 2;
-        g.gridy = 2;
-        g.gridwidth = 2;
-        this.add(txtDNI, g);
-        limpiarConstraints(g);
-
-        campoDNI = new JTextField();
-        campoDNI.setPreferredSize(new Dimension(300, 35));
-        campoDNI.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.ipady = 10;
-        g.insets = new Insets(10, 0, 0, 43);
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.gridx = 2;
-        g.gridy = 3;
-        g.gridwidth = 2;
-        this.add(campoDNI, g);
-        limpiarConstraints(g);
-
-        txtApellido = new JLabel("Apellidos:");
-        txtApellido.setForeground(colorSecundario);
-        txtApellido.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        txtApellido = new JLabel("Introduce tu Apellido:");
+        txtApellido.setForeground(new Color(7, 65, 35));
+        txtApellido.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.insets = new Insets(20, 43, 0, 0);
         g.fill = GridBagConstraints.HORIZONTAL;
         g.gridx = 0;
-        g.gridy = 4;
+        g.gridy = 3;
         g.gridwidth = 4;
         this.add(txtApellido, g);
         limpiarConstraints(g);
 
         campoApellido = new JTextField();
         campoApellido.setPreferredSize(new Dimension(300, 35));
-        campoApellido.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.ipady = 10;
+        campoApellido.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        campoApellido.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+        campoApellido.setOpaque(false);
+        campoApellido.setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        campoApellido.addFocusListener(new focusListener());
         g.insets = new Insets(10, 43, 0, 43);
         g.fill = GridBagConstraints.HORIZONTAL;
         g.gridx = 0;
-        g.gridy = 5;
+        g.gridy = 4;
         g.gridwidth = 4;
         this.add(campoApellido, g);
         limpiarConstraints(g);
 
         txtNacimiento = new JLabel("Edad:");
-        txtNacimiento.setForeground(colorSecundario);
-        txtNacimiento.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        txtNacimiento.setForeground(new Color(7, 65, 35));
+        txtNacimiento.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.insets = new Insets(20, 43, 0, 20);
         g.fill = GridBagConstraints.HORIZONTAL;
         g.gridx = 0;
-        g.gridy = 6;
+        g.gridy = 5;
         g.gridwidth = 1;
         this.add(txtNacimiento, g);
         limpiarConstraints(g);
@@ -177,7 +142,7 @@ public class PanelRegistro extends PanelBackground {
         listaDias.setBackground(Color.WHITE);
         g.insets = new Insets(20, 0, 0, 0);
         g.gridx = 1;
-        g.gridy = 6;
+        g.gridy = 5;
         g.gridwidth = 1;
         g.anchor = GridBagConstraints.LINE_START;
         this.add(listaDias, g);
@@ -192,7 +157,7 @@ public class PanelRegistro extends PanelBackground {
         listaMeses.setBackground(Color.WHITE);
         g.insets = new Insets(20, 0, 0, 0);
         g.gridx = 2;
-        g.gridy = 6;
+        g.gridy = 5;
         g.gridwidth = 1;
         g.anchor = GridBagConstraints.LINE_START;
         this.add(listaMeses, g);
@@ -207,83 +172,72 @@ public class PanelRegistro extends PanelBackground {
         listaAños.setPreferredSize(new Dimension(60, 25));
         g.insets = new Insets(20, 0, 0, 35);
         g.gridx = 3;
-        g.gridy = 6;
+        g.gridy = 5;
         g.gridwidth = 1;
         g.anchor = GridBagConstraints.LINE_START;
         this.add(listaAños, g);
         limpiarConstraints(g);
 
-        txtPassword = new JLabel("Pass:");
-        txtPassword.setForeground(colorSecundario);
-        txtPassword.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        txtDNI = new JLabel("DNI:");
+        txtDNI.setForeground(new Color(7, 65, 35));
+        txtDNI.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        g.insets = new Insets(20, 43, 0, 0);
+        g.fill = GridBagConstraints.HORIZONTAL;
+        g.gridx = 0;
+        g.gridy = 6;
+        g.gridwidth = 1;
+        this.add(txtDNI, g);
+        limpiarConstraints(g);
+
+        campoDNI = new JTextField();
+        campoDNI.setPreferredSize(new Dimension(300, 35));
+        campoDNI.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        campoDNI.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+        campoDNI.setOpaque(false);
+        campoDNI.setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        campoDNI.addFocusListener(new focusListener());
+        g.insets = new Insets(20, 0, 0, 45);
+        g.fill = GridBagConstraints.HORIZONTAL;
+        g.gridx = 1;
+        g.gridy = 6;
+        g.gridwidth = 3;
+        this.add(campoDNI, g);
+        limpiarConstraints(g);
+
+        txtPassword = new JLabel("Introduce tu Contraseña:");
+        txtPassword.setForeground(new Color(7, 65, 35));
+        txtPassword.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.insets = new Insets(20, 43, 0, 0);
         g.fill = GridBagConstraints.HORIZONTAL;
         g.gridx = 0;
         g.gridy = 7;
-        g.gridwidth = 1;
+        g.gridwidth = 4;
         this.add(txtPassword, g);
         limpiarConstraints(g);
 
         campoPassword = new JPasswordField();
         campoPassword.setPreferredSize(new Dimension(300, 35));
-        campoPassword.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.ipady = 10;
-        g.insets = new Insets(20, 0, 0, 45);
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.gridx = 1;
-        g.gridy = 7;
-        g.gridwidth = 3;
-        this.add(campoPassword, g);
-        limpiarConstraints(g);
-
-        txtCorreo = new JLabel("Correo:");
-        txtCorreo.setForeground(colorSecundario);
-        txtCorreo.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
-        g.insets = new Insets(20, 43, 0, 0);
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.gridx = 0;
-        g.gridy = 8;
-        g.gridwidth = 4;
-        this.add(txtCorreo, g);
-        limpiarConstraints(g);
-
-        campoCorreo = new JTextField();
-        campoCorreo.setPreferredSize(new Dimension(300, 35));
-        campoCorreo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        g.ipady = 10;
+        campoPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        campoPassword.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
+        campoPassword.setOpaque(false);
+        campoPassword.setBorder(new MatteBorder(0, 0, 2, 0, colorSecundario));
+        campoPassword.addFocusListener(new focusListener());
         g.fill = GridBagConstraints.HORIZONTAL;
         g.insets = new Insets(10, 43, 0, 43);
         g.gridx = 0;
-        g.gridy = 9;
+        g.gridy = 8;
         g.gridwidth = 4;
-        this.add(campoCorreo, g);
-        limpiarConstraints(g);
-
-        /**
-         * JLabel para espaciar entre zonas
-         */
-        espacio = new JLabel();
-        espacio.setForeground(colorSecundario);
-        espacio.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
-        espacio.setBorder(new MatteBorder(0, 0, 1, 0, colorSecundario));
-        g.fill = GridBagConstraints.HORIZONTAL;
-        g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(40, 43, 10, 43);
-        g.gridx = 0;
-        g.gridy = 10;
-        g.gridwidth = 4;
-        g.weightx = 1;
-        this.add(espacio, g);
+        this.add(campoPassword, g);
         limpiarConstraints(g);
 
         checkAdmin = new JCheckBox("Admin");
-        checkAdmin.setForeground(colorSecundario);
-        checkAdmin.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
+        checkAdmin.setForeground(new Color(7, 65, 35));
+        checkAdmin.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         checkAdmin.setOpaque(false);
         checkAdmin.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        g.insets = new Insets(0, 36, 0, 0);
+        g.insets = new Insets(35, 36, 0, 0);
         g.gridx = 0;
-        g.gridy = 11;
+        g.gridy = 9;
         this.add(checkAdmin, g);
         limpiarConstraints(g);
 
@@ -294,10 +248,10 @@ public class PanelRegistro extends PanelBackground {
         botonConfirmar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonConfirmar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonConfirmar.setFocusPainted(false);
-        g.insets = new Insets(5, 0, 0, 43);
+        g.insets = new Insets(40, 0, 0, 43);
         g.anchor = GridBagConstraints.LINE_END;
         g.gridx = 1;
-        g.gridy = 11;
+        g.gridy = 9;
         g.gridwidth = 3;
         g.ipadx = 53;
         g.ipady = 30;
