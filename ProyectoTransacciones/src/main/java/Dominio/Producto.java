@@ -6,56 +6,78 @@
 package Dominio;
 
 /**
+ * La clase Producto servira de plantilla para los productos con los que se vaya
+ * a trabajar durante el programa
  *
  * @author victo
  */
 public class Producto {
-    private String nombre, codigoProducto;
+
+    /**
+     * Variables de la clase
+     */
+    private String codigo, nombre;
     private float precio;
     private int puntos;
 
-    public Producto(String nombre, String codigoProducto, float precio, int puntos) {
+    /**
+     * Constructor del objeto
+     *
+     * @param codigo Parametro que indicara el Codigo del objeto
+     * @param nombre Parametro que indicara el Nombre del objeto
+     * @param precio Parametro que indicara el Precio del objeto
+     * @param puntos Parametro que indicara los Puntos del objeto
+     */
+    public Producto(String codigo, String nombre, float precio, int puntos) {
+        this.codigo = codigo;
         this.nombre = nombre;
-        this.codigoProducto = codigoProducto;
         this.precio = precio;
         this.puntos = puntos;
     }
 
+    /**
+     * Metodo que devolvera la variable Codigo del objeto
+     *
+     * @return valor del Codigo del objeto
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Metodo que devolvera la variable Nombre del objeto
+     *
+     * @return valor del Nombre del objeto
+     */
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getCodigoProducto() {
-        return codigoProducto;
-    }
-
-    public void setCodigoProducto(String codigoProducto) {
-        this.codigoProducto = codigoProducto;
-    }
-
+    /**
+     * Metodo que devolvera la variable Precio del objeto
+     *
+     * @return valor del Precio del objeto
+     */
     public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
-        this.precio = precio;
-    }
-
+    /**
+     * Metodo que devolvera la variable Puntos del objeto
+     *
+     * @return valor del Puntos del objeto
+     */
     public int getPuntos() {
         return puntos;
     }
 
+    /**
+     * Metodo que actualizara la variable Puntos del objeto
+     *
+     * @param puntos nuevo valor para DNI
+     */
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 
-    @Override
-    public String toString() {
-        return "Producto{" + "nombre=" + nombre + ", codigoProducto=" + codigoProducto + ", precio=" + precio + ", puntos=" + puntos + '}';
-    }
-    
 }

@@ -2,7 +2,7 @@
 <!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Administrador" version="4">
   <OBJECT>
     <ID name="Administrador" mc="Standard.Class" uid="107be04d-51e4-4960-8119-ede2208ee7f2"/>
-    <PID name="proyectotransacciones" mc="Standard.Package" uid="bc9a0581-74d3-41f8-9532-93c83690863c"/>
+    <PID name="DiagramaClases" mc="Standard.Package" uid="bc9a0581-74d3-41f8-9532-93c83690863c"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
       <ATT name="IsMain">false</ATT>
@@ -100,21 +100,6 @@
           <DEPENDENCIES>
             <LINK relation="Type">
               <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
-            </LINK>
-          </DEPENDENCIES>
-        </OBJECT>
-      </COMP>
-      <COMP relation="Parent">
-        <OBJECT>
-          <ID name="Generalization" mc="Standard.Generalization" uid="b4ce045b-a3b4-41aa-9575-69a9cdeaffa6"/>
-          <ATTRIBUTES>
-            <ATT name="Discriminator"></ATT>
-            <ATT name="Name"><![CDATA[Generalization]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="SuperType">
-              <ID name="Persona" mc="Standard.Class" uid="ec0c4945-086a-4ce5-9567-84ca854d8c74"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>

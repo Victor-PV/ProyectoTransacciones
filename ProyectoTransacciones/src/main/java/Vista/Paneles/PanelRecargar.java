@@ -62,7 +62,7 @@ public class PanelRecargar extends JPanel {
         g.gridx = 0;
         g.gridy = 0;
         g.gridwidth = 30;
-        g.insets = new Insets(-90, 90, 30, 50);
+        g.insets = new Insets( -90, 90, 30, 50);
         this.add(titulo, g);
         limpiarConstraints(g);
 
@@ -152,7 +152,7 @@ public class PanelRecargar extends JPanel {
         labelNumeroTarjeta.setForeground(colorSecundario);
         labelNumeroTarjeta.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.FIRST_LINE_START;
-        g.insets = new Insets(30, 0, 0, 0);
+        g.insets = new Insets(30, 62, 0, 0);
         g.gridx = 2;
         g.gridy = 2;
         g.gridwidth = 2;
@@ -164,7 +164,7 @@ public class PanelRecargar extends JPanel {
         campoNumeroTarjeta.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoNumeroTarjeta.setEditable(true);
         g.anchor = GridBagConstraints.FIRST_LINE_START;
-        g.insets = new Insets(0, 0, 0, 0);
+        g.insets = new Insets(0, 62, 0, 0);
         g.gridx = 2;
         g.gridy = 3;
         g.gridwidth = 2;
@@ -175,7 +175,7 @@ public class PanelRecargar extends JPanel {
         labelTitularTarjetaNombre.setForeground(colorSecundario);
         labelTitularTarjetaNombre.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(40, 0, 10, 0);
+        g.insets = new Insets(40, 62, 10, 0);
         g.gridx = 2;
         g.gridy = 4;
         g.gridwidth = 1;
@@ -187,7 +187,7 @@ public class PanelRecargar extends JPanel {
         campoTitularTarjetaNombre.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoTitularTarjetaNombre.setEditable(true);
         g.anchor = GridBagConstraints.FIRST_LINE_START;
-        g.insets = new Insets(0, 0, 0, 10);
+        g.insets = new Insets(0, 62, 0, 10);
         g.gridx = 2;
         g.gridy = 5;
         this.add(campoTitularTarjetaNombre, g);
@@ -219,7 +219,7 @@ public class PanelRecargar extends JPanel {
         labelCodigoTarjeta.setForeground(colorSecundario);
         labelCodigoTarjeta.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
-        g.insets = new Insets(40, 0, 10, 0);
+        g.insets = new Insets(40 ,62, 10, 0);
         g.gridx = 2;
         g.gridy = 6;
         g.gridwidth = 1;
@@ -231,7 +231,7 @@ public class PanelRecargar extends JPanel {
         campoCodigoTarjet.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoCodigoTarjet.setEditable(true);
         g.anchor = GridBagConstraints.FIRST_LINE_START;
-        g.insets = new Insets(0, 0, 0, 10);
+        g.insets = new Insets(0, 62, 0, 10);
         g.gridx = 2;
         g.gridy = 7;
         this.add(campoCodigoTarjet, g);
@@ -303,7 +303,7 @@ public class PanelRecargar extends JPanel {
         botonRecargar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonRecargar.setFocusPainted(false);
         botonRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        g.insets = new Insets(40, -65, 0, 0);
+        g.insets = new Insets(40, -65, 40, 0);
         g.gridx = 3;
         g.gridy = 8;
         this.add(botonRecargar, g);

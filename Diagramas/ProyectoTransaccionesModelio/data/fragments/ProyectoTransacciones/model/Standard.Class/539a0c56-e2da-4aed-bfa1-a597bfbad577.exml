@@ -2,7 +2,7 @@
 <!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Stock" version="4">
   <OBJECT>
     <ID name="Stock" mc="Standard.Class" uid="539a0c56-e2da-4aed-bfa1-a597bfbad577"/>
-    <PID name="proyectotransacciones" mc="Standard.Package" uid="bc9a0581-74d3-41f8-9532-93c83690863c"/>
+    <PID name="DiagramaClases" mc="Standard.Package" uid="bc9a0581-74d3-41f8-9532-93c83690863c"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
       <ATT name="IsMain">false</ATT>

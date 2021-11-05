@@ -5,16 +5,14 @@
  */
 package Test;
 
-import Dominio.Cliente;
 import java.sql.Date;
 
 /**
  *
  * @author victo
  */
-public class TextManejoClienteDAO {
+public class TextManejoUsuarioDAO {
     public static void main(String[] args) {
-        Cliente cliente = new Cliente("32323", "PAla", "", "Sperma", new Date(12, 12, 12));
         
         
     }

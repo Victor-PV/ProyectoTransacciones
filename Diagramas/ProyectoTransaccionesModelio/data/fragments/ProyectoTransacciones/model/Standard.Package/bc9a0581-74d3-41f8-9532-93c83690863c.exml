@@ -14,12 +14,115 @@
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="OwnedElement">
-        <COMPID name="Persona" mc="Standard.Class" uid="ec0c4945-086a-4ce5-9567-84ca854d8c74"/>
+        <COMPID name="Usuario" mc="Standard.Class" uid="ec0c4945-086a-4ce5-9567-84ca854d8c74"/>
         <COMPID name="Cliente" mc="Standard.Class" uid="d49469dc-e5fe-4ba4-a5c6-c6418bac26cb"/>
         <COMPID name="Administrador" mc="Standard.Class" uid="107be04d-51e4-4960-8119-ede2208ee7f2"/>
         <COMPID name="Producto" mc="Standard.Class" uid="f71d28a0-5183-4673-93f4-20a0e9209e0e"/>
         <COMPID name="EWallet" mc="Standard.Class" uid="2e88a22b-0797-4a7f-8359-ee198a047545"/>
         <COMPID name="Stock" mc="Standard.Class" uid="539a0c56-e2da-4aed-bfa1-a597bfbad577"/>
+        <OBJECT>
+          <ID name="Posiciones" mc="Standard.Enumeration" uid="8ea85ffe-1c88-4454-be03-71409c9a9219"/>
+          <ATTRIBUTES>
+            <ATT name="IsElementary">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[Posiciones]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Value">
+              <OBJECT>
+                <ID name="Cliente" mc="Standard.EnumerationLiteral" uid="6c7a4b0d-7a74-41fb-a4e9-59eaf87b518a"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Cliente]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Administrador" mc="Standard.EnumerationLiteral" uid="c9794be7-e8d6-4fdd-af7b-65f4a115d67b"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Administrador]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Cliente/Administrador" mc="Standard.EnumerationLiteral" uid="0732acd2-a46b-42dc-8a8d-74564b13ea44"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[Cliente/Administrador]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="OwnedEnd">
+              <OBJECT>
+                <ID name="" mc="Standard.AssociationEnd" uid="d5395067-e00e-47fb-9166-a68475c33c01"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsAssociation</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"></ATT>
+                  <ATT name="MultiplicityMax"></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <ID name="Usuario" mc="Standard.Class" uid="ec0c4945-086a-4ce5-9567-84ca854d8c74"/>
+                  </LINK>
+                  <COMP relation="Opposite">
+                    <OBJECT>
+                      <ID name="" mc="Standard.AssociationEnd" uid="f20db850-af91-4a00-b223-528302988edf"/>
+                      <ATTRIBUTES>
+                        <ATT name="Aggregation">KindIsAssociation</ATT>
+                        <ATT name="IsChangeable">true</ATT>
+                        <ATT name="Changeable">ReadWrite</ATT>
+                        <ATT name="IsDerived">false</ATT>
+                        <ATT name="IsOrdered">false</ATT>
+                        <ATT name="IsUnique">false</ATT>
+                        <ATT name="MultiplicityMin"></ATT>
+                        <ATT name="MultiplicityMax"></ATT>
+                        <ATT name="Visibility">Public</ATT>
+                        <ATT name="IsClass">false</ATT>
+                        <ATT name="IsAbstract">false</ATT>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <COMP relation="Opposite">
+                          <COMPID name="" mc="Standard.AssociationEnd" uid="d5395067-e00e-47fb-9166-a68475c33c01"/>
+                        </COMP>
+                        <COMP relation="Association">
+                          <OBJECT>
+                            <ID name="" mc="Standard.Association" uid="5585b26e-0e4f-467c-9438-c8b78f136ff9"/>
+                            <ATTRIBUTES>
+                              <ATT name="Name"></ATT>
+                              <ATT name="status">1970354901745664</ATT>
+                            </ATTRIBUTES>
+                            <DEPENDENCIES></DEPENDENCIES>
+                          </OBJECT>
+                        </COMP>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                  <COMP relation="Association">
+                    <COMPID name="" mc="Standard.Association" uid="5585b26e-0e4f-467c-9438-c8b78f136ff9"/>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
       </COMP>
       <COMP relation="Product">
         <COMPID name="DiagramaClases" mc="Standard.ClassDiagram" uid="7f20aabe-08b3-4b7c-a153-6171cae3ed70"/>
