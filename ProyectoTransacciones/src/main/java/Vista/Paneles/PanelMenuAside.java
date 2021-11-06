@@ -31,8 +31,8 @@ public class PanelMenuAside extends JPanel {
     private JLabel labelPlantilla;
     private ImageIcon imgPlantilla;
 
-    private JLabel labelHome, labelSalir, labelHistorial, labelCatalogo, labelDepositar, labelEncargos, labelRecargar, labelEncargar;
-    private ImageIcon imgHome, imgSalir, imgHistorial, imgCatalogo, imgDepositar, imgEncargos, imgRecargar, imgEncargar;
+    private JLabel labelHome, labelSalir, labelReembolso, labelCatalogo, labelDepositar, labelEncargos, labelRecargar, labelEncargar;
+    private ImageIcon imgHome, imgSalir, imgReembolso, imgCatalogo, imgDepositar, imgEncargos, imgRecargar, imgEncargar;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
@@ -114,7 +114,7 @@ public class PanelMenuAside extends JPanel {
         labelRecargar.setHorizontalAlignment(JLabel.CENTER);
         labelRecargar.setToolTipText("Recargar");
         labelRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        g.insets = new Insets(0, -20, 20, -20);
+        g.insets = new Insets(0, -20, 15, -20);
         g.gridx = 0;
         g.gridy = posicionY++;
         panelGeneral.add(labelRecargar, g);
@@ -130,18 +130,47 @@ public class PanelMenuAside extends JPanel {
             }
         });
 
+        
+        /**
+         * Icono del Historial
+         */
+        
+        imgReembolso = new ImageIcon("./src/main/java/Imagenes/reembolso.png");
+        labelReembolso = new JLabel();
+        Image imgEscalada6 = imgReembolso.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado6 = new ImageIcon(imgEscalada6);
+        labelReembolso.setIcon(iconoEscalado6);
+        labelReembolso.setHorizontalAlignment(JLabel.CENTER);
+        labelReembolso.setToolTipText("Reembolsar");
+        labelReembolso.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        g.insets = new Insets(0, -20, 20, -20);
+        g.gridx = 0;
+        g.gridy = posicionY++;
+        panelGeneral.add(labelReembolso, g);
+        limpiarConstraints(g);
+        /**
+         * Añade interaccion al label Depositar
+         */
+        labelReembolso.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso()));
+                ventana.invalidate();
+                ventana.validate();
+            }
+        });
+        
         /**
          * Icono del Historial
          */
         imgEncargar = new ImageIcon("./src/main/java/Imagenes/encargar.png");
         labelEncargar = new JLabel();
-        Image imgEscalada6 = imgEncargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado6 = new ImageIcon(imgEscalada6);
-        labelEncargar.setIcon(iconoEscalado6);
+        Image imgEscalada7 = imgEncargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Icon iconoEscalado7 = new ImageIcon(imgEscalada7);
+        labelEncargar.setIcon(iconoEscalado7);
         labelEncargar.setHorizontalAlignment(JLabel.CENTER);
         labelEncargar.setToolTipText("Encargar");
         labelEncargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        g.insets = new Insets(0, -20, 20, -20);
+        g.insets = new Insets(0, -20, 25, -20);
         g.gridx = 0;
         g.gridy = posicionY++;
         panelGeneral.add(labelEncargar, g);
@@ -156,7 +185,7 @@ public class PanelMenuAside extends JPanel {
                 ventana.validate();
             }
         });
-
+        
         panelSalir = new JPanel(new GridBagLayout());
         this.add(panelSalir, BorderLayout.SOUTH);
 

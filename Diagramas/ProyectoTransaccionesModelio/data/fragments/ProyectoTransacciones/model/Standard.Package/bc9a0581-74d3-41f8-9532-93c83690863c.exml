@@ -15,11 +15,9 @@
     <DEPENDENCIES>
       <COMP relation="OwnedElement">
         <COMPID name="Usuario" mc="Standard.Class" uid="ec0c4945-086a-4ce5-9567-84ca854d8c74"/>
-        <COMPID name="Cliente" mc="Standard.Class" uid="d49469dc-e5fe-4ba4-a5c6-c6418bac26cb"/>
-        <COMPID name="Administrador" mc="Standard.Class" uid="107be04d-51e4-4960-8119-ede2208ee7f2"/>
         <COMPID name="Producto" mc="Standard.Class" uid="f71d28a0-5183-4673-93f4-20a0e9209e0e"/>
         <COMPID name="EWallet" mc="Standard.Class" uid="2e88a22b-0797-4a7f-8359-ee198a047545"/>
-        <COMPID name="Stock" mc="Standard.Class" uid="539a0c56-e2da-4aed-bfa1-a597bfbad577"/>
+        <COMPID name="Catalogo" mc="Standard.Class" uid="539a0c56-e2da-4aed-bfa1-a597bfbad577"/>
         <OBJECT>
           <ID name="Posiciones" mc="Standard.Enumeration" uid="8ea85ffe-1c88-4454-be03-71409c9a9219"/>
           <ATTRIBUTES>
@@ -123,6 +121,8 @@
             </COMP>
           </DEPENDENCIES>
         </OBJECT>
+        <COMPID name="HistorialCompra" mc="Standard.Class" uid="62ccd9a2-123d-4781-8ad1-3242f8ae22bc"/>
+        <COMPID name="Compra" mc="Standard.Class" uid="0ecd3f8a-1646-40f9-a525-1b22cba8dbf4"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="DiagramaClases" mc="Standard.ClassDiagram" uid="7f20aabe-08b3-4b7c-a153-6171cae3ed70"/>
