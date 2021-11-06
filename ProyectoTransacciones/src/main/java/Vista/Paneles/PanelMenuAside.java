@@ -153,7 +153,7 @@ public class PanelMenuAside extends JPanel {
          */
         labelReembolso.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso()));
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso(ventana)));
                 ventana.invalidate();
                 ventana.validate();
             }

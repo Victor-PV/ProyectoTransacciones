@@ -5,6 +5,8 @@
  */
 package Vista.Paneles;
 
+import Datos.UsuarioDAO;
+import Vista.FrameAplicacion;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -27,6 +29,8 @@ import javax.swing.border.MatteBorder;
  */
 public class PanelLogin extends PanelBackground {
 
+    private UsuarioDAO usuarioDAO;
+    
     private JLabel titulo;
     private JTextField campoDNI;
     private JPasswordField campoPassword;
@@ -160,7 +164,19 @@ public class PanelLogin extends PanelBackground {
 
         botonConfirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ventana.dispose();
+                usuarioDAO = new UsuarioDAO(ventana);
+                
+                if(usuarioDAO.login(campoDNI.getText(), campoPassword.getText()) == 0){
+                    PanelAlerta panelError = new PanelAlerta(ventana, true, "Usuario no encontrado", "ERROR");
+                    panelError.setVisible(true);
+                    System.out.println("Non");
+                }else{
+                    FrameAplicacion frameAplicacion = new FrameAplicacion();
+                    frameAplicacion.setVisible(true);
+                    ventana.dispose();
+                    System.out.println("Sis");
+                }
+                //ventana.dispose();
             }
         });
 

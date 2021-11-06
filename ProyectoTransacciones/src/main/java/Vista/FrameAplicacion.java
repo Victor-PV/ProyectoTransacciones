@@ -38,7 +38,7 @@ public class FrameAplicacion extends JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon("./src/main/java/Imagenes/logo.png").getImage());
 
-        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelReembolso());
+        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelReembolso(FrameAplicacion.this));
         
         
         this.add(panelPrincipal);

@@ -18,7 +18,7 @@ public class Main {
         /**
          * Crear la ventana principal de la aplicación
          */
-        FrameAplicacion ventana = new FrameAplicacion();
+        FrameInicio ventana = new FrameInicio();
         ventana.setVisible(true);
         
     }
