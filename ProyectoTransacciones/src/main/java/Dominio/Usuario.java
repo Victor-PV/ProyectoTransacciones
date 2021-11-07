@@ -23,6 +23,11 @@ public class Usuario {
     private Posicion posicion;
 
     /**
+     * Constructor vacio
+     */
+    public Usuario(){}
+    
+    /**
      * Constructor del objeto
      *
      * @param DNI Parametro que indicara el DNI del objeto

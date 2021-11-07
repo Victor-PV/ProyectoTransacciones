@@ -9,6 +9,7 @@ import Datos.ExceptionDAO;
 import Datos.UsuarioDAO;
 import Dominio.Posicion;
 import Dominio.Usuario;
+import Vista.FrameAplicacion;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -318,7 +319,6 @@ public class PanelRegistro extends PanelBackground {
         botonConfirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 usuarioDAO = new UsuarioDAO(ventana);
-                Posicion posicion = checkAdmin.isSelected() ? Posicion.Administrador : Posicion.Cliente;
                 try {
                     //Comprobar que el campo DNI tenga 8 numeros y 1 letra
                     if (campoDNI.getText().length() == 9) {
@@ -363,12 +363,12 @@ public class PanelRegistro extends PanelBackground {
                     if (listaDias.getSelectedIndex() == 0 || listaMeses.getSelectedIndex() == 0 || listaAños.getSelectedIndex() == 0) {
                         throw new ExceptionDAO("Error al introducir la fecha");
                     }
-                    
+
                     //Comprobar que el usuario es mayor de edad
                     LocalDate fechaHoy = LocalDate.now();
                     LocalDate fechaNacimientoa = LocalDate.of(Integer.parseInt((String) listaAños.getSelectedItem()), Integer.parseInt((String) listaMeses.getSelectedItem()), Integer.parseInt((String) listaDias.getSelectedItem()));
                     Period periodo = Period.between(fechaNacimientoa, fechaHoy);
-                    if(periodo.getYears() < 18){
+                    if (periodo.getYears() < 18) {
                         throw new ExceptionDAO("El usuario debe ser mayor de edad");
                     }
 
@@ -395,14 +395,23 @@ public class PanelRegistro extends PanelBackground {
                     }
 
                     Date fechaNacimiento = new Date(Integer.parseInt((String) listaAños.getSelectedItem()), Integer.parseInt((String) listaMeses.getSelectedItem()), Integer.parseInt((String) listaDias.getSelectedItem()));
+                    Posicion posicion = checkAdmin.isSelected() ? Posicion.Administrador : Posicion.Cliente;
                     Usuario usuario = new Usuario(campoDNI.getText(), campoNombre.getText(), campoApellido.getText(), campoCorreo.getText(), campoPassword.getText(), fechaNacimiento, posicion);
 
                     int resultado = usuarioDAO.insertar(usuario);
-                    if (resultado == 1) {
-                        System.out.println("sis");
-                    } else if (resultado == -1){
+                    if (resultado == -2) {
                         throw new ExceptionDAO("El DNI introducido ya existe");
+                    }else if (resultado == 2) {
+                        PanelAlerta panelException = new PanelAlerta(ventana, true, "El usuario ha sido actualizado", "");
+                        panelException.setVisible(true);
+                    } else {
+                        
                     }
+                    
+                    //Cambiar de ventana a la de la aplicacion
+                    FrameAplicacion frameAplicacion = new FrameAplicacion(usuarioDAO.select(usuario.getDNI()));
+                    frameAplicacion.setVisible(true);
+                    ventana.dispose();
                 } catch (Exception ex) {
                     PanelAlerta panelException = new PanelAlerta(ventana, true, ex.getMessage(), "ERROR");
                     panelException.setVisible(true);

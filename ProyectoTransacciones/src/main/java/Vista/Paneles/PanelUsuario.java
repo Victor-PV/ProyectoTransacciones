@@ -32,9 +32,9 @@ public class PanelUsuario extends JPanel {
     private ImageIcon img;
     private JLabel imgUser;
 
-    private JLabel txtDNI, txtNombre, txtApellidos, txtSaldo, txtPuntos, txtPosicion;
-    private JTextField campoDNI, campoNombre, campoApellidos, campoSaldo, campoPuntos, campoPosicion;
-    
+    private JLabel txtDNI, txtNombre, txtApellidos, txtSaldo, txtPuntos, txtPosicion, txtCorreo;
+    private JTextField campoDNI, campoNombre, campoApellidos, campoSaldo, campoPuntos, campoPosicion, campoCorreo;
+
     private JPanel panelBotones;
     private JButton botonActualizar;
 
@@ -73,8 +73,7 @@ public class PanelUsuario extends JPanel {
         this.add(txtDNI, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto para el campo DNI
-         * No sera editable
+         * Campo de texto para el campo DNI No sera editable
          */
         campoDNI = new JTextField("23322973F");
         campoDNI.setPreferredSize(new Dimension(150, 35));
@@ -129,8 +128,7 @@ public class PanelUsuario extends JPanel {
         this.add(txtSaldo, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto para el campo Saldo
-         * No sera editable
+         * Campo de texto para el campo Saldo No sera editable
          */
         campoSaldo = new JTextField("124.43€");
         campoSaldo.setPreferredSize(new Dimension(150, 35));
@@ -147,7 +145,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Texto para el campo Nombre
          */
-        txtApellidos = new JLabel("Nombre: ");
+        txtApellidos = new JLabel("Apellidos: ");
         txtApellidos.setForeground(colorSecundario);
         txtApellidos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
@@ -185,8 +183,7 @@ public class PanelUsuario extends JPanel {
         this.add(txtPuntos, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto para el campo Puntos
-         * No sera editable
+         * Campo de texto para el campo Puntos No sera editable
          */
         campoPuntos = new JTextField("2300");
         campoPuntos.setPreferredSize(new Dimension(150, 35));
@@ -201,34 +198,60 @@ public class PanelUsuario extends JPanel {
         limpiarConstraints(g);
 
         /**
-         * Texto para el campo Posicion
+         * Texto para el campo Nombre
          */
-        txtPosicion = new JLabel("Posición: ");
-        txtPosicion.setForeground(colorSecundario);
-        txtPosicion.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        txtCorreo = new JLabel("Correo: ");
+        txtCorreo.setForeground(colorSecundario);
+        txtCorreo.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
         g.insets = new Insets(0, 0, 15, 0);
         g.gridx = 2;
         g.gridy = 4;
         g.weightx = 0.55;
-        this.add(txtPosicion, g);
+        this.add(txtCorreo, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto para el campo Posicion
-         * No sera editable
+         * Campo de texto para el campo Nombre
          */
-        campoPosicion = new JTextField("Administrador");
-        campoPosicion.setPreferredSize(new Dimension(150, 35));
-        campoPosicion.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
-        campoPosicion.setEditable(false);
+        campoCorreo = new JTextField("PedritoElCrack@gmail.com");
+        campoCorreo.setPreferredSize(new Dimension(300, 35));
+        campoCorreo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         g.insets = new Insets(0, 0, 40, 0);
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 2;
         g.gridy = 5;
         g.weightx = 0.55;
+        this.add(campoCorreo, g);
+        limpiarConstraints(g);
+
+        /**
+         * Texto para el campo Posicion
+         */
+        txtPosicion = new JLabel("Posición: ");
+        txtPosicion.setForeground(colorSecundario);
+        txtPosicion.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        g.insets = new Insets(0, 30, 10, 0);
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 1;
+        g.gridy = 6;
+        g.weightx = 0.35;
+        this.add(txtPosicion, g);
+        limpiarConstraints(g);
+        /**
+         * Campo de texto para el campo Posicion No sera editable
+         */
+        campoPosicion = new JTextField("Administrador");
+        campoPosicion.setPreferredSize(new Dimension(150, 35));
+        campoPosicion.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
+        campoPosicion.setEditable(false);
+        g.insets = new Insets(0, 30, 40, 0);
+        g.anchor = GridBagConstraints.LINE_START;
+        g.gridx = 1;
+        g.gridy = 7;
+        g.weightx = 0.35;
         this.add(campoPosicion, g);
         limpiarConstraints(g);
-        
+
         /**
          * Panel donde se colocaran los botones
          */
@@ -236,13 +259,13 @@ public class PanelUsuario extends JPanel {
         panelBotones.setOpaque(false);
         //panelBotones.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
         g.fill = GridBagConstraints.HORIZONTAL;
-        g.insets = new Insets(150, 100, 0, 90);
+        g.insets = new Insets(70, 100, 0, 90);
         g.gridx = 0;
-        g.gridy = 6;
+        g.gridy = 8;
         g.gridwidth = 3;
         this.add(panelBotones, g);
         limpiarConstraints(g);
-        
+
         /**
          * Boton para actualizar los cambios
          */

@@ -172,7 +172,7 @@ public class PanelLogin extends PanelBackground {
                     campoPassword.setText("");
                     campoDNI.requestFocus();
                 }else{
-                    FrameAplicacion frameAplicacion = new FrameAplicacion();
+                    FrameAplicacion frameAplicacion = new FrameAplicacion(usuarioDAO.select(campoDNI.getText()));
                     frameAplicacion.setVisible(true);
                     ventana.dispose();
                 }

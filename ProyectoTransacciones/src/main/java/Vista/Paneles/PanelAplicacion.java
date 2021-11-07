@@ -5,6 +5,7 @@
  */
 package Vista.Paneles;
 
+import Dominio.Usuario;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,7 +29,7 @@ public class PanelAplicacion extends JPanel {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelAplicacion(JFrame ventana, JPanel panelSustituto) {
+    public PanelAplicacion(JFrame ventana, JPanel panelSustituto, Usuario usuario) {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
@@ -47,7 +48,7 @@ public class PanelAplicacion extends JPanel {
         /**
          * Contenido del panel Menu
          */
-        panelMenuIn = new PanelMenuAside(ventana);
+        panelMenuIn = new PanelMenuAside(ventana, usuario);
         panelMenu.setBackground(new Color(210, 210, 210));
         g1.gridx = 0;
         g1.gridy = 0;

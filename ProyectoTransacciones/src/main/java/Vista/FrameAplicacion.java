@@ -5,11 +5,9 @@
  */
 package Vista;
 
+import Dominio.Usuario;
 import Vista.Paneles.PanelAplicacion;
 import Vista.Paneles.PanelCatalogo;
-import Vista.Paneles.PanelRecargar;
-import Vista.Paneles.PanelReembolso;
-import Vista.Paneles.PanelReponer;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -30,7 +28,7 @@ public class FrameAplicacion extends JFrame {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public FrameAplicacion() {
+    public FrameAplicacion(Usuario usuario) {
         this.setSize(1000, 700);
         this.setTitle("Supercomprín");
         this.setResizable(false);
@@ -38,7 +36,7 @@ public class FrameAplicacion extends JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon("./src/main/java/Imagenes/logo.png").getImage());
 
-        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelReembolso(FrameAplicacion.this));
+        panelPrincipal = new PanelAplicacion(FrameAplicacion.this, new PanelCatalogo(), usuario);
         
         
         this.add(panelPrincipal);

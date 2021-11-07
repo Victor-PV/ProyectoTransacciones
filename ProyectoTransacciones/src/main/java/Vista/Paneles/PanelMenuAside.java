@@ -5,6 +5,8 @@
  */
 package Vista.Paneles;
 
+import Dominio.Posicion;
+import Dominio.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -41,7 +43,7 @@ public class PanelMenuAside extends JPanel {
     private String[] listaPanelesAdmin = {"home", "catalogo", "encargos", "encargar"};
     private String[] listaPanelesCliente = {"home", "catalogo", "historial", "recargar"};
 
-    public PanelMenuAside(JFrame ventana) {
+    public PanelMenuAside(JFrame ventana, Usuario usuario) {
         this.setLayout(new BorderLayout());
         panelGeneral = new JPanel(new GridBagLayout());
         this.add(panelGeneral, BorderLayout.NORTH);
@@ -70,7 +72,7 @@ public class PanelMenuAside extends JPanel {
          */
         labelHome.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario()));
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario(), usuario));
                 ventana.invalidate();
                 ventana.validate();
             }
@@ -97,95 +99,96 @@ public class PanelMenuAside extends JPanel {
          */
         labelCatalogo.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo()));
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(), usuario));
                 ventana.invalidate();
                 ventana.validate();
             }
         });
 
-        /**
-         * Icono de los encargos
-         */
-        imgRecargar = new ImageIcon("./src/main/java/Imagenes/recargar.png");
-        labelRecargar = new JLabel();
-        Image imgEscalada5 = imgRecargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado5 = new ImageIcon(imgEscalada5);
-        labelRecargar.setIcon(iconoEscalado5);
-        labelRecargar.setHorizontalAlignment(JLabel.CENTER);
-        labelRecargar.setToolTipText("Recargar");
-        labelRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        g.insets = new Insets(0, -20, 15, -20);
-        g.gridx = 0;
-        g.gridy = posicionY++;
-        panelGeneral.add(labelRecargar, g);
-        limpiarConstraints(g);
-        /**
-         * Añade interaccion al label Encargos
-         */
-        labelRecargar.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelRecargar()));
-                ventana.invalidate();
-                ventana.validate();
-            }
-        });
+        if (usuario.getPosicion() == Posicion.Cliente || usuario.getPosicion() == Posicion.ClienteAdministrador) {
+            /**
+             * Icono de los encargos
+             */
+            imgRecargar = new ImageIcon("./src/main/java/Imagenes/recargar.png");
+            labelRecargar = new JLabel();
+            Image imgEscalada5 = imgRecargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            Icon iconoEscalado5 = new ImageIcon(imgEscalada5);
+            labelRecargar.setIcon(iconoEscalado5);
+            labelRecargar.setHorizontalAlignment(JLabel.CENTER);
+            labelRecargar.setToolTipText("Recargar");
+            labelRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            g.insets = new Insets(0, -20, 15, -20);
+            g.gridx = 0;
+            g.gridy = posicionY++;
+            panelGeneral.add(labelRecargar, g);
+            limpiarConstraints(g);
+            /**
+             * Añade interaccion al label Encargos
+             */
+            labelRecargar.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelRecargar(), usuario));
+                    ventana.invalidate();
+                    ventana.validate();
+                }
+            });
 
-        
-        /**
-         * Icono del Historial
-         */
-        
-        imgReembolso = new ImageIcon("./src/main/java/Imagenes/reembolso.png");
-        labelReembolso = new JLabel();
-        Image imgEscalada6 = imgReembolso.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado6 = new ImageIcon(imgEscalada6);
-        labelReembolso.setIcon(iconoEscalado6);
-        labelReembolso.setHorizontalAlignment(JLabel.CENTER);
-        labelReembolso.setToolTipText("Reembolsar");
-        labelReembolso.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        g.insets = new Insets(0, -20, 20, -20);
-        g.gridx = 0;
-        g.gridy = posicionY++;
-        panelGeneral.add(labelReembolso, g);
-        limpiarConstraints(g);
-        /**
-         * Añade interaccion al label Depositar
-         */
-        labelReembolso.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso(ventana)));
-                ventana.invalidate();
-                ventana.validate();
-            }
-        });
-        
-        /**
-         * Icono del Historial
-         */
-        imgEncargar = new ImageIcon("./src/main/java/Imagenes/encargar.png");
-        labelEncargar = new JLabel();
-        Image imgEscalada7 = imgEncargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        Icon iconoEscalado7 = new ImageIcon(imgEscalada7);
-        labelEncargar.setIcon(iconoEscalado7);
-        labelEncargar.setHorizontalAlignment(JLabel.CENTER);
-        labelEncargar.setToolTipText("Encargar");
-        labelEncargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        g.insets = new Insets(0, -20, 25, -20);
-        g.gridx = 0;
-        g.gridy = posicionY++;
-        panelGeneral.add(labelEncargar, g);
-        limpiarConstraints(g);
-        /**
-         * Añade interaccion al label Depositar
-         */
-        labelEncargar.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelReponer()));
-                ventana.invalidate();
-                ventana.validate();
-            }
-        });
-        
+            /**
+             * Icono del Historial
+             */
+            imgReembolso = new ImageIcon("./src/main/java/Imagenes/reembolso.png");
+            labelReembolso = new JLabel();
+            Image imgEscalada6 = imgReembolso.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            Icon iconoEscalado6 = new ImageIcon(imgEscalada6);
+            labelReembolso.setIcon(iconoEscalado6);
+            labelReembolso.setHorizontalAlignment(JLabel.CENTER);
+            labelReembolso.setToolTipText("Reembolsar");
+            labelReembolso.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            g.insets = new Insets(0, -20, 20, -20);
+            g.gridx = 0;
+            g.gridy = posicionY++;
+            panelGeneral.add(labelReembolso, g);
+            limpiarConstraints(g);
+            /**
+             * Añade interaccion al label Depositar
+             */
+            labelReembolso.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso(ventana), usuario));
+                    ventana.invalidate();
+                    ventana.validate();
+                }
+            });
+        }
+
+        if (usuario.getPosicion() == Posicion.Administrador || usuario.getPosicion() == Posicion.ClienteAdministrador) {
+            /**
+             * Icono del Encargar
+             */
+            imgEncargar = new ImageIcon("./src/main/java/Imagenes/encargar.png");
+            labelEncargar = new JLabel();
+            Image imgEscalada7 = imgEncargar.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            Icon iconoEscalado7 = new ImageIcon(imgEscalada7);
+            labelEncargar.setIcon(iconoEscalado7);
+            labelEncargar.setHorizontalAlignment(JLabel.CENTER);
+            labelEncargar.setToolTipText("Encargar");
+            labelEncargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            g.insets = new Insets(0, -20, 25, -20);
+            g.gridx = 0;
+            g.gridy = posicionY++;
+            panelGeneral.add(labelEncargar, g);
+            limpiarConstraints(g);
+            /**
+             * Añade interaccion al label Encargar
+             */
+            labelEncargar.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelReponer(), usuario));
+                    ventana.invalidate();
+                    ventana.validate();
+                }
+            });
+        }
         panelSalir = new JPanel(new GridBagLayout());
         this.add(panelSalir, BorderLayout.SOUTH);
 
