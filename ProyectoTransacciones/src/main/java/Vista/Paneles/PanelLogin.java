@@ -166,15 +166,15 @@ public class PanelLogin extends PanelBackground {
             public void actionPerformed(ActionEvent e) {
                 usuarioDAO = new UsuarioDAO(ventana);
                 
-                if(usuarioDAO.login(campoDNI.getText(), campoPassword.getText()) == 0){
-                    PanelAlerta panelError = new PanelAlerta(ventana, true, "Usuario no encontrado", "ERROR");
+                if(usuarioDAO.login(campoDNI.getText(), campoPassword.getText()).size() != 1){
+                    PanelAlerta panelError = new PanelAlerta(ventana, true, "Datos incorrectos", "ERROR");
                     panelError.setVisible(true);
-                    System.out.println("Non");
+                    campoPassword.setText("");
+                    campoDNI.requestFocus();
                 }else{
                     FrameAplicacion frameAplicacion = new FrameAplicacion();
                     frameAplicacion.setVisible(true);
                     ventana.dispose();
-                    System.out.println("Sis");
                 }
                 //ventana.dispose();
             }

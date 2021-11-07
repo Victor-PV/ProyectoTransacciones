@@ -5,6 +5,10 @@
  */
 package Vista.Paneles;
 
+import Datos.ExceptionDAO;
+import Datos.UsuarioDAO;
+import Dominio.Posicion;
+import Dominio.Usuario;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -16,6 +20,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -31,6 +38,8 @@ import javax.swing.border.MatteBorder;
  * @author victo
  */
 public class PanelRegistro extends PanelBackground {
+
+    private UsuarioDAO usuarioDAO;
 
     private JPanel panelNacimiento;
     private JLabel titulo;
@@ -308,7 +317,98 @@ public class PanelRegistro extends PanelBackground {
 
         botonConfirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ventana.dispose();
+                usuarioDAO = new UsuarioDAO(ventana);
+                Posicion posicion = checkAdmin.isSelected() ? Posicion.Administrador : Posicion.Cliente;
+                try {
+                    //Comprobar que el campo DNI tenga 8 numeros y 1 letra
+                    if (campoDNI.getText().length() == 9) {
+                        for (int i = 0; i < campoDNI.getText().length(); i++) {
+                            if (i != 8) {
+                                if (!Character.isDigit(campoDNI.getText().charAt(i))) {
+                                    throw new ExceptionDAO("El DNI debe contener 8 numeros y 1 letra");
+                                }
+                            } else {
+                                if (Character.isDigit(campoDNI.getText().charAt(i))) {
+                                    throw new ExceptionDAO("El DNI debe contener 8 numeros y 1 letra");
+                                }
+                            }
+                        }
+                    } else {
+                        throw new ExceptionDAO("El DNI debe tener 9 caracteres");
+                    }
+
+                    //Comprobar que el campo Nombre no tenga numeros
+                    if (campoNombre.getText().length() > 0) {
+                        for (int i = 0; i < campoNombre.getText().length(); i++) {
+                            if (Character.isDigit(campoNombre.getText().charAt(i))) {
+                                throw new ExceptionDAO("Error al introducir el nombre");
+                            }
+                        }
+                    } else {
+                        throw new ExceptionDAO("El Nombre es obligatorio");
+                    }
+
+                    //Comprobar que el campo Apellidos no tenga numeros
+                    if (campoApellido.getText().length() > 0) {
+                        for (int i = 0; i < campoApellido.getText().length(); i++) {
+                            if (Character.isDigit(campoApellido.getText().charAt(i))) {
+                                throw new ExceptionDAO("Error al introducir el apellido");
+                            }
+                        }
+                    } else {
+                        throw new ExceptionDAO("El apellido es obligatorio");
+                    }
+
+                    //Comprobar que todos los campos de Fecha Nacimiento estan seleccionados
+                    if (listaDias.getSelectedIndex() == 0 || listaMeses.getSelectedIndex() == 0 || listaAños.getSelectedIndex() == 0) {
+                        throw new ExceptionDAO("Error al introducir la fecha");
+                    }
+                    
+                    //Comprobar que el usuario es mayor de edad
+                    LocalDate fechaHoy = LocalDate.now();
+                    LocalDate fechaNacimientoa = LocalDate.of(Integer.parseInt((String) listaAños.getSelectedItem()), Integer.parseInt((String) listaMeses.getSelectedItem()), Integer.parseInt((String) listaDias.getSelectedItem()));
+                    Period periodo = Period.between(fechaNacimientoa, fechaHoy);
+                    if(periodo.getYears() < 18){
+                        throw new ExceptionDAO("El usuario debe ser mayor de edad");
+                    }
+
+                    //Comprobar que el campo Password esta escrito
+                    if (campoPassword.getText().length() == 0) {
+                        throw new ExceptionDAO("La contraseña es obligatoria");
+                    }
+
+                    //Comprobar que el campo Correo contenga @ y .
+                    if (campoCorreo.getText().length() > 0) {
+                        boolean arroba = false;
+                        boolean punto = false;
+                        for (int i = 0; i < campoCorreo.getText().length(); i++) {
+                            if (campoCorreo.getText().charAt(i) == '@') {
+                                arroba = true;
+                            }
+                            if (campoCorreo.getText().charAt(i) == '.') {
+                                punto = true;
+                            }
+                        }
+                        if (!arroba || !punto) {
+                            throw new ExceptionDAO("Correo no valido");
+                        }
+                    }
+
+                    Date fechaNacimiento = new Date(Integer.parseInt((String) listaAños.getSelectedItem()), Integer.parseInt((String) listaMeses.getSelectedItem()), Integer.parseInt((String) listaDias.getSelectedItem()));
+                    Usuario usuario = new Usuario(campoDNI.getText(), campoNombre.getText(), campoApellido.getText(), campoCorreo.getText(), campoPassword.getText(), fechaNacimiento, posicion);
+
+                    int resultado = usuarioDAO.insertar(usuario);
+                    if (resultado == 1) {
+                        System.out.println("sis");
+                    } else if (resultado == -1){
+                        throw new ExceptionDAO("El DNI introducido ya existe");
+                    }
+                } catch (Exception ex) {
+                    PanelAlerta panelException = new PanelAlerta(ventana, true, ex.getMessage(), "ERROR");
+                    panelException.setVisible(true);
+                }
+
+                //ventana.dispose();
             }
         });
 

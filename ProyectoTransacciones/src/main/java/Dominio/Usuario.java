@@ -18,7 +18,7 @@ public class Usuario {
     /**
      * Variables de la clase
      */
-    private String DNI, nombre, apellidos, password;
+    private String DNI, nombre, apellidos, correo, password;
     private Date nacimiento;
     private Posicion posicion;
 
@@ -33,10 +33,11 @@ public class Usuario {
      * objeto
      * @param posicion Parametro que indicara la posicion del objeto
      */
-    public Usuario(String DNI, String nombre, String apellidos, String password, Date nacimiento, Posicion posicion) {
+    public Usuario(String DNI, String nombre, String apellidos, String correo, String password, Date nacimiento, Posicion posicion) {
         this.DNI = DNI;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.correo = correo;
         this.password = password;
         this.nacimiento = nacimiento;
         this.posicion = posicion;
@@ -94,6 +95,14 @@ public class Usuario {
      */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+    /**
+     * Metodo que devolvera la variable Correo del objeto
+     *
+     * @return valor del correo del objeto
+     */
+    public String getCorreo() {
+        return this.correo;
     }
 
     /**
