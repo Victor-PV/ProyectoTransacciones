@@ -318,6 +318,7 @@ public class PanelRegistro extends PanelBackground {
 
         botonConfirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 usuarioDAO = new UsuarioDAO(ventana);
                 try {
                     //Comprobar que el campo DNI tenga 8 numeros y 1 letra
@@ -393,8 +394,9 @@ public class PanelRegistro extends PanelBackground {
                             throw new ExceptionDAO("Correo no valido");
                         }
                     }
+                    
+                    Date fechaNacimiento = new Date(Integer.parseInt((String) listaAños.getSelectedItem()) - 1900, Integer.parseInt((String) listaMeses.getSelectedItem()), Integer.parseInt((String) listaDias.getSelectedItem()));
 
-                    Date fechaNacimiento = new Date(Integer.parseInt((String) listaAños.getSelectedItem()), Integer.parseInt((String) listaMeses.getSelectedItem()), Integer.parseInt((String) listaDias.getSelectedItem()));
                     Posicion posicion = checkAdmin.isSelected() ? Posicion.Administrador : Posicion.Cliente;
                     Usuario usuario = new Usuario(campoDNI.getText(), campoNombre.getText(), campoApellido.getText(), campoCorreo.getText(), campoPassword.getText(), fechaNacimiento, posicion);
 

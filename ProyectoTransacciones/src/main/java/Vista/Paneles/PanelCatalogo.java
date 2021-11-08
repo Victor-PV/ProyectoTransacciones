@@ -5,6 +5,12 @@
  */
 package Vista.Paneles;
 
+import Datos.EWalletDAO;
+import Datos.ProductoDAO;
+import Datos.UsuarioDAO;
+import Dominio.EWallet;
+import Dominio.Producto;
+import Dominio.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -15,10 +21,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -33,6 +43,14 @@ public class PanelCatalogo extends JPanel {
     /**
      * Variables de la clase
      */
+    private ProductoDAO productoDAO;
+    private UsuarioDAO usuarioDAO;
+    private EWalletDAO ewalletDAO;
+    private EWallet ewallet;
+    private Producto productoComprar;
+
+    private List<Producto> listaProductos;
+
     private JPanel panelHeader;
     private JLabel txtTitulo, espacio;
 
@@ -51,7 +69,16 @@ public class PanelCatalogo extends JPanel {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelCatalogo() {
+    public PanelCatalogo(Usuario usuario, JFrame ventana) {
+        /**
+         * Conexion con la base de datos
+         */
+        productoDAO = new ProductoDAO();
+        ewalletDAO = new EWalletDAO();
+
+        listaProductos = productoDAO.seleccionar();
+        ewallet = ewalletDAO.seleccionar(usuario.getDNI());
+
         this.setLayout(new BorderLayout());
         GridBagConstraints g = new GridBagConstraints();
 
@@ -86,7 +113,7 @@ public class PanelCatalogo extends JPanel {
         labelSaldo.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
         panelSaldo.add(labelSaldo);
 
-        campoSaldo = new JTextField("121,5€");
+        campoSaldo = new JTextField(ewallet.getSaldo() + "€");
         campoSaldo.setPreferredSize(new Dimension(90, 35));
         campoSaldo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoSaldo.setEditable(false);
@@ -97,7 +124,7 @@ public class PanelCatalogo extends JPanel {
         labelPuntos.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
         panelSaldo.add(labelPuntos);
 
-        campoPuntos = new JTextField("3.080Pts");
+        campoPuntos = new JTextField(ewallet.getPuntos() + "");
         campoPuntos.setPreferredSize(new Dimension(90, 35));
         campoPuntos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoPuntos.setEditable(false);
@@ -129,10 +156,17 @@ public class PanelCatalogo extends JPanel {
 
         String[] listaProductosNombre = {"Naranjas 4Kg", "Pechuga de pavo", "Ensalada gourmet", "Jamón cocido 125g",
             "Rabo vacuno 1Kg", "Setas enteras 300g", "Pan de perrito 6Ud", "Lechuga romana"};
-        String[] listaProductosPrecio = {"3.80", "4.11", "1.08", "1.99", "10.95", "2.99", "1.65", "1.39"};
-        String[] listaProductosPuntos = {"120", "400", "120", "150", "400", "200", "100", "120"};
+        String[] listaProductosPrecio = new String[8];
+        String[] listaProductosPuntos = new String[8];
+
+        for (int i = 0; i < listaProductosPrecio.length; i++) {
+            listaProductosPrecio[i] = listaProductos.get(i).getPrecio() + "";
+            listaProductosPuntos[i] = listaProductos.get(i).getPuntos() + "";
+        }
+
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
+                Producto productoActual = listaProductos.get((i + 1) * (j + 1) - 1);
                 panelProducto = new JPanel(new GridBagLayout());
                 panelProducto.setOpaque(false);
                 //panelProducto.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
@@ -146,11 +180,7 @@ public class PanelCatalogo extends JPanel {
                 panelMain.add(panelProducto, g);
                 limpiarConstraints(g);
 
-                if (i == 0) {
-                    labelPuntosProducto = new JLabel(listaProductosPuntos[j] + "Pts");
-                } else {
-                    labelPuntosProducto = new JLabel(listaProductosPuntos[j + 4] + "Pts");
-                }
+                labelPuntosProducto = new JLabel(productoActual.getPuntos() + "Pts");
                 labelPuntosProducto.setForeground(colorSecundario);
                 labelPuntosProducto.setOpaque(true);
                 labelPuntosProducto.setPreferredSize(new Dimension(60, 30));
@@ -166,11 +196,7 @@ public class PanelCatalogo extends JPanel {
                 panelProducto.add(labelPuntosProducto, g);
                 limpiarConstraints(g);
 
-                if (i == 0) {
-                    imgProducto = new ImageIcon("./src/main/java/Imagenes/Productos/" + (j + 1) + ".jpg");
-                } else {
-                    imgProducto = new ImageIcon("./src/main/java/Imagenes/Productos/" + (j + 5) + ".jpg");
-                }
+                imgProducto = new ImageIcon("./src/main/java/Imagenes/Productos/" + productoActual.getCodigo() + ".jpg");
                 labelProductoImg = new JLabel();
                 Image imgEscalada = imgProducto.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
                 Icon iconoEscalado = new ImageIcon(imgEscalada);
@@ -181,11 +207,7 @@ public class PanelCatalogo extends JPanel {
                 panelProducto.add(labelProductoImg, g);
                 limpiarConstraints(g);
 
-                if (i == 0) {
-                    labelProducto = new JLabel(listaProductosNombre[j]);
-                } else {
-                    labelProducto = new JLabel(listaProductosNombre[j + 4]);
-                }
+                labelProducto = new JLabel(productoActual.getNombre());
                 labelProducto.setForeground(colorSecundario);
                 labelProducto.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
                 labelProducto.setBackground(new Color(255, 255, 255));
@@ -202,11 +224,7 @@ public class PanelCatalogo extends JPanel {
                 panelProducto.add(labelProducto, g);
                 limpiarConstraints(g);
 
-                if (i == 0) {
-                    labelPrecio = new JLabel(listaProductosPrecio[j] + "€");
-                } else {
-                    labelPrecio = new JLabel(listaProductosPrecio[j + 4] + "€");
-                }
+                labelPrecio = new JLabel(productoActual.getPrecio() + "€");
                 labelPrecio.setForeground(colorSecundario);
                 labelPrecio.setFont(new Font(fuenteSecundaria, Font.PLAIN, 16));
                 labelProducto.setHorizontalAlignment(JLabel.CENTER);
@@ -224,12 +242,23 @@ public class PanelCatalogo extends JPanel {
                 botonProducto.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
                 botonProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 botonProducto.setFocusPainted(false);
+                if (productoActual.getCantidad() <= 0) {
+                    botonProducto.setEnabled(false);
+                }
                 g.anchor = GridBagConstraints.LINE_END;
                 g.gridx = 1;
                 g.gridy = 2;
                 g.gridwidth = 1;
                 panelProducto.add(botonProducto, g);
                 limpiarConstraints(g);
+                botonProducto.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        productoComprar = productoActual;
+                        labelNombreCesta.setText(productoComprar.getNombre() + " | " + productoComprar.getPrecio() + "€ ");
+                        botonCesta.setEnabled(true);
+                    }
+                });
 
             }
             panelPasarProductos = new JPanel();
@@ -337,6 +366,14 @@ public class PanelCatalogo extends JPanel {
         botonCesta.setEnabled(false);
         botonCesta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelCesta.add(botonCesta);
+        botonCesta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "\""+productoComprar.getNombre()+"\" comprado con exito", "");
+                ventanaComprado.setVisible(true);
+            }
+        });
 
         panelFooter.add(panelCesta, g);
 

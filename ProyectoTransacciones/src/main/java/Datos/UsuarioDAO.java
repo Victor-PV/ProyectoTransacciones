@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 public class UsuarioDAO {
 
     private JFrame ventana;
+    private EWalletDAO ewalletDAO = new EWalletDAO();
     
     private String SQL_SELECT = "SELECT * FROM usuarios WHERE DNI LIKE ?";
     private String SQL_INSERT = "INSERT INTO usuarios VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -165,6 +166,7 @@ public class UsuarioDAO {
 
             resultado = stmt.executeUpdate();
             if (resultado == 1) {
+                ewalletDAO.inertar(usuario.getDNI(), 0.0f, 0);
                 return 1;
             }
 

@@ -18,7 +18,7 @@ public class Producto {
      */
     private String codigo, nombre;
     private float precio;
-    private int puntos;
+    private int puntos, cantidad;
 
     /**
      * Constructor del objeto
@@ -28,11 +28,12 @@ public class Producto {
      * @param precio Parametro que indicara el Precio del objeto
      * @param puntos Parametro que indicara los Puntos del objeto
      */
-    public Producto(String codigo, String nombre, float precio, int puntos) {
+    public Producto(String codigo, String nombre, float precio, int puntos, int cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.puntos = puntos;
+        this.cantidad = cantidad;
     }
 
     /**
@@ -72,12 +73,41 @@ public class Producto {
     }
 
     /**
+     * Metodo que devolvera la variable Cantidad del objeto
+     *
+     * @return valor del Puntos del objeto
+     */
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    /**
+     * Metodo que actualizara la variable Cantidad del objeto
+     *
+     * @param cantidad nuevo valor para Cantidad
+     */
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    /**
      * Metodo que actualizara la variable Puntos del objeto
      *
      * @param puntos nuevo valor para DNI
      */
     public void setPuntos(int puntos) {
         this.puntos = puntos;
+    }
+
+    /**
+     * Metodo que devuelve en un String una descripción del objeto con sus
+     * variables
+     *
+     * @return String con las variables del objeto
+     */
+    @Override
+    public String toString() {
+        return "Producto{" + "codigo=" + codigo + ", nombre=" + nombre + ", precio=" + precio + ", puntos=" + puntos + ", cantidad=" + cantidad + '}';
     }
 
 }
