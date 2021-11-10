@@ -5,10 +5,12 @@
  */
 package Vista.Paneles;
 
+import Datos.ComprasDAO;
 import Datos.EWalletDAO;
 import Datos.ProductoDAO;
 import Datos.UsuarioDAO;
 import Dominio.EWallet;
+import Dominio.Posicion;
 import Dominio.Producto;
 import Dominio.Usuario;
 import java.awt.BorderLayout;
@@ -44,10 +46,12 @@ public class PanelCatalogo extends JPanel {
      * Variables de la clase
      */
     private ProductoDAO productoDAO;
-    private UsuarioDAO usuarioDAO;
     private EWalletDAO ewalletDAO;
+    private ComprasDAO comprasDAO;
     private EWallet ewallet;
     private Producto productoComprar;
+    private float saldoUsuario;
+    private int puntosUsuario;
 
     private List<Producto> listaProductos;
 
@@ -73,11 +77,14 @@ public class PanelCatalogo extends JPanel {
         /**
          * Conexion con la base de datos
          */
-        productoDAO = new ProductoDAO();
-        ewalletDAO = new EWalletDAO();
+        productoDAO = new ProductoDAO(ventana);
+        ewalletDAO = new EWalletDAO(ventana);
+        comprasDAO = new ComprasDAO(ventana);
 
         listaProductos = productoDAO.seleccionar();
         ewallet = ewalletDAO.seleccionar(usuario.getDNI());
+        saldoUsuario = ewallet.getSaldo();
+        puntosUsuario = ewallet.getPuntos();
 
         this.setLayout(new BorderLayout());
         GridBagConstraints g = new GridBagConstraints();
@@ -113,7 +120,7 @@ public class PanelCatalogo extends JPanel {
         labelSaldo.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
         panelSaldo.add(labelSaldo);
 
-        campoSaldo = new JTextField(ewallet.getSaldo() + "€");
+        campoSaldo = new JTextField(saldoUsuario + "€");
         campoSaldo.setPreferredSize(new Dimension(90, 35));
         campoSaldo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoSaldo.setEditable(false);
@@ -124,7 +131,7 @@ public class PanelCatalogo extends JPanel {
         labelPuntos.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
         panelSaldo.add(labelPuntos);
 
-        campoPuntos = new JTextField(ewallet.getPuntos() + "");
+        campoPuntos = new JTextField(puntosUsuario + " Pts");
         campoPuntos.setPreferredSize(new Dimension(90, 35));
         campoPuntos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoPuntos.setEditable(false);
@@ -164,9 +171,10 @@ public class PanelCatalogo extends JPanel {
             listaProductosPuntos[i] = listaProductos.get(i).getPuntos() + "";
         }
 
+        int indice = 0;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
-                Producto productoActual = listaProductos.get((i + 1) * (j + 1) - 1);
+                Producto productoActual = listaProductos.get(indice++);
                 panelProducto = new JPanel(new GridBagLayout());
                 panelProducto.setOpaque(false);
                 //panelProducto.setBorder(new MatteBorder(1, 1, 1, 1, colorSecundario));
@@ -260,6 +268,14 @@ public class PanelCatalogo extends JPanel {
                     }
                 });
 
+                //Si el usuario es cliente_administrador se mostrara el stock y si es solo administrador se bloqueara el boton añadir
+                if (usuario.getPosicion() == Posicion.Administrador || usuario.getPosicion() == Posicion.ClienteAdministrador) {
+                    panelProducto.setToolTipText("Stock: " + productoActual.getCantidad());
+                    if (usuario.getPosicion() == Posicion.Administrador) {
+                        botonProducto.setEnabled(false);
+                    }
+                }
+
             }
             panelPasarProductos = new JPanel();
             panelPasarProductos.setOpaque(false);
@@ -335,6 +351,7 @@ public class PanelCatalogo extends JPanel {
         checkPagarPuntos.setFont(new Font(fuenteSecundaria, Font.BOLD, 16));
         checkPagarPuntos.setOpaque(false);
         checkPagarPuntos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        checkPagarPuntos.setToolTipText("100Pts = 1€");
         checkPagarPuntos.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         panelPagarPuntos.add(checkPagarPuntos);
 
@@ -369,9 +386,49 @@ public class PanelCatalogo extends JPanel {
         botonCesta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "\""+productoComprar.getNombre()+"\" comprado con exito", "");
-                ventanaComprado.setVisible(true);
+                if (checkPagarPuntos.isSelected()) {
+                    if (productoComprar.getPrecio() >= 5) { //Si el producto cuesta mas de 5€
+                        if (((float) puntosUsuario / 100) >= productoComprar.getPrecio()) {//Si los puntos son suficientes para pagar el producto, 100Pts = 1€ (Ej. 2620Pts = 26.2€)
+
+                            comprasDAO.inertar(usuario, productoComprar);//Añade registro de la compra
+                            productoDAO.actualizar(productoComprar); //Actualiza el stock del producto
+                            ewalletDAO.actualizarCompraPuntos(productoComprar, ewallet, (int) (productoComprar.getPrecio() * 100)); //Actualiza los puntos del usuario tras la compra
+                            
+                            //Vuelve a cargar el panel
+                            ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(usuario, ventana), usuario));
+                            ventana.invalidate();
+                            ventana.validate();
+
+                            PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "\"" + productoComprar.getNombre() + "\" comprado por "+(int) (productoComprar.getPrecio() * 100)+" puntos", "");
+                            ventanaComprado.setVisible(true);
+
+                        } else {
+                            PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "No tienes suficientes puntos", "ERROR");
+                            ventanaComprado.setVisible(true);
+                        }
+                    } else {
+                        PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "El producto debe costar mas de 5€", "ERROR");
+                        ventanaComprado.setVisible(true);
+                    }
+                } else {
+                    if (saldoUsuario - productoComprar.getPrecio() >= 0) {
+                        //Transaccion
+                        comprasDAO.inertar(usuario, productoComprar);//Añade registro de la compra
+                        productoDAO.actualizar(productoComprar); //Actualiza el stock del producto
+                        ewalletDAO.actualizarCompra(productoComprar, ewallet); //Actualiza el saldo y los puntos del usuario tras la compra
+
+                        //Vuelve a cargar el panel
+                        ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(usuario, ventana), usuario));
+                        ventana.invalidate();
+                        ventana.validate();
+
+                        PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "\"" + productoComprar.getNombre() + "\" comprado con exito", "");
+                        ventanaComprado.setVisible(true);
+                    } else {
+                        PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "No tienes suficiente saldo", "ERROR");
+                        ventanaComprado.setVisible(true);
+                    }
+                }
             }
         });
 

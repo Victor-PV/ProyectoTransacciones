@@ -35,6 +35,8 @@ public class Producto {
         this.puntos = puntos;
         this.cantidad = cantidad;
     }
+    
+    public Producto(){};
 
     /**
      * Metodo que devolvera la variable Codigo del objeto

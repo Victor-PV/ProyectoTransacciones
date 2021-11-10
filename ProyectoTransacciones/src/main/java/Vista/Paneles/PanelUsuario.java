@@ -5,6 +5,10 @@
  */
 package Vista.Paneles;
 
+import Datos.EWalletDAO;
+import Datos.UsuarioDAO;
+import Dominio.EWallet;
+import Dominio.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -13,8 +17,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -29,6 +36,11 @@ public class PanelUsuario extends JPanel {
     /**
      * Variables de la clase
      */
+    private UsuarioDAO usuarioDAO;
+    private EWalletDAO ewalletDAO;
+    private EWallet ewallet;
+    private Usuario usuarioActual;
+
     private ImageIcon img;
     private JLabel imgUser;
 
@@ -41,9 +53,15 @@ public class PanelUsuario extends JPanel {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelUsuario() {
+    public PanelUsuario(JFrame ventana, Usuario usuario) {
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
+
+        usuarioDAO = new UsuarioDAO(ventana);
+        ewalletDAO = new EWalletDAO(ventana);
+        ewallet = ewalletDAO.seleccionar(usuario.getDNI());
+        usuarioActual = usuarioDAO.select(usuario.getDNI());
+
         /**
          * Avatar del usuario
          */
@@ -103,7 +121,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Campo de texto para el campo Nombre
          */
-        campoNombre = new JTextField("Victor");
+        campoNombre = new JTextField(usuarioActual.getNombre());
         campoNombre.setPreferredSize(new Dimension(300, 35));
         campoNombre.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         g.insets = new Insets(0, 0, 40, 0);
@@ -130,7 +148,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Campo de texto para el campo Saldo No sera editable
          */
-        campoSaldo = new JTextField("124.43€");
+        campoSaldo = new JTextField(ewallet.getSaldo() + "€");
         campoSaldo.setPreferredSize(new Dimension(150, 35));
         campoSaldo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoSaldo.setEditable(false);
@@ -158,7 +176,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Campo de texto para el campo Nombre
          */
-        campoApellidos = new JTextField("Perez Villanueva");
+        campoApellidos = new JTextField(usuarioActual.getApellidos());
         campoApellidos.setPreferredSize(new Dimension(300, 35));
         campoApellidos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         g.insets = new Insets(0, 0, 40, 0);
@@ -185,7 +203,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Campo de texto para el campo Puntos No sera editable
          */
-        campoPuntos = new JTextField("2300");
+        campoPuntos = new JTextField(ewallet.getPuntos() + " Pts");
         campoPuntos.setPreferredSize(new Dimension(150, 35));
         campoPuntos.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoPuntos.setEditable(false);
@@ -213,7 +231,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Campo de texto para el campo Nombre
          */
-        campoCorreo = new JTextField("PedritoElCrack@gmail.com");
+        campoCorreo = new JTextField(usuarioActual.getCorreo());
         campoCorreo.setPreferredSize(new Dimension(300, 35));
         campoCorreo.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         g.insets = new Insets(0, 0, 40, 0);
@@ -240,7 +258,7 @@ public class PanelUsuario extends JPanel {
         /**
          * Campo de texto para el campo Posicion No sera editable
          */
-        campoPosicion = new JTextField("Administrador");
+        campoPosicion = new JTextField(usuarioActual.getPosicion() + "");
         campoPosicion.setPreferredSize(new Dimension(150, 35));
         campoPosicion.setFont(new Font(fuenteSecundaria, Font.PLAIN, 14));
         campoPosicion.setEditable(false);
@@ -278,6 +296,20 @@ public class PanelUsuario extends JPanel {
         botonActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         botonActualizar.setFocusPainted(false);
         panelBotones.add(botonActualizar, BorderLayout.EAST);
+        botonActualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (usuarioDAO.actualizar(campoNombre.getText(), campoApellidos.getText(), campoCorreo.getText(), usuarioActual) == 1) {
+
+                    PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "Perfil actualizado", "");
+                    ventanaComprado.setVisible(true);
+
+                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario(ventana, usuario), usuario));
+                    ventana.invalidate();
+                    ventana.validate();
+                }
+            }
+        });
     }
 
     /**

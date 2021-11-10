@@ -7,6 +7,7 @@ package Vista.Paneles;
 
 import Dominio.Posicion;
 import Dominio.Usuario;
+import Vista.FrameAplicacion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -72,7 +73,7 @@ public class PanelMenuAside extends JPanel {
          */
         labelHome.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario(), usuario));
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelUsuario(ventana, usuario), usuario));
                 ventana.invalidate();
                 ventana.validate();
             }
@@ -99,7 +100,7 @@ public class PanelMenuAside extends JPanel {
          */
         labelCatalogo.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(), usuario));
+                ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(usuario, ventana), usuario));
                 ventana.invalidate();
                 ventana.validate();
             }
@@ -154,7 +155,7 @@ public class PanelMenuAside extends JPanel {
              */
             labelReembolso.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso(ventana), usuario));
+                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelReembolso(ventana, usuario), usuario));
                     ventana.invalidate();
                     ventana.validate();
                 }
@@ -183,7 +184,7 @@ public class PanelMenuAside extends JPanel {
              */
             labelEncargar.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelReponer(), usuario));
+                    ventana.setContentPane(new PanelAplicacion(ventana, new PanelReponer(ventana), usuario));
                     ventana.invalidate();
                     ventana.validate();
                 }

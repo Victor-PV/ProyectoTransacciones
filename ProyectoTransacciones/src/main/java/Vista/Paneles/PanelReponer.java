@@ -5,6 +5,8 @@
  */
 package Vista.Paneles;
 
+import Datos.ProductoDAO;
+import Dominio.Producto;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -12,9 +14,12 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -30,6 +35,9 @@ public class PanelReponer extends JPanel {
     /**
      * Variables de la clase
      */
+    private ProductoDAO productoDAO;
+    private Producto productoActual;
+
     private ImageIcon img;
     private JLabel imgUser, titulo;
     private JLabel txtCodProducto, txtNombreProducto, txtPrecioUd, txtCantidadDisponible;
@@ -51,7 +59,9 @@ public class PanelReponer extends JPanel {
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
 
-    public PanelReponer() {
+    public PanelReponer(JFrame ventana) {
+        productoDAO = new ProductoDAO(ventana);
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
@@ -82,7 +92,7 @@ public class PanelReponer extends JPanel {
         g.weightx = 1;
         this.add(espacio, g);
         limpiarConstraints(g);
-        
+
         /**
          * Texto para el campo Campo producto
          */
@@ -129,6 +139,41 @@ public class PanelReponer extends JPanel {
         g.gridy = 3;
         g.weightx = 0.33;
         this.add(botonConsulta, g);
+        botonConsulta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                productoActual = productoDAO.seleccionarProducto(campoCodProducto.getText());
+                if (productoActual != null) {
+                    campoNombreProducto.setText(productoActual.getNombre());
+                    campoPrecioUd.setText(productoActual.getPrecio() + "€");
+                    campoCantidadDisponible.setText(productoActual.getCantidad() + "");
+
+                    cantidadDepos.setEnabled(true);
+
+                    botonPedir.setEnabled(true);
+                    int cantidad = Integer.valueOf((String) cantidadDepos.getSelectedItem());
+                    campoPrecioDepos.setText(productoActual.getPrecio() * cantidad + "€");
+
+                    campoPuntosActuales.setText(productoActual.getPuntos() + " Pts");
+                    camposPuntosNuevos.setEditable(true);
+
+                    botonActualizar.setEnabled(true);
+                } else {
+                    campoNombreProducto.setText("");
+                    campoPrecioUd.setText("");
+                    campoCantidadDisponible.setText("");
+
+                    cantidadDepos.setEnabled(false);
+
+                    botonPedir.setEnabled(false);
+                    campoPrecioDepos.setText("");
+                    campoPuntosActuales.setText("");
+                    camposPuntosNuevos.setEditable(false);
+
+                    botonActualizar.setEnabled(false);
+                }
+            }
+        });
 
         /**
          * Texto para el campo Nombre del producto
@@ -264,6 +309,15 @@ public class PanelReponer extends JPanel {
         g.weightx = 0.33;
         this.add(cantidadDepos, g);
         limpiarConstraints(g);
+        cantidadDepos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int cantidad = Integer.valueOf((String) cantidadDepos.getSelectedItem());
+                campoPrecioDepos.setText(productoActual.getPrecio() * cantidad + "€");
+
+            }
+        });
 
         /**
          * Texto para el campo precio total
@@ -279,7 +333,8 @@ public class PanelReponer extends JPanel {
         this.add(txtPrecioDepos, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto donde se mostrara el precio de la cantidad seleccionada
+         * Campo de texto donde se mostrara el precio de la cantidad
+         * seleccionada
          */
         campoPrecioDepos = new JTextField("");
         campoPrecioDepos.setPreferredSize(new Dimension(210, 35));
@@ -303,7 +358,7 @@ public class PanelReponer extends JPanel {
         botonPedir.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonPedir.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonPedir.setFocusPainted(false);
-        botonPedir.setEnabled(true);
+        botonPedir.setEnabled(false);
         botonPedir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 2;
@@ -312,8 +367,23 @@ public class PanelReponer extends JPanel {
         g.weightx = 0.33;
         this.add(botonPedir, g);
         limpiarConstraints(g);
-        
-                /**
+        botonPedir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "Se ha aumentado el stock de \n" + productoActual.getNombre() + "\"", "");
+                ventanaComprado.setVisible(true);
+
+                productoDAO.inertarStock(Integer.parseInt((String) cantidadDepos.getSelectedItem()), productoActual);
+
+                cantidadDepos.setSelectedIndex(0);
+                int cantidad = Integer.valueOf((String) cantidadDepos.getSelectedItem());
+                campoPrecioDepos.setText(productoActual.getPrecio() * cantidad + "€");
+
+            }
+        });
+
+        /**
          * JLabel para espaciar entre zonas
          */
         espacio = new JLabel();
@@ -333,15 +403,15 @@ public class PanelReponer extends JPanel {
         /**
          * Texto para el campo cantidad a depositar
          */
-        txtPuntosActuales = new JLabel("Puntos actuales: ");
-        txtPuntosActuales.setForeground(colorSecundario);
-        txtPuntosActuales.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        txtPuntosNuevos = new JLabel("Nuevos puntos: ");
+        txtPuntosNuevos.setForeground(colorSecundario);
+        txtPuntosNuevos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 0;
         g.gridy = 10;
         g.insets = new Insets(0, 90, 5, 0);
         g.weightx = 0.33;
-        this.add(txtPuntosActuales, g);
+        this.add(txtPuntosNuevos, g);
         limpiarConstraints(g);
         /**
          * Campo de texto para el campo cantidad a depositar
@@ -361,18 +431,19 @@ public class PanelReponer extends JPanel {
         /**
          * Texto para el campo precio total
          */
-        txtPuntosNuevos = new JLabel("Nuevos puntos: ");
-        txtPuntosNuevos.setForeground(colorSecundario);
-        txtPuntosNuevos.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
+        txtPuntosActuales = new JLabel("Puntos actuales: ");
+        txtPuntosActuales.setForeground(colorSecundario);
+        txtPuntosActuales.setFont(new Font(fuenteSecundaria, Font.BOLD, 18));
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 1;
         g.gridy = 10;
         g.insets = new Insets(0, 0, 5, 0);
         g.weightx = 0.33;
-        this.add(txtPuntosNuevos, g);
+        this.add(txtPuntosActuales, g);
         limpiarConstraints(g);
         /**
-         * Campo de texto donde se mostrara el precio de la cantidad seleccionada
+         * Campo de texto donde se mostrara el precio de la cantidad
+         * seleccionada
          */
         camposPuntosNuevos = new JTextField("");
         camposPuntosNuevos.setPreferredSize(new Dimension(210, 35));
@@ -396,7 +467,7 @@ public class PanelReponer extends JPanel {
         botonActualizar.setBorder(new MatteBorder(1, 1, 1, 1, colorPrincipal));
         botonActualizar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
         botonActualizar.setFocusPainted(false);
-        botonActualizar.setEnabled(true);
+        botonActualizar.setEnabled(false);
         botonActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         g.anchor = GridBagConstraints.LINE_START;
         g.gridx = 2;
@@ -404,6 +475,19 @@ public class PanelReponer extends JPanel {
         g.insets = new Insets(0, 20, 0, 0);
         g.weightx = 0.33;
         this.add(botonActualizar, g);
+        botonActualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "Se han actualizado los puntos de \n" + productoActual.getNombre() + "\"", "");
+                ventanaComprado.setVisible(true);
+
+                productoDAO.actualizarPuntos(Integer.parseInt(camposPuntosNuevos.getText()), productoActual);
+
+                camposPuntosNuevos.setText("");
+
+            }
+        });
     }
 
     /**

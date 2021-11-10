@@ -23,13 +23,14 @@ import javax.swing.JFrame;
 public class UsuarioDAO {
 
     private JFrame ventana;
-    private EWalletDAO ewalletDAO = new EWalletDAO();
+    private EWalletDAO ewalletDAO = new EWalletDAO(this.ventana);
     
     private String SQL_SELECT = "SELECT * FROM usuarios WHERE DNI LIKE ?";
     private String SQL_INSERT = "INSERT INTO usuarios VALUES(?, ?, ?, ?, ?, ?, ?)";
     private String SQL_SEARCH_DNI = "SELECT * FROM usuarios WHERE DNI LIKE ?";
     private String SQL_LOGIN = "SELECT * FROM usuarios WHERE DNI LIKE ? AND password LIKE ?";
-    private String SQL_UPDATE_CA = "UPDATE usuarios SET Posicion = 'ClienteAdministrador' WHERE DNI LIKE ?";
+    private String SQL_UPDATE_POSICION = "UPDATE usuarios SET Posicion = 'ClienteAdministrador' WHERE DNI LIKE ?";
+    private String SQL_UPDATE_USER = "UPDATE usuarios SET nombre = ?, apellidos = ?, correo = ? WHERE DNI LIKE ?";
 
     public UsuarioDAO(JFrame ventana) {
         this.ventana = ventana;
@@ -139,7 +140,7 @@ public class UsuarioDAO {
                         && rs.getString("Password").equalsIgnoreCase(usuario.getPassword())
                         && !rs.getString("Posicion").equalsIgnoreCase(usuario.getPosicion() + "")) {
 
-                    stmt = conn.prepareStatement(SQL_UPDATE_CA);
+                    stmt = conn.prepareStatement(SQL_UPDATE_POSICION);
                     stmt.setString(1, usuario.getDNI());
 
                     resultado = stmt.executeUpdate();
@@ -178,4 +179,37 @@ public class UsuarioDAO {
         return 5;
     }
 
+        public int actualizar(String nombre, String apellidos, String correo, Usuario usuario) {
+        int resultado = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE_USER);
+
+            stmt.setString(1, nombre);
+            stmt.setString(2, apellidos);
+            stmt.setString(3, correo);
+            stmt.setString(4, usuario.getDNI());
+
+            resultado = stmt.executeUpdate(); 
+        } catch (Exception e) {
+            PanelAlerta ventanaError = new PanelAlerta(ventana, true, e.getMessage(), "ERROR");
+            ventanaError.setVisible(true);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+
+        return resultado;
+    }
+    
+    
 }

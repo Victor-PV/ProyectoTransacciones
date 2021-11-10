@@ -21,5 +21,6 @@ public class Main {
         FrameInicio ventana = new FrameInicio();
         ventana.setVisible(true);
         
+        
     }
 }

@@ -5,6 +5,7 @@
  */
 package Datos;
 
+import Dominio.Compra;
 import Dominio.EWallet;
 import Dominio.Producto;
 import Vista.Paneles.PanelAlerta;
@@ -12,8 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -26,6 +25,12 @@ public class EWalletDAO {
 
     private String SQL_INSERT = "INSERT INTO EWallet VALUES(?, ?, ?)";
     private String SQL_SELECT = "SELECT * FROM ewallet WHERE DNI LIKE ?";
+    private String SQL_UPDATE_COMPRA = "UPDATE ewallet SET Saldo = ?, Puntos = ? WHERE DNI LIKE ?";
+    private String SQL_UPDATE_COMPRA_PUNTOS = "UPDATE ewallet SET Puntos = ? WHERE DNI LIKE ?";
+
+    public EWalletDAO(JFrame ventana) {
+        this.ventana = ventana;
+    }
 
     public void inertar(String DNI, float saldo, int puntos) {
         Connection conn = null;
@@ -33,7 +38,6 @@ public class EWalletDAO {
         int resultado = 0;
 
         try {
-            //Se comprueba si existe algun usuario con ese DNI
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, DNI);
@@ -104,4 +108,92 @@ public class EWalletDAO {
         return ewallet;
     }
 
+    public int actualizarCompra(Producto producto, EWallet ewallet) {
+        int resultado = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE_COMPRA);
+
+            stmt.setFloat(1, ewallet.getSaldo() - producto.getPrecio());
+            stmt.setInt(2, ewallet.getPuntos() + producto.getPuntos());
+            stmt.setString(3, ewallet.getDNI());
+
+            resultado = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+
+        return resultado;
+    }
+
+    public int actualizarCompraPuntos(Producto producto, EWallet ewallet, int puntosGastado) {
+        int resultado = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE_COMPRA_PUNTOS);
+            stmt.setInt(1, ewallet.getPuntos() - puntosGastado);
+            stmt.setString(2, ewallet.getDNI());
+
+            resultado = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+
+        return resultado;
+    }
+    
+    public int actualizarDevolucion(Compra compra, EWallet ewallet) {
+        int resultado = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE_COMPRA);
+
+            stmt.setFloat(1, ewallet.getSaldo() + compra.getPrecio());
+            stmt.setInt(2, ewallet.getPuntos() - compra.getPuntos());
+            stmt.setString(3, ewallet.getDNI());
+
+            resultado = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+
+        return resultado;
+    }
+    
 }

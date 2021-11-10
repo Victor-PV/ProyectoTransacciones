@@ -13,18 +13,22 @@ import java.sql.Date;
  */
 public class Compra {
 
-    private String DNI, codProducto;
+    private int ID;
+    private String DNI, codProducto, nombreProducto;
     private float precio;
     private int puntos;
     private Date fechaCompra;
 
-    public Compra(String DNI, Producto producto, Date fechaCompra) {
+    public Compra(int ID, String DNI, String codProducto, String nombreProducto, float precio, int puntos, Date fechaCompra) {
+        this.ID = ID;
         this.DNI = DNI;
-        this.codProducto = producto.getCodigo();
-        this.precio = producto.getPrecio();
-        this.puntos = producto.getPuntos();
+        this.codProducto = codProducto;
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.puntos = puntos;
         this.fechaCompra = fechaCompra;
     }
+
 
     /**
      * Metodo que devolvera la variable DNI del objeto
@@ -80,6 +84,22 @@ public class Compra {
     @Override
     public String toString() {
         return "Compra{" + "DNI=" + DNI + ", codProducto=" + codProducto + ", precio=" + precio + ", puntos=" + puntos + ", fechaCompra=" + fechaCompra + '}';
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getNombreProducto() {
+        return this.nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
 }
