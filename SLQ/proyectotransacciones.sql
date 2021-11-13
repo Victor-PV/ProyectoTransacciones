@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 08-11-2021 a las 23:21:30
+-- Tiempo de generación: 10-11-2021 a las 23:21:51
 -- Versión del servidor: 5.7.31
 -- Versión de PHP: 7.3.21
 
@@ -38,7 +38,27 @@ CREATE TABLE IF NOT EXISTS `compras` (
   PRIMARY KEY (`ID`),
   KEY `Comprador` (`DNI`),
   KEY `ProductoComprado` (`CodigoProducto`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `compras`
+--
+
+INSERT INTO `compras` (`ID`, `DNI`, `CodigoProducto`, `Precio`, `Puntos`, `FechaCompra`) VALUES
+(3, '123', '0432-IU', 1.99, 90, '2021-11-09'),
+(4, '123', '0382-AP', 3.85, 120, '2021-11-09'),
+(5, '123', '0382-AP', 3.85, 120, '2021-11-09'),
+(6, '123', '0721-HI', 4.11, 280, '2021-11-09'),
+(7, '123', '0872-LK', 10.95, 400, '2021-11-09'),
+(8, '123', '0872-LK', 10.95, 400, '2021-11-09'),
+(9, '123', '0872-LK', 10.95, 400, '2021-11-09'),
+(12, '123', '0872-LK', 10.95, 400, '2021-11-09'),
+(13, '123', '0872-LK', 10.95, 400, '2021-11-09'),
+(15, '123', '1123-ER', 1.08, 130, '2021-11-10'),
+(16, '123', '0382-AP', 3.85, 120, '2021-11-10'),
+(17, '123', '0382-AP', 3.85, 120, '2021-11-10'),
+(18, '123', '0382-AP', 3.85, 120, '2021-11-10'),
+(19, '123', '0721-HI', 4.11, 280, '2021-11-10');
 
 -- --------------------------------------------------------
 
@@ -59,7 +79,9 @@ CREATE TABLE IF NOT EXISTS `ewallet` (
 --
 
 INSERT INTO `ewallet` (`DNI`, `Saldo`, `Puntos`) VALUES
-('123', 1200, 600),
+('123', 16.3, 255),
+('12345678A', 0, 0),
+('22222222P', 0, 0),
 ('43434343T', 0, 0);
 
 -- --------------------------------------------------------
@@ -83,13 +105,13 @@ CREATE TABLE IF NOT EXISTS `productos` (
 --
 
 INSERT INTO `productos` (`Codigo`, `Nombre`, `Precio`, `Puntos`, `cantidad`) VALUES
-('0382-AP', 'Naranjas 4Kg', 3.85, 120, 8),
-('0432-IU', 'Jamón cocido 125g', 1.99, 90, 20),
-('0531-PU', 'Lechuga romana', 1.39, 120, 0),
-('0721-HI', 'Pechuga de pavo', 4.11, 280, 32),
-('0872-LK', 'Rabo vacuno 1Kg', 0.95, 400, 17),
+('0382-AP', 'Naranjas 4Kg', 3.85, 120, 11),
+('0432-IU', 'Jamón cocido 125g', 1.99, 90, 19),
+('0531-PU', 'Lechuga romana', 1.39, 120, 8),
+('0721-HI', 'Pechuga de pavo', 4.11, 280, 30),
+('0872-LK', 'Rabo vacuno 1Kg', 10.95, 400, 9),
 ('0927-FI', 'Pan de perrito 6Ud', 1.65, 100, 33),
-('1123-ER', 'Ensalada gourmet', 1.08, 120, 13),
+('1123-ER', 'Ensalada gourmet', 1.08, 130, 14),
 ('1233-LH', 'Setas enteras 300g', 2.99, 200, 23);
 
 -- --------------------------------------------------------
@@ -115,17 +137,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`DNI`, `Nombre`, `Apellidos`, `correo`, `FechaNacimiento`, `Password`, `Posicion`) VALUES
-('11111111D', 'asa', 'sas', '', '3804-05-02', '123', 'Cliente'),
-('11111111F', 'Lucas', 'si', '', '3801-01-31', '123', 'Cliente'),
-('11111111O', 'Lucas', 'Garin', '', '2001-04-02', '123', 'Cliente'),
-('12121212A', 'Hugo', 'Si', '', '3803-04-01', '123', 'ClienteAdministrador'),
-('12211212R', 'Pablo', 'Si', 'Pablo@gmail.com', '3862-05-01', '123', 'ClienteAdministrador'),
-('123', '123', '123', NULL, '1999-01-01', '123', 'ClienteAdministrador'),
-('22222222D', 'ded', 'ded', '', '3899-04-02', '123', 'Administrador'),
-('34439012Y', 'Gustabo', 'Si', '', '3804-05-04', '123', 'Administrador'),
-('43434343T', 'Isak', 'Isak', '', '1991-11-02', '123', 'Cliente'),
-('54786345E', 'Fran', 'Alvarez', NULL, '2000-05-04', '123', 'Cliente'),
-('89898989U', 'Juan', 'Garcia', 'Juanito@a.com', '1972-04-02', '123', 'Cliente');
+('123', 'Victor', 'Perez Villanueva', 'PedritoElCrack@gmail.com', '1999-01-01', '123', 'ClienteAdministrador'),
+('12345678A', 'Guille', 'Guillamon', '', '2000-04-02', '123', 'Cliente'),
+('22222222P', 'Yoel', 'Ikea', '', '1970-04-02', '123', 'Administrador'),
+('43434343T', 'Isak', 'Isak', '', '1991-11-02', '123', 'Cliente');
 
 --
 -- Restricciones para tablas volcadas

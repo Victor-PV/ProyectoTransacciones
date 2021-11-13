@@ -112,7 +112,7 @@ public class PanelAplicacion extends JPanel {
         }else if(panel instanceof PanelCatalogo){
             tam = 0.2f;
         }else if(panel instanceof PanelRecargar){
-            tam = 0.217f;
+            tam = 0.265f;
         }else if(panel instanceof PanelReembolso){
             tam = 0.285f;
         }else{
@@ -132,7 +132,7 @@ public class PanelAplicacion extends JPanel {
         }else if(panel instanceof PanelCatalogo){
             tam = 0.8f;
         }else if(panel instanceof PanelRecargar){
-            tam = 0.783f;
+            tam = 0.735f;
         }else if(panel instanceof PanelReembolso){
             tam = 0.715f;
         }else{

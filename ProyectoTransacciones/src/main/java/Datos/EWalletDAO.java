@@ -27,6 +27,7 @@ public class EWalletDAO {
     private String SQL_SELECT = "SELECT * FROM ewallet WHERE DNI LIKE ?";
     private String SQL_UPDATE_COMPRA = "UPDATE ewallet SET Saldo = ?, Puntos = ? WHERE DNI LIKE ?";
     private String SQL_UPDATE_COMPRA_PUNTOS = "UPDATE ewallet SET Puntos = ? WHERE DNI LIKE ?";
+    private String SQL_UPDATE_RECARGAR = "UPDATE ewallet SET Saldo = Saldo + ? WHERE DNI LIKE ?";
 
     public EWalletDAO(JFrame ventana) {
         this.ventana = ventana;
@@ -194,6 +195,33 @@ public class EWalletDAO {
         }
 
         return resultado;
+    }
+    public void inertarSaldo(float saldo, String DNI) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int resultado = 0;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE_RECARGAR);
+            stmt.setFloat(1, saldo);
+            stmt.setString(2, DNI);
+
+            resultado = stmt.executeUpdate();
+
+        } catch (Exception e) {
+            PanelAlerta ventanaError = new PanelAlerta(ventana, true, e.getMessage(), "ERROR");
+            ventanaError.setVisible(true);
+        }
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+        }
+        try {
+            stmt.close();
+        } catch (SQLException ex) {
+        }
+
     }
     
 }
