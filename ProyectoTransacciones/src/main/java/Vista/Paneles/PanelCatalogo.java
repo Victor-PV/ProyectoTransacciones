@@ -6,9 +6,9 @@
 package Vista.Paneles;
 
 import Datos.ComprasDAO;
+import Datos.Conexion;
 import Datos.EWalletDAO;
 import Datos.ProductoDAO;
-import Datos.UsuarioDAO;
 import Dominio.EWallet;
 import Dominio.Posicion;
 import Dominio.Producto;
@@ -25,6 +25,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -389,17 +390,45 @@ public class PanelCatalogo extends JPanel {
                 if (checkPagarPuntos.isSelected()) {
                     if (productoComprar.getPrecio() >= 5) { //Si el producto cuesta mas de 5€
                         if (((float) puntosUsuario / 100) >= productoComprar.getPrecio()) {//Si los puntos son suficientes para pagar el producto, 100Pts = 1€ (Ej. 2620Pts = 26.2€)
+                            try {
+                                Connection conexionTransaccion = Conexion.getConnection();
+                                ComprasDAO comprasDAOTra = new ComprasDAO(ventana, conexionTransaccion);
+                                ProductoDAO productoDAOra = new ProductoDAO(ventana, conexionTransaccion);
+                                EWalletDAO ewalletDAOra = new EWalletDAO(ventana, conexionTransaccion);
+                                try {
 
-                            comprasDAO.inertar(usuario, productoComprar);//Añade registro de la compra
-                            productoDAO.actualizar(productoComprar); //Actualiza el stock del producto
-                            ewalletDAO.actualizarCompraPuntos(productoComprar, ewallet, (int) (productoComprar.getPrecio() * 100)); //Actualiza los puntos del usuario tras la compra
-                            
+                                    if (conexionTransaccion.getAutoCommit()) {
+                                        conexionTransaccion.setAutoCommit(false);
+                                    }
+
+                                    comprasDAOTra.inertar(usuario, productoComprar);//Añade registro de la compra
+                                    productoDAOra.actualizar(productoComprar); //Actualiza el stock del producto
+                                    ewalletDAOra.actualizarCompraPuntos(productoComprar, ewallet, (int) (productoComprar.getPrecio() * 100)); //Actualiza los puntos del usuario tras la compra
+
+                                    conexionTransaccion.commit();
+
+                                } catch (Exception ec) {
+                                    PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, ec.getMessage()+ "1", "ERROR");
+                                    ventanaCommit.setVisible(true);
+                                    try {
+
+                                        conexionTransaccion.rollback();
+                                    } catch (Exception er) {
+                                        PanelAlerta ventanaRollback = new PanelAlerta(ventana, true, er.getMessage()+ "2", "ERROR");
+                                        ventanaRollback.setVisible(true);
+                                    }
+                                }
+                            } catch (Exception ev) {
+                                PanelAlerta ventanaConnection = new PanelAlerta(ventana, true, ev.getMessage()+ "3", "ERROR");
+                                ventanaConnection.setVisible(true);
+                            }
+
                             //Vuelve a cargar el panel
                             ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(usuario, ventana), usuario));
                             ventana.invalidate();
                             ventana.validate();
 
-                            PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "\"" + productoComprar.getNombre() + "\" comprado por "+(int) (productoComprar.getPrecio() * 100)+" puntos", "");
+                            PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "\"" + productoComprar.getNombre() + "\" comprado por " + (int) (productoComprar.getPrecio() * 100) + " puntos", "");
                             ventanaComprado.setVisible(true);
 
                         } else {
@@ -413,9 +442,38 @@ public class PanelCatalogo extends JPanel {
                 } else {
                     if (saldoUsuario - productoComprar.getPrecio() >= 0) {
                         //Transaccion
-                        comprasDAO.inertar(usuario, productoComprar);//Añade registro de la compra
-                        productoDAO.actualizar(productoComprar); //Actualiza el stock del producto
-                        ewalletDAO.actualizarCompra(productoComprar, ewallet); //Actualiza el saldo y los puntos del usuario tras la compra
+                        try {
+                            Connection conexionTransaccion = Conexion.getConnection();
+                            ComprasDAO comprasDAOTra = new ComprasDAO(ventana, conexionTransaccion);
+                            ProductoDAO productoDAOra = new ProductoDAO(ventana, conexionTransaccion);
+                            EWalletDAO ewalletDAOra = new EWalletDAO(ventana, conexionTransaccion);
+                            try {
+
+                                if (conexionTransaccion.getAutoCommit()) {
+                                    conexionTransaccion.setAutoCommit(false);
+                                }
+
+                                comprasDAOTra.inertar(usuario, productoComprar);//Añade registro de la compra
+                                productoDAOra.actualizar(productoComprar); //Actualiza el stock del producto
+                                ewalletDAOra.actualizarCompra(productoComprar, ewallet); //Actualiza el saldo y los puntos del usuario tras la compra
+
+                                conexionTransaccion.commit();
+
+                            } catch (Exception ec) {
+                                PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, ec.getMessage()+ "1", "ERROR");
+                                ventanaCommit.setVisible(true);
+                                try {
+
+                                    conexionTransaccion.rollback();
+                                } catch (Exception er) {
+                                    PanelAlerta ventanaRollback = new PanelAlerta(ventana, true, er.getMessage()+ "2", "ERROR");
+                                    ventanaRollback.setVisible(true);
+                                }
+                            }
+                        } catch (Exception ev) {
+                            PanelAlerta ventanaConnection = new PanelAlerta(ventana, true, ev.getMessage()+ "3", "ERROR");
+                            ventanaConnection.setVisible(true);
+                        }
 
                         //Vuelve a cargar el panel
                         ventana.setContentPane(new PanelAplicacion(ventana, new PanelCatalogo(usuario, ventana), usuario));

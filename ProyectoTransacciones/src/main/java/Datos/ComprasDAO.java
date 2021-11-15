@@ -25,14 +25,22 @@ import javax.swing.JFrame;
 public class ComprasDAO {
 
     private JFrame ventana;
+    private Connection conexionTransaccion;
 
     public ComprasDAO(JFrame ventana) {
         this.ventana = ventana;
+        this.conexionTransaccion = null;
+    }
+
+    public ComprasDAO(JFrame ventana, Connection conexionTransaccion) {
+        this.ventana = ventana;
+        this.conexionTransaccion = conexionTransaccion;
     }
     private String SQL_INSERT = "INSERT INTO compras VALUES(null, ?, ? , ? , ?, ?)";
     private String SQL_SELECT = "SELECT c.*, p.Nombre FROM compras c INNER JOIN productos p ON c.CodigoProducto = p.Codigo WHERE c.DNI LIKE ? ORDER BY c.ID DESC LIMIT 10";
     private String SQL_SELECT_COMPRA = "SELECT * FROM compras WHERE DNI LIKE ? AND ID = ?";
     private String SQL_DELETE = "DELETE FROM compras WHERE ID = ?";
+    private String SQL_DELETE_COMPRA = "DELETE FROM compras WHERE DNI = ?";
 
     public List<Compra> seleccionar(String DNIUsuario) {
         /**
@@ -92,7 +100,7 @@ public class ComprasDAO {
 
         try {
             //Se comprueba si existe algun usuario con ese DNI
-            conn = Conexion.getConnection();
+            conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, usuario.getDNI());
             stmt.setString(2, producto.getCodigo());
@@ -111,11 +119,10 @@ public class ComprasDAO {
             ventanaError.setVisible(true);
         }
         try {
-            conn.close();
-        } catch (SQLException ex) {
-        }
-        try {
             stmt.close();
+            if (this.conexionTransaccion == null) {
+                Conexion.close(conn);
+            }
         } catch (SQLException ex) {
         }
 
@@ -135,7 +142,7 @@ public class ComprasDAO {
         List<Compra> listaCompras = seleccionar(DNIUsuario);
         for (Compra c : listaCompras) {
             isValida = c.getID() == IDCompra;
-            if(isValida){
+            if (isValida) {
                 break;
             }
         }
@@ -189,9 +196,47 @@ public class ComprasDAO {
          * catch
          */
         try {
-            conn = Conexion.getConnection();
+            conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, compra.getID());
+
+            resultado = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+
+        return resultado;
+    }
+    
+    public int borrarCompras(String DNI) {
+        /**
+         * Variables del metodo
+         */
+        int resultado = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        /**
+         * Dentro del try se establece la conexión con la base de datos, se
+         * genera la consulta DELETE con el coche que queramos borrar de la base
+         * de datos Dentro del catch se recogen los posibles errores que se
+         * pueden generar dentro del try Dentro del finally se finalizan las
+         * variables de conexión con la base de datos con sus respectivos try &
+         * catch
+         */
+        try {
+            conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
+            stmt = conn.prepareStatement(SQL_DELETE);
+            stmt.setString(1, DNI);
 
             resultado = stmt.executeUpdate();
         } catch (Exception e) {

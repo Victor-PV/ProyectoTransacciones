@@ -23,54 +23,62 @@ import javax.swing.JFrame;
 public class UsuarioDAO {
 
     private JFrame ventana;
-    private EWalletDAO ewalletDAO = new EWalletDAO(this.ventana);
+    private Connection conexionTransaccion;
+
+    public UsuarioDAO(JFrame ventana, Connection conexionTransaccion) {
+        this.ventana = ventana;
+        this.conexionTransaccion = conexionTransaccion;
+    }
+    public UsuarioDAO(JFrame ventana) {
+        this.ventana = ventana;
+    }
     
+    private EWalletDAO ewalletDAO = new EWalletDAO(this.ventana);
+
     private String SQL_SELECT = "SELECT * FROM usuarios WHERE DNI LIKE ?";
     private String SQL_INSERT = "INSERT INTO usuarios VALUES(?, ?, ?, ?, ?, ?, ?)";
     private String SQL_SEARCH_DNI = "SELECT * FROM usuarios WHERE DNI LIKE ?";
     private String SQL_LOGIN = "SELECT * FROM usuarios WHERE DNI LIKE ? AND password LIKE ?";
     private String SQL_UPDATE_POSICION = "UPDATE usuarios SET Posicion = 'ClienteAdministrador' WHERE DNI LIKE ?";
     private String SQL_UPDATE_USER = "UPDATE usuarios SET nombre = ?, apellidos = ?, correo = ? WHERE DNI LIKE ?";
+    private String SQL_DELETE = "DELETE FROM usuarios WHERE DNI = ?";
 
-    public UsuarioDAO(JFrame ventana) {
-        this.ventana = ventana;
-    }
 
-    public Usuario select(String DNI){
+    public Usuario select(String DNI) {
         Usuario usuario = new Usuario();
         Connection conn = null;
-        PreparedStatement stmt = null;      
+        PreparedStatement stmt = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             stmt.setString(1, DNI);
             rs = stmt.executeQuery();
-            
+
             String nombre, apellidos, password, correo;
             Date nacimiento;
             Posicion posicion;
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 nombre = rs.getString("Nombre");
                 apellidos = rs.getString("Apellidos");
                 correo = rs.getString("Correo");
                 nacimiento = rs.getDate("FechaNacimiento");
                 password = rs.getString("Password");
                 posicion = Posicion.valueOf(rs.getString("Posicion"));
-                
+
                 usuario = new Usuario(DNI, nombre, apellidos, correo, password, nacimiento, posicion);
             }
-            
-        }catch(Exception e){
-                PanelAlerta ventanaError = new PanelAlerta(ventana, true, e.getMessage(), "ERROR");
-                ventanaError.setVisible(true);
+
+        } catch (Exception e) {
+            PanelAlerta ventanaError = new PanelAlerta(ventana, true, e.getMessage(), "ERROR");
+            ventanaError.setVisible(true);
         }
-        
+
         return usuario;
     }
-    
+
     public ArrayList<String> login(String DNI, String password) {
         ArrayList<String> usuarios = new ArrayList<>();
         Connection conn = null;
@@ -107,9 +115,7 @@ public class UsuarioDAO {
     /**
      * metodo que tal
      *
-     * -2: El usuario ya existe 
-     * 1: Usuario introducido 
-     * 2: Usuario actualizado
+     * -2: El usuario ya existe 1: Usuario introducido 2: Usuario actualizado
      *
      * @param usuario
      * @return
@@ -179,7 +185,7 @@ public class UsuarioDAO {
         return 5;
     }
 
-        public int actualizar(String nombre, String apellidos, String correo, Usuario usuario) {
+    public int actualizar(String nombre, String apellidos, String correo, Usuario usuario) {
         int resultado = 0;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -193,7 +199,7 @@ public class UsuarioDAO {
             stmt.setString(3, correo);
             stmt.setString(4, usuario.getDNI());
 
-            resultado = stmt.executeUpdate(); 
+            resultado = stmt.executeUpdate();
         } catch (Exception e) {
             PanelAlerta ventanaError = new PanelAlerta(ventana, true, e.getMessage(), "ERROR");
             ventanaError.setVisible(true);
@@ -211,5 +217,42 @@ public class UsuarioDAO {
         return resultado;
     }
     
-    
+    public int borrar(String DNI) {
+        /**
+         * Variables del metodo
+         */
+        int resultado = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        /**
+         * Dentro del try se establece la conexión con la base de datos, se
+         * genera la consulta DELETE con el coche que queramos borrar de la base
+         * de datos Dentro del catch se recogen los posibles errores que se
+         * pueden generar dentro del try Dentro del finally se finalizan las
+         * variables de conexión con la base de datos con sus respectivos try &
+         * catch
+         */
+        try {
+            conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
+            stmt = conn.prepareStatement(SQL_DELETE);
+            stmt.setString(1, DNI);
+
+            resultado = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+            }
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+
+        return resultado;
+    }
+
 }

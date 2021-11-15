@@ -6,8 +6,10 @@
 package Vista.Paneles;
 
 import Datos.ComprasDAO;
+import Datos.Conexion;
 import Datos.EWalletDAO;
 import Datos.ExceptionDAO;
+import Datos.UsuarioDAO;
 import Dominio.Compra;
 import Dominio.EWallet;
 import Dominio.Usuario;
@@ -20,6 +22,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -374,15 +377,48 @@ public class PanelReembolso extends JPanel {
             public void actionPerformed(ActionEvent e) {
 
                 compraReembolso = comprasDAO.seleccionarCompra(usuario.getDNI(), Integer.parseInt(campoPedirID.getText()));
-                
+
                 if (compraReembolso != null) {
                     if ((ewallet.getPuntos() - compraReembolso.getPuntos()) >= 5) {
                         //Aqui empieza la transaccion puto gilipollas
-                        ewalletDAO.actualizarDevolucion(compraReembolso, ewallet);//Suma el precio del objeto y resta los puntos del mismo a la ewallet
-                        comprasDAO.borrar(compraReembolso);
+                        try {
+                            Connection conexionTransaccion = Conexion.getConnection();
+                            ComprasDAO comprasDAOTra = new ComprasDAO(ventana, conexionTransaccion);
+                            EWalletDAO ewalletDAOra = new EWalletDAO(ventana, conexionTransaccion);
+                            
+                            try {
+
+                                if (conexionTransaccion.getAutoCommit()) {
+                                    conexionTransaccion.setAutoCommit(false);
+                                }
+
+                                ewalletDAOra.actualizarDevolucion(compraReembolso, ewallet);//Suma el precio del objeto y resta los puntos del mismo a la ewallet
+                                //Añadir 1 al stock del producto ¿?
+                                comprasDAOTra.borrar(compraReembolso);//Borrar el registro de la cmpra
+
+                                conexionTransaccion.commit();
+
+                                PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, "El reembolso se ha realizado con exito", "");
+                                ventanaCommit.setVisible(true);
+
+                            } catch (Exception ec) {
+                                PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, ec.getMessage(), "ERROR");
+                                ventanaCommit.setVisible(true);
+                                try {
+
+                                    conexionTransaccion.rollback();
+                                } catch (Exception er) {
+                                    PanelAlerta ventanaRollback = new PanelAlerta(ventana, true, er.getMessage(), "ERROR");
+                                    ventanaRollback.setVisible(true);
+                                }
+                            }
+                        } catch (Exception ev) {
+                            PanelAlerta ventanaConnection = new PanelAlerta(ventana, true, ev.getMessage(), "ERROR");
+                            ventanaConnection.setVisible(true);
+                        }
 
                         //Se notifica del borrado                
-                        PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "Se ha borrado la comra con id \""+compraReembolso.getID()+"\"", "");
+                        PanelAlerta ventanaComprado = new PanelAlerta(ventana, true, "Se ha borrado la comra con id \"" + compraReembolso.getID() + "\"", "");
                         ventanaComprado.setVisible(true);
 
                         //Recarga la pagina

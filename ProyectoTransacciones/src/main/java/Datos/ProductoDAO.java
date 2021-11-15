@@ -22,16 +22,22 @@ import javax.swing.JFrame;
 public class ProductoDAO {
 
     private JFrame ventana;
-    
-    public ProductoDAO(JFrame ventana){
+    private Connection conexionTransaccion;
+
+    public ProductoDAO(JFrame ventana, Connection conexionTransaccion) {
+        this.ventana = ventana;
+        this.conexionTransaccion = conexionTransaccion;
+    }
+
+    public ProductoDAO(JFrame ventana) {
         this.ventana = ventana;
     }
-    
+
     private String SQL_SELECT = "SELECT * FROM productos";
     private String SQL_UPDATE = "UPDATE productos SET cantidad = (cantidad - 1) WHERE Codigo LIKE ?";
     private String SQL_SELECT_ONE = "SELECT * FROM productos WHERE Codigo LIKE ?";
     private String SQL_UPDATE_STOCK = "UPDATE productos SET cantidad = cantidad + ? WHERE Codigo LIKE ?";
-    private String SQL_UPDATE_PUNTOS = "UPDATE productos SET puntos = ? WHERE Codigo LIKE ?";
+    private String SQL_UPDATE_PUNTOS = "UPDATE productos SET puntos = ? WHERE Codigo LIKE ?";  
 
     public List<Producto> seleccionar() {
         /**
@@ -87,7 +93,7 @@ public class ProductoDAO {
         PreparedStatement stmt = null;
 
         try {
-            conn = Conexion.getConnection();
+            conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
             stmt = conn.prepareStatement(SQL_UPDATE);
 
             stmt.setString(1, producto.getCodigo());
@@ -97,11 +103,10 @@ public class ProductoDAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-            try {
                 stmt.close();
+                if (this.conexionTransaccion == null) {
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
             }
         }
@@ -143,14 +148,14 @@ public class ProductoDAO {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        }else{
-                PanelAlerta ventanaError = new PanelAlerta(ventana, true, "El producto no se ha encontrado", "ERROR");
-                ventanaError.setVisible(true);
+        } else {
+            PanelAlerta ventanaError = new PanelAlerta(ventana, true, "El producto no se ha encontrado", "ERROR");
+            ventanaError.setVisible(true);
         }
 
         return producto;
     }
-    
+
     public void inertarStock(int cantidad, Producto producto) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -179,7 +184,8 @@ public class ProductoDAO {
         }
 
     }
-        public void actualizarPuntos(int cantidad, Producto producto) {
+
+    public void actualizarPuntos(int cantidad, Producto producto) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int resultado = 0;

@@ -5,7 +5,10 @@
  */
 package Vista.Paneles;
 
+import Datos.ComprasDAO;
+import Datos.Conexion;
 import Datos.EWalletDAO;
+import Datos.ProductoDAO;
 import Datos.UsuarioDAO;
 import Dominio.EWallet;
 import Dominio.Usuario;
@@ -19,6 +22,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -49,6 +53,7 @@ public class PanelUsuario extends JPanel {
 
     private JPanel panelBotones;
     private JButton botonActualizar;
+    private JButton botonBorrar;
 
     private String fuentePrincipal = "Monospaced", fuenteSecundaria = "Arial";
     private Color colorPrincipal = new Color(218, 254, 235), colorSecundario = new Color(76, 138, 105);
@@ -287,6 +292,61 @@ public class PanelUsuario extends JPanel {
         /**
          * Boton para actualizar los cambios
          */
+        botonBorrar = new JButton("BORRAR CUENTA");
+        botonBorrar.setPreferredSize(new Dimension(160, 40));
+        botonBorrar.setBackground(new Color(187, 52, 28));
+        botonBorrar.setForeground(Color.WHITE);
+        botonBorrar.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
+        botonBorrar.setFont(new Font(fuenteSecundaria, Font.BOLD, 12));
+        botonBorrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        botonBorrar.setFocusPainted(false);
+        panelBotones.add(botonBorrar, BorderLayout.WEST);
+        botonBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Transaccion para borrar el cliente, su ewallet y sus compras
+                //Transaccion
+                try {
+                    Connection conexionTransaccion = Conexion.getConnection();
+                    ComprasDAO comprasDAOTra = new ComprasDAO(ventana, conexionTransaccion);
+                    UsuarioDAO usuarioDAOTra = new UsuarioDAO(ventana, conexionTransaccion);
+                    EWalletDAO ewalletDAOra = new EWalletDAO(ventana, conexionTransaccion);
+                    
+                    try {
+
+                        if (conexionTransaccion.getAutoCommit()) {
+                            conexionTransaccion.setAutoCommit(false);
+                        }
+
+                        comprasDAOTra.borrarCompras(usuario.getDNI());//Borrar todas las compras del usuario
+                        ewalletDAOra.borrar(usuario.getDNI());//Borrar la ewallet del usuario
+                        usuarioDAOTra.borrar(usuario.getDNI());//Borra el usuario
+
+                        conexionTransaccion.commit();
+
+                        PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, "El usuario ha sido eliminado", "");
+                        ventanaCommit.setVisible(true);
+
+                        ventana.dispose();//Se cierra la ventana
+
+                    } catch (Exception ec) {
+                        PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, ec.getMessage(), "ERROR");
+                        ventanaCommit.setVisible(true);
+                        try {
+
+                            conexionTransaccion.rollback();
+                        } catch (Exception er) {
+                            PanelAlerta ventanaRollback = new PanelAlerta(ventana, true, er.getMessage(), "ERROR");
+                            ventanaRollback.setVisible(true);
+                        }
+                    }
+                } catch (Exception ev) {
+                    PanelAlerta ventanaConnection = new PanelAlerta(ventana, true, ev.getMessage(), "ERROR");
+                    ventanaConnection.setVisible(true);
+                }
+            }
+        });
+
         botonActualizar = new JButton("ACTUALIZAR");
         botonActualizar.setPreferredSize(new Dimension(140, 40));
         botonActualizar.setBackground(colorSecundario);
