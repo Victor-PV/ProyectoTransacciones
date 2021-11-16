@@ -197,11 +197,8 @@ public class ComprasDAO {
          */
         try {
             conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
-            System.out.println("NO");
             stmt = conn.prepareStatement(SQL_DELETE);
-            System.out.println("NO");
             stmt.setInt(1, compra.getID());
-            System.out.println("NO");
 
             resultado = stmt.executeUpdate();
         } catch (Exception e) {

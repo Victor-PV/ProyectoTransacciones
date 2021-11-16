@@ -392,11 +392,8 @@ public class PanelReembolso extends JPanel {
                                     conexionTransaccion.setAutoCommit(false);
                                 }
                                 ewalletDAOra.actualizarDevolucion(compraReembolso, ewallet);//Suma el precio del objeto y resta los puntos del mismo a la ewallet
-                                System.out.println("SI");
                                 comprasDAOTra.borrar(compraReembolso);//Borrar el registro de la cmpra
-                                System.out.println("SI");
                                 conexionTransaccion.commit();
-                                System.out.println("SI");
 
                                 PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, "El reembolso se ha realizado con exito", "");
                                 ventanaCommit.setVisible(true);
@@ -411,7 +408,7 @@ public class PanelReembolso extends JPanel {
                                 ventana.validate();
 
                             } catch (Exception ec) {
-                                PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, ec.getMessage() + " EEROR", "ERROR");
+                                PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, ec.getMessage(), "ERROR");
                                 ventanaCommit.setVisible(true);
                                 try {
 
