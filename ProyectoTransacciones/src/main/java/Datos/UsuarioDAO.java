@@ -243,11 +243,10 @@ public class UsuarioDAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-            try {
                 stmt.close();
+                if (this.conexionTransaccion == null) {
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
             }
         }

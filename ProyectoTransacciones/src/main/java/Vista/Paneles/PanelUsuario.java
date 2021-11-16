@@ -319,10 +319,14 @@ public class PanelUsuario extends JPanel {
                         }
 
                         comprasDAOTra.borrarCompras(usuario.getDNI());//Borrar todas las compras del usuario
+                        System.out.println("S");
                         ewalletDAOra.borrar(usuario.getDNI());//Borrar la ewallet del usuario
+                        System.out.println("S");
                         usuarioDAOTra.borrar(usuario.getDNI());//Borra el usuario
+                        System.out.println("S");
 
                         conexionTransaccion.commit();
+                        System.out.println("S");
 
                         PanelAlerta ventanaCommit = new PanelAlerta(ventana, true, "El usuario ha sido eliminado", "");
                         ventanaCommit.setVisible(true);

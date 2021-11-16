@@ -197,19 +197,22 @@ public class ComprasDAO {
          */
         try {
             conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
+            System.out.println("NO");
             stmt = conn.prepareStatement(SQL_DELETE);
+            System.out.println("NO");
             stmt.setInt(1, compra.getID());
+            System.out.println("NO");
 
             resultado = stmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("WUUW " + e.getMessage());
         } finally {
             try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-            try {
+                
                 stmt.close();
+                if (this.conexionTransaccion == null) {
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
             }
         }
@@ -235,7 +238,7 @@ public class ComprasDAO {
          */
         try {
             conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
-            stmt = conn.prepareStatement(SQL_DELETE);
+            stmt = conn.prepareStatement(SQL_DELETE_COMPRA);
             stmt.setString(1, DNI);
 
             resultado = stmt.executeUpdate();
@@ -243,11 +246,10 @@ public class ComprasDAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-            try {
                 stmt.close();
+                if (this.conexionTransaccion == null) {
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
             }
         }

@@ -190,11 +190,10 @@ public class EWalletDAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-            try {
                 stmt.close();
+                if (this.conexionTransaccion == null) {
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
             }
         }
@@ -248,19 +247,21 @@ public class EWalletDAO {
          */
         try {
             conn = this.conexionTransaccion == null ? Conexion.getConnection() : this.conexionTransaccion;
+            System.out.println("Y");
             stmt = conn.prepareStatement(SQL_DELETE);
+            System.out.println("Y");
             stmt.setString(1, DNI);
+            System.out.println("Y");
 
             resultado = stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             try {
-                conn.close();
-            } catch (SQLException ex) {
-            }
-            try {
                 stmt.close();
+                if (this.conexionTransaccion == null) {
+                    Conexion.close(conn);
+                }
             } catch (SQLException ex) {
             }
         }
